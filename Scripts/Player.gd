@@ -28,7 +28,7 @@ func _ready():
 	for each in selected_units:
 		each.selected = true
 	
-func _input(event):
+func _unhandled_input(event):
 	if event.is_action_pressed("exit"):
 		get_tree().quit()
 	if event.is_action_pressed("~"):

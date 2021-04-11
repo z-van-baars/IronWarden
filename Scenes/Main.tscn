@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Fonts/SourceHanSerifSC-Regular.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/GameMap.gd" type="Script" id=2]
@@ -48,6 +48,7 @@
 [ext_resource path="res://Assets/Art/Resources/tree/pine_2.png" type="Texture" id=46]
 [ext_resource path="res://Assets/Art/Resources/tree/pine_4.png" type="Texture" id=47]
 [ext_resource path="res://Scripts/BuildMenu.gd" type="Script" id=48]
+[ext_resource path="res://Scripts/RightCorner.gd" type="Script" id=49]
 
 [sub_resource type="TileSet" id=1]
 0/name = "grass.png 0"
@@ -551,7 +552,6 @@ __meta__ = {
 }
 
 [node name="RightCorner" type="Control" parent="UILayer"]
-visible = false
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -559,6 +559,7 @@ anchor_bottom = 1.0
 margin_left = -1920.0
 margin_top = -1080.0
 mouse_filter = 2
+script = ExtResource( 49 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -997,12 +998,10 @@ custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "Draw Nav Polys : True"
 
 [node name="BuildMenu" type="Control" parent="UILayer"]
-visible = false
 margin_left = 716.0
 margin_top = 959.0
 margin_right = 1207.0
 margin_bottom = 1079.0
-mouse_filter = 1
 script = ExtResource( 48 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1017,7 +1016,6 @@ margin_left = -245.5
 margin_top = -59.5
 margin_right = 245.5
 margin_bottom = 59.5
-mouse_filter = 1
 custom_styles/panel = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1131,7 +1129,9 @@ custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
 text = "  C "
 [connection signal="mouse_in_menu" from="Dispatcher" to="Player" method="_on_Dispatcher_mouse_in_menu"]
+[connection signal="mouse_in_menu" from="Dispatcher" to="UILayer/RightCorner" method="_on_Dispatcher_mouse_in_menu"]
 [connection signal="mouse_out_of_menu" from="Dispatcher" to="Player" method="_on_Dispatcher_mouse_out_of_menu"]
+[connection signal="mouse_out_of_menu" from="Dispatcher" to="UILayer/RightCorner" method="_on_Dispatcher_mouse_out_of_menu"]
 [connection signal="toggle_debug_menu" from="Player" to="UILayer/DebugMenu" method="_on_Player_toggle_debug_menu"]
 [connection signal="pressed" from="UILayer/DebugMenu/Panel/CloseButton" to="UILayer/DebugMenu" method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="UILayer/DebugMenu/Panel/OptionsContainer/DrawPaths" to="UILayer/DebugMenu" method="_on_DrawPaths_pressed"]
