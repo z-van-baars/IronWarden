@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Resource.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Art/Tiles/grass.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/Resources/gem/gem_1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Art/selection_box.png" type="Texture" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[node name="Resource" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="TileSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, 16 )
+texture = ExtResource( 2 )
+
+[node name="Border" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, 16 )
+texture = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -34 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 15.4348 )
+rotation = 0.785398
+shape = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( -10.3201, -31.5565, -10.1525, 2.67311, 9.94061, 3.01367, 9.94061, -31.7235 )
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
