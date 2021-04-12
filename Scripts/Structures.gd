@@ -6,7 +6,9 @@ onready var structure_scn = preload("res://Scenes/Structure.tscn")
 
 var command_post_stats = {
 	"display name": "Command Post",
-	"health": 1000,
+	"armor": 10,
+	"maxhealth": 1000,
+	"maxshields": 0,
 	"attack": 0,
 	"range": 0}
 
@@ -23,7 +25,7 @@ var icons = {
 
 
 var build_options = {
-	"Command Post": ["Engineer"]}
+	"Command Post": ["Engineer", "Lascannon", "Rhino"]}
 
 var tech_options = {}
 onready var tiles = []

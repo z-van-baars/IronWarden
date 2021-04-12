@@ -2,21 +2,20 @@ extends Node2D
 
 signal toggle_debug_menu
 signal toggle_spawn_mode
+signal resources_changed
 
 var unit_scn = preload("res://Scenes/Unit.tscn")
 var units
-var mouse_in_menu = false
 
 onready var dragging = false
 onready var selected_units = []
-onready var map_widget = get_tree().root.get_node("Main/UILayer/MapWidget")
 onready var spawn_mode = get_tree().root.get_node("Main").spawn_mode
 onready var last_clicked = null
 onready var selection_box = get_tree().root.get_node("Main/SelectionBox")
 
 onready var resources = {
-	"Biomass": 100,
-	"Alloys": 200,
+	"Biomass": 200,
+	"Alloy": 600,
 	"Warpstone": 0,
 	"Energy": 100,
 	"Command": 0
@@ -24,7 +23,6 @@ onready var resources = {
 
 func _ready():
 	units = get_tree().root.get_node("Main/Units")
-	self.connect("toggle_spawn_mode", map_widget, "_on_Player_spawn_mode_toggle")
 	for each in selected_units:
 		each.selected = true
 	
@@ -45,9 +43,6 @@ func _unhandled_input(event):
 		
 	
 	if event.is_action_pressed("left_click"):
-		if mouse_in_menu == true:
-			
-			return
 		for each in selected_units:
 			each.deselect()
 		selected_units = []
@@ -72,6 +67,9 @@ func _unhandled_input(event):
 
 
 func _on_Selection_Box_end(newly_selected):
+	for each in selected_units:
+		each.deselect()
+	selected_units = []
 	for each in newly_selected:
 		selected_units.append(each)
 		each.select()
@@ -89,9 +87,37 @@ func kill():
 	get_tree().reload_current_scene()
 
 
-func _on_Dispatcher_mouse_in_menu():
-	mouse_in_menu = true
+func credit_resources(resource_cost):
+	var prev_resources = {}
+	for resource in resources.keys():
+		prev_resources[resource] = resources[resource]
+	for resource in resource_cost.keys():
+
+		resources[resource] += resource_cost[resource]
+	emit_signal("resources_changed")
 
 
-func _on_Dispatcher_mouse_out_of_menu():
-	mouse_in_menu = false
+func debit_resources(resource_cost, cost_producer):
+	var prev_resources = {}
+	for resource in resources.keys():
+		prev_resources[resource] = resources[resource]
+	for resource in resource_cost.keys():
+		assert(resource_cost[resource] <= resources[resource])
+
+		resources[resource] -= resource_cost[resource]
+	emit_signal("resources_changed")
+		
+
+
+func _on_resource_right_clicked(resource):
+	if selected_units == []: return
+	var gatherer_units = []
+	for each_unit in selected_units:
+		if each_unit.can_gather == true:
+			gatherer_units.append(each_unit)
+	if gatherer_units == []: return
+	for gatherer in gatherer_units:
+		gatherer.set_resource_target(resource)
+
+func _on_unit_right_clicked(unit):
+	pass

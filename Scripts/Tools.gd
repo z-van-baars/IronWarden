@@ -227,7 +227,6 @@ func circ_random(center, radius):
 	if rng.randf_range(-1.0, 1.0) > 0:
 		random_vec_y = -random_vec_y
 	var randomized_vector_normalized = Vector2(random_vec_x, random_vec_y).normalized()
-	print("Random Vec: ", Vector2(random_vec_x, random_vec_y))
 	return randomized_vector_normalized * radius
 
 func get_random_coordinates(super_array, number_of_coordinates):

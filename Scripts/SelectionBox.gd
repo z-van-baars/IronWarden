@@ -22,10 +22,12 @@ func _ready():
 
 func reset():
 	$Panel.rect_position = Vector2.ZERO
+	$Timer.wait_time = 0.1
 	selected_units = []
 
 func start(mouse_pos):
 	start = mouse_pos
+	$Timer.start()
 	show()
 
 func _process(delta):
@@ -64,6 +66,10 @@ func set_area():
 	selection_rect.extents = (start - stop) / 2
 
 func close():
+	if $Timer.is_stopped() == false:
+		hide()
+		reset()
+		return
 	var space = get_world_2d().direct_space_state
 	var query = Physics2DShapeQueryParameters.new()
 	query.set_shape(selection_rect)

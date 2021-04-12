@@ -4,7 +4,7 @@
 [ext_resource path="res://Styles/MenuButtonPressed.tres" type="StyleBox" id=2]
 [ext_resource path="res://Styles/MenuButtonHoverl.tres" type="StyleBox" id=3]
 [ext_resource path="res://Fonts/SourceHanSerifSC-Regular.otf" type="DynamicFontData" id=4]
-[ext_resource path="res://Scripts/BuildButton.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/UI/BuildButton.gd" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 4 )
@@ -26,6 +26,7 @@ custom_styles/hover = ExtResource( 3 )
 custom_styles/pressed = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0.811765, 1, 1 )
 text = "A"
 __meta__ = {
 "_edit_use_anchors_": false

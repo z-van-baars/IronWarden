@@ -5,6 +5,13 @@ onready var nav_map = get_tree().root.get_node("Main/Nav2D")
 onready var resource_scn = preload("res://Scenes/Resource.tscn")
 onready var tiles = []
 
+onready var dropoff_types = {
+	"Biomass": ["Command Post", "Biomass Reactor"],
+	"Alloy": ["Command Post", "Alloy Foundry"],
+	"Warpstone": ["Command Post", "Warpstone Refinery"],
+	"Energy": ["Command Post", "Energy Conduit"],
+	"Command": ["Command Post"]}
+
 onready var gem_deposit = {
 	"Minerals": 50}
 onready var ore_deposit = {
@@ -54,11 +61,11 @@ onready var icons = {
 
 
 func add_deposit(deposit_type, coordinates):
+	# Coordinates are MAP coordinates, whole numbers and tile address
 	var new_deposit = resource_scn.instance()
 	$Deposits.add_child(new_deposit)
-	new_deposit.load_type(deposit_type, coordinates)
+	new_deposit.setup(deposit_type, coordinates)
 	new_deposit.position = $ResourceMap.map_to_world(coordinates)
-	nav_map.update_nav_tile(coordinates, -1)
 
 
 

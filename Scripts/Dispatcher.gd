@@ -1,12 +1,14 @@
 extends Node
 var inbound = []
 var archived = []
-var build_menu
 signal mouse_in_menu
 signal mouse_out_of_menu
-
-func _ready():
-	build_menu = get_tree().root.get_node("Main/UILayer/BuildMenu")
+signal unit_hovered
+signal unit_unhovered
+signal open_build_menu
+signal unit_selected
+signal unit_deselected
+signal resource_right_clicked
 
 func add_event(event, event_args):
 	inbound.append(event)
@@ -17,19 +19,21 @@ func _process(delta):
 		archived.append(active_event)
 		pass
 
-func _on_Object_hovered(args):
-	pass
+func _on_Unit_hovered(unit):
+	emit_signal("unit_hovered", unit)
 
-func _on_Build_Structure_selected(structure):
-	build_menu._on_Structure_selected(structure)
+func _on_Unit_unhovered():
+	emit_signal("unit_unhovered")
 
-func _on_Build_Structure_deselected():
-	build_menu._on_Structure_deselected()
+func _on_Unit_selected(unit):
+	emit_signal("unit_selected", unit)
 
+func _on_Production_Structure_selected(unit, build_options=null, tech_options=null):
+	if build_options != null or tech_options != null:
+		emit_signal("open_build_menu", unit)
 
-func _on_Menu_mouse_entered(menu):
-	emit_signal("mouse_in_menu")
+func _on_Unit_deselected():
+	emit_signal("unit_deselected")
 
-
-func _on_Menu_mouse_exited():
-	emit_signal("mouse_out_of_menu")
+func _on_Resource_right_clicked(resource):
+	emit_signal("resource_right_clicked", resource)

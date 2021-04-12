@@ -1,13 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/Resource.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Art/Tiles/grass.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Art/Resources/gem/gem_1.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Art/selection_box.png" type="Texture" id=4]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.847059, 0.847059, 0.847059, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.14902, 0.14902, 0.14902, 1 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 14.2768
 
 [node name="Resource" type="KinematicBody2D"]
+input_pickable = true
 script = ExtResource( 1 )
 
 [node name="TileSprite" type="Sprite" parent="."]
@@ -24,14 +32,30 @@ texture = ExtResource( 4 )
 position = Vector2( 0, -34 )
 texture = ExtResource( 3 )
 
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = -16.0
+margin_top = -32.0
+margin_right = 16.0
+margin_bottom = -29.0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 90.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 15.4348 )
 rotation = 0.785398
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="BBox" type="Area2D" parent="."]
 visible = false
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PoolVector2Array( -10.3201, -31.5565, -10.1525, 2.67311, 9.94061, 3.01367, 9.94061, -31.7235 )
-[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BBox"]
+polygon = PoolVector2Array( -10.3201, -31.5565, -18.6869, -8.91713, -30.9213, 16.5712, 0.276367, 31.4563, 32.0858, 16.3673, 18.8318, -9.32495, 9.94061, -31.7235 )
+[connection signal="input_event" from="BBox" to="." method="_on_BBox_input_event"]
+[connection signal="mouse_entered" from="BBox" to="." method="_on_BBox_mouse_entered"]
+[connection signal="mouse_exited" from="BBox" to="." method="_on_BBox_mouse_exited"]

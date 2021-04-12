@@ -1,8 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Unit.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Art/spess.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Art/selection_border.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Art/selection_border_small.png" type="Texture" id=4]
+[ext_resource path="res://Styles/shieldbarbackground.tres" type="StyleBox" id=5]
+[ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=6]
+[ext_resource path="res://Styles/healthbarvalue.tres" type="StyleBox" id=7]
+[ext_resource path="res://Styles/healthbarbackground.tres" type="StyleBox" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 3.19797
@@ -14,7 +19,11 @@ script = ExtResource( 1 )
 visible = false
 cast_to = Vector2( 0, 100 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PathChecker" type="RayCast2D" parent="."]
+visible = false
+cast_to = Vector2( 0, 100 )
+
+[node name="FootPrint" type="CollisionShape2D" parent="."]
 position = Vector2( 0.0165844, 0.00634766 )
 scale = Vector2( 1.75, 1 )
 shape = SubResource( 1 )
@@ -28,7 +37,12 @@ region_rect = Rect2( 196, 132, 56, 56 )
 [node name="SelectionBox" type="Sprite" parent="."]
 visible = false
 position = Vector2( -0.619015, -0.0538483 )
-scale = Vector2( 0.319057, 0.319057 )
+texture = ExtResource( 4 )
+
+[node name="VehicleSelectionBox" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0.0165844, 0 )
+scale = Vector2( 0.744752, 0.744752 )
 texture = ExtResource( 3 )
 
 [node name="UpSprite" type="Sprite" parent="."]
@@ -70,42 +84,49 @@ visible = false
 position = Vector2( 2.64639, -50.9009 )
 texture = ExtResource( 2 )
 
-[node name="HealthBarRed" type="ColorRect" parent="."]
+[node name="ShieldBar" type="ProgressBar" parent="."]
 visible = false
-margin_left = -15.7657
-margin_top = -37.76
-margin_right = 16.2343
-margin_bottom = -33.76
-color = Color( 1, 0, 0, 1 )
+margin_left = -13.0
+margin_top = -39.0
+margin_right = 13.0
+margin_bottom = -36.0
+custom_styles/fg = ExtResource( 6 )
+custom_styles/bg = ExtResource( 5 )
+value = 80.0
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthBarGreen" type="ColorRect" parent="."]
-visible = false
-margin_left = -15.7657
-margin_top = -37.76
-margin_right = 16.2343
-margin_bottom = -33.76
-color = Color( 0.172549, 1, 0, 1 )
+[node name="HealthBar" type="ProgressBar" parent="."]
+margin_left = -13.0
+margin_top = -35.0
+margin_right = 13.0
+margin_bottom = -32.0
+custom_styles/fg = ExtResource( 7 )
+custom_styles/bg = ExtResource( 8 )
+value = 80.0
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ShieldBar" type="ColorRect" parent="."]
-visible = false
-margin_right = 32.0
-margin_bottom = 4.0
-color = Color( 0, 0.345098, 1, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="BBoxHuman" type="Area2D" parent="."]
+input_pickable = false
 
-[node name="BBox" type="Area2D" parent="."]
-
-[node name="Borders" type="CollisionPolygon2D" parent="BBox"]
+[node name="Borders" type="CollisionPolygon2D" parent="BBoxHuman"]
 visible = false
 polygon = PoolVector2Array( 5.56509, -24.5965, -0.0474014, -27.1077, -5.05421, -24.484, -6.77435, -18.5251, -8.35843, 1.65974, -0.00547791, 4.24518, 7.85028, 1.75918, 7.37543, -18.0611 )
-[connection signal="input_event" from="BBox" to="." method="_on_BBox_input_event"]
-[connection signal="mouse_entered" from="BBox" to="." method="_on_BBox_mouse_entered"]
-[connection signal="mouse_exited" from="BBox" to="." method="_on_BBox_mouse_exited"]
+
+[node name="BBoxVehicle" type="Area2D" parent="."]
+input_pickable = false
+
+[node name="Borders" type="CollisionPolygon2D" parent="BBoxVehicle"]
+visible = false
+polygon = PoolVector2Array( 20.3808, -31.2398, 0.185089, -34.3953, -13.945, -31.4543, -28.2098, -24.9002, -28.9808, -1.63952, -14.6461, 8.3627, 0.0273132, 11.9916, 18.6452, 7.41602, 31.8986, -1.89292, 30.9519, -24.6131 )
+[connection signal="input_event" from="BBoxHuman" to="." method="_on_BBox_input_event"]
+[connection signal="mouse_entered" from="BBoxHuman" to="." method="_on_BBox_mouse_entered"]
+[connection signal="mouse_exited" from="BBoxHuman" to="." method="_on_BBox_mouse_exited"]
+[connection signal="input_event" from="BBoxVehicle" to="." method="_on_BBox_input_event"]
+[connection signal="mouse_entered" from="BBoxVehicle" to="." method="_on_BBox_mouse_entered"]
+[connection signal="mouse_exited" from="BBoxVehicle" to="." method="_on_BBox_mouse_exited"]

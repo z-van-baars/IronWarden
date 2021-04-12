@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=66 format=2]
 
 [ext_resource path="res://Fonts/SourceHanSerifSC-Regular.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/GameMap.gd" type="Script" id=2]
@@ -9,10 +9,10 @@
 [ext_resource path="res://Scripts/Tools.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=8]
 [ext_resource path="res://Assets/Art/Resources/gem/gem_1.png" type="Texture" id=9]
-[ext_resource path="res://Scripts/MapWidget.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/UI/MapWidget.gd" type="Script" id=10]
 [ext_resource path="res://Scripts/Nav2D.gd" type="Script" id=11]
 [ext_resource path="res://Styles/MenuDefault.tres" type="StyleBox" id=12]
-[ext_resource path="res://Scripts/DebugGUI.gd" type="Script" id=13]
+[ext_resource path="res://Scripts/UI/ResourcesWidget.gd" type="Script" id=13]
 [ext_resource path="res://Styles/MenuButtonNormal.tres" type="StyleBox" id=14]
 [ext_resource path="res://Styles/MenuButtonPressed.tres" type="StyleBox" id=15]
 [ext_resource path="res://Styles/MenuButtonHoverl.tres" type="StyleBox" id=16]
@@ -27,7 +27,7 @@
 [ext_resource path="res://Assets/Art/UI/Icons/Resources/biomass.png" type="Texture" id=25]
 [ext_resource path="res://Assets/Art/UI/Icons/Resources/alloy.png" type="Texture" id=26]
 [ext_resource path="res://Assets/Art/UI/Icons/Resources/energy.png" type="Texture" id=27]
-[ext_resource path="res://Assets/Art/UI/Icons/Flat/36.png" type="Texture" id=28]
+[ext_resource path="res://Assets/Art/Backgrounds/battleship_schematic.jpg" type="Texture" id=28]
 [ext_resource path="res://Scripts/Scenery.gd" type="Script" id=29]
 [ext_resource path="res://Scripts/Resources.gd" type="Script" id=30]
 [ext_resource path="res://Assets/Art/Resources/gem/gem_2.png" type="Texture" id=31]
@@ -47,8 +47,9 @@
 [ext_resource path="res://Assets/Art/Resources/tree/pine_5.png" type="Texture" id=45]
 [ext_resource path="res://Assets/Art/Resources/tree/pine_2.png" type="Texture" id=46]
 [ext_resource path="res://Assets/Art/Resources/tree/pine_4.png" type="Texture" id=47]
-[ext_resource path="res://Scripts/BuildMenu.gd" type="Script" id=48]
-[ext_resource path="res://Scripts/RightCorner.gd" type="Script" id=49]
+[ext_resource path="res://Scripts/UI/BuildMenu.gd" type="Script" id=48]
+[ext_resource path="res://Scripts/UI/CenterWidget.gd" type="Script" id=49]
+[ext_resource path="res://Assets/Art/UI/MeteorRepository1Icons_fixed.png" type="Texture" id=50]
 
 [sub_resource type="TileSet" id=1]
 0/name = "grass.png 0"
@@ -393,17 +394,40 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 1 )
 
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.0666667, 0.988235, 0.0117647, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 1, 0.0156863, 0.0156863, 1 )
+
 [sub_resource type="DynamicFont" id=8]
+size = 12
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=9]
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=10]
-font_data = ExtResource( 1 )
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0, 0, 0, 0 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 0.117647, 0.831373, 0.92549, 1 )
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="DynamicFont" id=11]
-size = 12
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 11
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=14]
 font_data = ExtResource( 1 )
 
 [node name="Main" type="Node"]
@@ -496,116 +520,28 @@ visible = false
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
-[node name="MapWidget" type="Control" parent="UILayer"]
-margin_left = 1.10803
-margin_top = -1.10803
-margin_right = 1922.11
-margin_bottom = 1077.89
+[node name="ScreenArea" type="Control" parent="UILayer"]
+margin_right = 1920.0
+margin_bottom = 1080.0
 mouse_filter = 2
-script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="UILayer/MapWidget"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -245.5
-margin_top = -119.0
-margin_right = 245.5
-custom_styles/panel = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WidgetHeader" type="Label" parent="UILayer/MapWidget/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -154.5
-margin_top = -38.0
-margin_right = 154.5
-custom_fonts/font = SubResource( 7 )
-text = "-"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SubHeader" type="Label" parent="UILayer/MapWidget/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -154.5
-margin_top = 10.0
-margin_right = 154.5
-margin_bottom = 48.0
-custom_fonts/font = SubResource( 7 )
-text = "-"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RightCorner" type="Control" parent="UILayer"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -1920.0
-margin_top = -1080.0
-mouse_filter = 2
-script = ExtResource( 49 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="UILayer/RightCorner"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -222.0
-margin_top = -119.0
-custom_styles/panel = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TestLabel" type="Label" parent="UILayer/RightCorner/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -154.5
-margin_top = -19.0
-margin_right = 154.5
-margin_bottom = 19.0
-custom_fonts/font = SubResource( 7 )
-text = "I'm a piece of test text"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ResourcesWidget" type="Control" parent="UILayer"]
+[node name="ResourcesWidget" type="Control" parent="UILayer/ScreenArea"]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 1.10803
-margin_top = -1081.11
-margin_right = 1921.11
-margin_bottom = -1.10217
+margin_top = -120.0
+margin_right = 225.0
+margin_bottom = -1.0
 rect_pivot_offset = Vector2( -148.667, 1047.7 )
 mouse_filter = 2
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="UILayer/ResourcesWidget"]
+[node name="Panel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -119.006
@@ -616,7 +552,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BGCompies" type="Sprite" parent="UILayer/ResourcesWidget/Panel"]
+[node name="BGCompies" type="Sprite" parent="UILayer/ScreenArea/ResourcesWidget/Panel"]
 modulate = Color( 0.160784, 0.666667, 0.984314, 0.423529 )
 position = Vector2( 54.7894, 60.5 )
 texture = ExtResource( 22 )
@@ -624,7 +560,7 @@ region_enabled = true
 region_rect = Rect2( 50, 4, 100, 110 )
 region_filter_clip = true
 
-[node name="Panel" type="Panel" parent="UILayer/ResourcesWidget/Panel"]
+[node name="SpriteBGPanel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget/Panel"]
 margin_left = 61.0
 margin_top = 8.0
 margin_right = 89.0
@@ -634,19 +570,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Biomass" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Biomass" type="Control" parent="UILayer/ScreenArea/ResourcesWidget/Panel"]
+margin_right = 225.0
+margin_bottom = 119.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Biomass"]
+[node name="Sprite" type="Sprite" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Biomass"]
 position = Vector2( 75.9742, 17.2798 )
 scale = Vector2( 0.268642, 0.268642 )
 texture = ExtResource( 25 )
 
-[node name="BackPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Biomass"]
+[node name="BGPanel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Biomass"]
 margin_left = 89.0
 margin_top = 8.0
 margin_right = 214.0
@@ -657,7 +593,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BiomassCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Biomass/BackPanel"]
+[node name="BiomassCount" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Biomass/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -674,7 +610,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BiomassTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Biomass"]
+[node name="BiomassTitle" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Biomass"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -691,16 +627,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Warpstone" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Warpstone" type="Control" parent="UILayer/ScreenArea/ResourcesWidget/Panel"]
+margin_right = 225.0
+margin_bottom = 119.0
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Warpstone"]
+[node name="Sprite" type="Sprite" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Warpstone"]
 position = Vector2( 75.1808, 37.7932 )
 scale = Vector2( 0.207691, 0.207691 )
 texture = ExtResource( 24 )
 
-[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Warpstone"]
+[node name="BGPanel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Warpstone"]
 margin_left = 89.0
 margin_top = 28.0
 margin_right = 214.0
@@ -711,7 +647,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WarpstoneCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Warpstone/BGPanel"]
+[node name="WarpstoneCount" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Warpstone/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -728,7 +664,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WarpstoneTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Warpstone"]
+[node name="WarpstoneTitle" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Warpstone"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -745,11 +681,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Alloy" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Alloy" type="Control" parent="UILayer/ScreenArea/ResourcesWidget/Panel"]
+margin_right = 225.0
+margin_bottom = 119.0
 
-[node name="AlloyPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Alloy"]
+[node name="BGPanel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Alloy"]
 margin_left = 89.0
 margin_top = 49.0
 margin_right = 214.0
@@ -760,7 +696,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AlloyCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Alloy/AlloyPanel"]
+[node name="AlloyCount" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Alloy/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -777,12 +713,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Alloy"]
+[node name="Sprite" type="Sprite" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Alloy"]
 position = Vector2( 75.2892, 58.4983 )
 scale = Vector2( 0.232635, 0.232635 )
 texture = ExtResource( 26 )
 
-[node name="AlloyTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Alloy"]
+[node name="AlloyTitle" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Alloy"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -799,11 +735,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Energy" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Energy" type="Control" parent="UILayer/ScreenArea/ResourcesWidget/Panel"]
+margin_right = 225.0
+margin_bottom = 118.0
 
-[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Energy"]
+[node name="BGPanel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Energy"]
 margin_left = 89.0
 margin_top = 70.0
 margin_right = 214.0
@@ -814,7 +750,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EnergyCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Energy/BGPanel"]
+[node name="EnergyCount" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Energy/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -831,13 +767,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Energy"]
+[node name="Sprite" type="Sprite" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Energy"]
 position = Vector2( 74.9346, 78.8438 )
 rotation = 0.888373
 scale = Vector2( 0.176642, 0.176642 )
 texture = ExtResource( 27 )
 
-[node name="EnergyTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Energy"]
+[node name="EnergyTitle" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Energy"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -854,11 +790,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Command" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Command" type="Control" parent="UILayer/ScreenArea/ResourcesWidget/Panel"]
+margin_right = 225.0
+margin_bottom = 119.0
 
-[node name="Panel2" type="Panel" parent="UILayer/ResourcesWidget/Panel/Command"]
+[node name="IconPanel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Command"]
 margin_left = 115.0
 margin_top = 91.0
 margin_right = 136.0
@@ -868,13 +804,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Command/Panel2"]
-modulate = Color( 0.819608, 0.462745, 0.14902, 1 )
-position = Vector2( 10.4948, 10.4395 )
-scale = Vector2( 0.231217, 0.231217 )
-texture = ExtResource( 28 )
+[node name="Sprite" type="Sprite" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Command/IconPanel"]
+position = Vector2( 10.385, 10.0949 )
+scale = Vector2( 0.887571, 0.887571 )
+texture = ExtResource( 50 )
+region_enabled = true
+region_rect = Rect2( 102, 125, 16, 16 )
 
-[node name="CommandPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Command"]
+[node name="BGPanel" type="Panel" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Command"]
 margin_left = 136.0
 margin_top = 91.0
 margin_right = 186.0
@@ -884,7 +821,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CommandCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Command/CommandPanel"]
+[node name="CommandCount" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Command/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -901,7 +838,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CommandTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Command"]
+[node name="CommandTitle" type="Label" parent="UILayer/ScreenArea/ResourcesWidget/Panel/Command"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -918,13 +855,436 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CenterWidget" type="Control" parent="UILayer/ScreenArea"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -323.0
+margin_top = -119.0
+margin_right = 236.0
+script = ExtResource( 49 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/ScreenArea/CenterWidget"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -280.0
+margin_top = -59.5
+margin_right = 280.0
+margin_bottom = 59.5
+custom_styles/panel = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UILayer/ScreenArea/CenterWidget/Panel"]
+modulate = Color( 0.415686, 0.443137, 0.937255, 0.156863 )
+position = Vector2( 279.828, 59.6069 )
+scale = Vector2( 1.14979, 1.14979 )
+texture = ExtResource( 28 )
+region_enabled = true
+region_rect = Rect2( 18, 94, 486, 102 )
+
+[node name="UnitHeader" type="Label" parent="UILayer/ScreenArea/CenterWidget/Panel"]
+margin_left = 8.0
+margin_top = 2.0
+margin_right = 227.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 7 )
+text = "Command Center"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="ProgressBar" parent="UILayer/ScreenArea/CenterWidget/Panel"]
+margin_left = 10.0
+margin_top = 27.0
+margin_right = 72.0
+margin_bottom = 33.0
+custom_styles/fg = SubResource( 9 )
+custom_styles/bg = SubResource( 10 )
+value = 80.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthLabel" type="Label" parent="UILayer/ScreenArea/CenterWidget/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -205.239
+margin_top = -38.5709
+margin_right = -103.239
+margin_bottom = -20.5709
+custom_fonts/font = SubResource( 8 )
+text = "2000 / 2000"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatBGPanel" type="Panel" parent="UILayer/ScreenArea/CenterWidget/Panel"]
+margin_left = 10.0
+margin_top = 36.0
+margin_right = 70.0
+margin_bottom = 99.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatIcons" type="VBoxContainer" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel"]
+margin_left = 4.0
+margin_top = 2.0
+margin_right = 20.0
+margin_bottom = 70.0
+custom_constants/separation = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack" type="Sprite" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel/StatIcons"]
+position = Vector2( 8.92084, 9.13214 )
+texture = ExtResource( 50 )
+region_enabled = true
+region_rect = Rect2( 0, 57, 16, 16 )
+
+[node name="Armor" type="Sprite" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel/StatIcons"]
+position = Vector2( 7.92084, 28.1321 )
+texture = ExtResource( 50 )
+region_enabled = true
+region_rect = Rect2( 34, 40, 16, 16 )
+
+[node name="Range" type="Sprite" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel/StatIcons"]
+position = Vector2( 7.92084, 47.1321 )
+texture = ExtResource( 50 )
+region_enabled = true
+region_rect = Rect2( 51, 24, 16, 16 )
+
+[node name="StatLabels" type="VBoxContainer" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel"]
+margin_left = 26.0
+margin_top = 2.0
+margin_right = 57.0
+margin_bottom = 64.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Armor" type="Label" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel/StatLabels"]
+margin_right = 31.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 8 )
+text = "5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack" type="Label" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel/StatLabels"]
+margin_top = 18.0
+margin_right = 31.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 8 )
+text = "5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Range" type="Label" parent="UILayer/ScreenArea/CenterWidget/Panel/StatBGPanel/StatLabels"]
+margin_top = 36.0
+margin_right = 31.0
+margin_bottom = 54.0
+custom_fonts/font = SubResource( 8 )
+text = "5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BuildMenu" type="Control" parent="UILayer/ScreenArea"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -235.193
+margin_top = -118.0
+margin_right = 235.807
+rect_pivot_offset = Vector2( -53.3188, -3.24097 )
+script = ExtResource( 48 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/ScreenArea/BuildMenu"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -264.0
+margin_top = -59.0
+margin_bottom = 59.0
+custom_styles/panel = SubResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RallyPointButton" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel"]
+margin_left = 186.76
+margin_top = 9.0
+margin_right = 218.76
+margin_bottom = 41.0
+mouse_filter = 2
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  R "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonGrid" type="GridContainer" parent="UILayer/ScreenArea/BuildMenu/Panel"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 177.0
+margin_bottom = 111.0
+mouse_filter = 2
+custom_constants/vseparation = 36
+custom_constants/hseparation = 36
+columns = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonA" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_right = 32.0
+margin_bottom = 32.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  A "
+
+[node name="ButtonB" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 68.0
+margin_right = 99.0
+margin_bottom = 32.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  B "
+
+[node name="ButtonC" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 135.0
+margin_right = 166.0
+margin_bottom = 32.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC2" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 202.0
+margin_right = 233.0
+margin_bottom = 32.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC3" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 269.0
+margin_right = 300.0
+margin_bottom = 32.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC4" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_top = 68.0
+margin_right = 32.0
+margin_bottom = 100.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC5" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 68.0
+margin_top = 68.0
+margin_right = 99.0
+margin_bottom = 100.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC6" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 135.0
+margin_top = 68.0
+margin_right = 166.0
+margin_bottom = 100.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC7" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 202.0
+margin_top = 68.0
+margin_right = 233.0
+margin_bottom = 100.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC8" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 269.0
+margin_top = 68.0
+margin_right = 300.0
+margin_bottom = 100.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC9" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_top = 136.0
+margin_right = 32.0
+margin_bottom = 168.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC10" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 68.0
+margin_top = 136.0
+margin_right = 99.0
+margin_bottom = 168.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC11" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 135.0
+margin_top = 136.0
+margin_right = 166.0
+margin_bottom = 168.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC12" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 202.0
+margin_top = 136.0
+margin_right = 233.0
+margin_bottom = 168.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="ButtonC13" type="Button" parent="UILayer/ScreenArea/BuildMenu/Panel/ButtonGrid"]
+margin_left = 269.0
+margin_top = 136.0
+margin_right = 300.0
+margin_bottom = 168.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C "
+
+[node name="MapWidget" type="Control" parent="UILayer"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -168.0
+margin_top = -120.0
+mouse_filter = 2
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MapWidget"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -84.0
+margin_top = -60.0
+margin_right = 84.0
+margin_bottom = 60.0
+custom_styles/panel = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MapHeader" type="Label" parent="UILayer/MapWidget/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -79.0
+margin_top = -59.0
+margin_right = 79.0
+margin_bottom = -21.0
+custom_fonts/font = SubResource( 12 )
+text = "Someday I will be a minimap"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DebugMenu" type="Control" parent="UILayer"]
 pause_mode = 2
 visible = false
 margin_right = 1920.0
 margin_bottom = 1080.0
 mouse_filter = 2
-script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -946,7 +1306,7 @@ margin_left = -126.5
 margin_top = 13.0
 margin_right = 126.5
 margin_bottom = 37.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 13 )
 text = "Debug Menu Options"
 align = 1
 __meta__ = {
@@ -963,7 +1323,7 @@ margin_bottom = 39.0
 custom_styles/hover = ExtResource( 16 )
 custom_styles/pressed = ExtResource( 15 )
 custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "X"
 
@@ -982,7 +1342,7 @@ margin_bottom = 32.0
 custom_styles/hover = ExtResource( 16 )
 custom_styles/pressed = ExtResource( 15 )
 custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
 text = "Draw Paths : True"
 
@@ -993,145 +1353,20 @@ margin_bottom = 68.0
 custom_styles/hover = ExtResource( 16 )
 custom_styles/pressed = ExtResource( 15 )
 custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "Draw Nav Polys : True"
 
-[node name="BuildMenu" type="Control" parent="UILayer"]
-margin_left = 716.0
-margin_top = 959.0
-margin_right = 1207.0
-margin_bottom = 1079.0
-script = ExtResource( 48 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="UILayer/BuildMenu"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -245.5
-margin_top = -59.5
-margin_right = 245.5
-margin_bottom = 59.5
-custom_styles/panel = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BuildingHeader" type="Label" parent="UILayer/BuildMenu/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -227.5
-margin_top = -50.5
-margin_right = -0.5
-margin_bottom = -12.5
-custom_fonts/font = SubResource( 7 )
-text = "Command Center"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HealthLabel" type="Label" parent="UILayer/BuildMenu/Panel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -149.162
-margin_top = -32.4982
-margin_right = -47.1622
-margin_bottom = -14.4982
-custom_fonts/font = SubResource( 11 )
-text = "2000 / 2000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HealthBarRed" type="ColorRect" parent="UILayer/BuildMenu/Panel"]
-margin_left = 18.0
-margin_top = 32.0
-margin_right = 91.0
-margin_bottom = 41.0
-mouse_filter = 2
-color = Color( 1, 0, 0, 1 )
-
-[node name="HealthBarGreen" type="ColorRect" parent="UILayer/BuildMenu/Panel"]
-margin_left = 18.0
-margin_top = 32.0
-margin_right = 91.0
-margin_bottom = 41.0
-mouse_filter = 2
-color = Color( 0.223529, 0.996078, 0.00784314, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RallyPointButton" type="Button" parent="UILayer/BuildMenu/Panel"]
-margin_left = 451.0
-margin_top = 9.0
-margin_right = 483.0
-margin_bottom = 41.0
-mouse_filter = 2
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 10 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  R "
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ButtonGrid" type="GridContainer" parent="UILayer/BuildMenu/Panel"]
-margin_left = 271.0
-margin_top = 9.0
-margin_right = 447.0
-margin_bottom = 113.0
-mouse_filter = 2
-columns = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ButtonA" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_right = 32.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 10 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  A "
-
-[node name="ButtonB" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 36.0
-margin_right = 67.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 10 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  B "
-
-[node name="ButtonC" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 71.0
-margin_right = 102.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 10 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="MeteorRepository1Icons_fixed" type="Sprite" parent="."]
+position = Vector2( 1461.84, 1435.37 )
+texture = ExtResource( 50 )
 [connection signal="mouse_in_menu" from="Dispatcher" to="Player" method="_on_Dispatcher_mouse_in_menu"]
-[connection signal="mouse_in_menu" from="Dispatcher" to="UILayer/RightCorner" method="_on_Dispatcher_mouse_in_menu"]
 [connection signal="mouse_out_of_menu" from="Dispatcher" to="Player" method="_on_Dispatcher_mouse_out_of_menu"]
-[connection signal="mouse_out_of_menu" from="Dispatcher" to="UILayer/RightCorner" method="_on_Dispatcher_mouse_out_of_menu"]
+[connection signal="open_build_menu" from="Dispatcher" to="UILayer/ScreenArea/BuildMenu" method="_on_Dispatcher_open_build_menu"]
+[connection signal="unit_deselected" from="Dispatcher" to="UILayer/ScreenArea/BuildMenu" method="_on_Dispatcher_unit_deselected"]
+[connection signal="unit_deselected" from="Dispatcher" to="UILayer/ScreenArea/CenterWidget" method="_on_Unit_deselected"]
+[connection signal="unit_selected" from="Dispatcher" to="UILayer/ScreenArea/CenterWidget" method="_on_Unit_selected"]
+[connection signal="resources_changed" from="Player" to="UILayer/ScreenArea/ResourcesWidget" method="_on_Player_resources_changed"]
 [connection signal="toggle_debug_menu" from="Player" to="UILayer/DebugMenu" method="_on_Player_toggle_debug_menu"]
 [connection signal="pressed" from="UILayer/DebugMenu/Panel/CloseButton" to="UILayer/DebugMenu" method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="UILayer/DebugMenu/Panel/OptionsContainer/DrawPaths" to="UILayer/DebugMenu" method="_on_DrawPaths_pressed"]

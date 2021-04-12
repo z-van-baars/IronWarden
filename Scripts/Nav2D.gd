@@ -15,7 +15,6 @@ func set_nav_tiles():
 	for y in range(height):
 		for x in range(width):
 			$NavMap.set_cellv(Vector2(x, y), tiles[y][x])
-	print("Number of resources: ", get_tree().root.get_node("Main/Resources/Deposits").get_children().size())
 	for each in get_tree().root.get_node("Main/Resources/Deposits").get_children():
 		$NavMap.set_cellv(each.pos, -1)
 
