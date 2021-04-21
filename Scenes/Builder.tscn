@@ -1,0 +1,190 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=1]
+[ext_resource path="res://Styles/healthbarvalue.tres" type="StyleBox" id=2]
+[ext_resource path="res://Styles/shieldbarbackground.tres" type="StyleBox" id=3]
+[ext_resource path="res://Styles/healthbarbackground.tres" type="StyleBox" id=4]
+[ext_resource path="res://Scripts/Builder.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Art/UI/selection_border_small.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Art/Tiles/98x52/grass_1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Art/Units/imperium/techpriest/down_left.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Art/UI/PP Inventory Icons/tool/pickaxe01.svg" type="Texture" id=10]
+[ext_resource path="res://Assets/Sound/Units/Techmarine/hammer_tink2.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sound/Units/Techmarine/hammer_tink1.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sound/Units/Techmarine/hammer_tink5.ogg" type="AudioStream" id=13]
+[ext_resource path="res://Assets/Sound/Units/Techmarine/hammer_tink4.ogg" type="AudioStream" id=14]
+[ext_resource path="res://Assets/Sound/Units/Techmarine/hammer_tink3.ogg" type="AudioStream" id=15]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 4.39801
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "swing",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=3]
+resource_name = "swing"
+length = 1.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6, 1.2, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -14, -27 ), Vector2( -20, -26 ), Vector2( 12, -26 ), Vector2( 0.599, -26 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6, 1.2, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ -25.7, -65.0, 90.0, 32.15 ]
+}
+
+[node name="Builder" type="KinematicBody2D"]
+script = ExtResource( 5 )
+
+[node name="HammerTink1" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+
+[node name="HammerTink2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+
+[node name="HammerTink3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 15 )
+volume_db = -1.0
+
+[node name="HammerTink4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )
+volume_db = -1.0
+
+[node name="HammerTink5" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+volume_db = -1.0
+
+[node name="TileBase" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 7 )
+
+[node name="Target" type="Sprite" parent="."]
+visible = false
+modulate = Color( 1, 0.113725, 0.113725, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 196, 132, 56, 56 )
+
+[node name="SelectionBox" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 6 )
+
+[node name="UpLeftSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="UpSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="UpRightSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="RightSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="DownRightSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="DownSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="DownLeftSprite" type="Sprite" parent="."]
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="LeftSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -74 )
+texture = ExtResource( 9 )
+
+[node name="FootPrint" type="CollisionShape2D" parent="."]
+scale = Vector2( 1.75, 1 )
+shape = SubResource( 1 )
+
+[node name="Hammer" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( -13.7597, -26.9835 )
+rotation = -0.431933
+scale = Vector2( 0.434896, 0.434896 )
+frames = SubResource( 2 )
+animation = "swing"
+flip_v = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hammer"]
+anims/swing = SubResource( 3 )
+
+[node name="ShieldBar" type="ProgressBar" parent="."]
+visible = false
+margin_left = -13.0
+margin_top = -49.0
+margin_right = 13.0
+margin_bottom = -46.0
+custom_styles/fg = ExtResource( 1 )
+custom_styles/bg = ExtResource( 3 )
+value = 80.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
+margin_left = -13.0
+margin_top = -45.0
+margin_right = 13.0
+margin_bottom = -42.0
+custom_styles/fg = ExtResource( 2 )
+custom_styles/bg = ExtResource( 4 )
+value = 80.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BBoxHuman" type="Area2D" parent="."]
+position = Vector2( 0, -26 )
+input_pickable = false
+
+[node name="Borders" type="CollisionPolygon2D" parent="BBoxHuman"]
+visible = false
+polygon = PoolVector2Array( 6.54823, -17.7914, -0.0444412, -20.4773, -6.39294, -17.9134, -10.9101, -8.51278, -11.0322, 27.5027, 0.199745, 31.1653, 11.3096, 27.5027, 11.1875, -7.90235 )
+
+[node name="GatherTimer" type="Timer" parent="."]
+one_shot = true
+[connection signal="input_event" from="BBoxHuman" to="." method="_on_BBox_input_event"]
+[connection signal="mouse_entered" from="BBoxHuman" to="." method="_on_BBox_mouse_entered"]
+[connection signal="mouse_exited" from="BBoxHuman" to="." method="_on_BBox_mouse_exited"]
+[connection signal="timeout" from="GatherTimer" to="." method="_on_GatherTimer_timeout"]

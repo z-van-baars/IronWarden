@@ -1,4 +1,6 @@
 extends Control
+signal play_tick_1
+
 var active_structure = null
 var build_button_scn = preload("res://Scenes/UI/BuildButton.tscn")
 var tech_button_scn = preload("res://Scenes/UI/BuildButton.tscn")
@@ -8,7 +10,7 @@ var units
 
 func _ready():
 	player = get_tree().root.get_node("Main/Player")
-	units = get_tree().root.get_node("Main/Units")
+	units = get_tree().root.get_node("Main/GameObjects/Units")
 	clear_all()
 
 func _process(delta):
@@ -32,13 +34,9 @@ func construct_buttons():
 	for unit in active_structure.build_options:
 		var new_button = build_button_scn.instance()
 		$Panel/ButtonGrid.add_child(new_button)
-		if unit == "":
-			new_button.spacer_setup()
-		else:
-			new_button.setup(self, unit)
+		new_button.setup(self, unit)
 
-	for tech in active_structure.tech_options:
-		pass
+	for tech in active_structure.tech_options: pass
 
 func check_cost(resource_cost):
 	for resource in resource_cost.keys():
@@ -47,17 +45,17 @@ func check_cost(resource_cost):
 	return true
 
 func _on_Build_Button_clicked(unit_type):
-	if check_cost(units.statlines[unit_type]["cost"]) == true:
+	if check_cost(units.get_build_cost(unit_type)) == true:
+		emit_signal("play_tick_1")
 		active_structure.add_to_queue(unit_type)
-		player.debit_resources(units.statlines[unit_type]["cost"], unit_type)
+		player.debit_resources(units.get_build_cost(unit_type), unit_type)
 	else:
 		pass
-		
-
-func _on_Dispatcher_unit_deselected():
-	clear_all()
 
 func _on_Dispatcher_open_build_menu(structure):
 	active_structure = structure
 	construct_buttons()
 	show()
+
+func _on_Dispatcher_selection_cleared():
+	clear_all()

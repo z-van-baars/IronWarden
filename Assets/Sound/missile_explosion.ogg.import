@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/missile_explosion.ogg-8da127eb24023a8d771411059070e24e.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/missile_explosion.ogg"
+dest_files=[ "res://.import/missile_explosion.ogg-8da127eb24023a8d771411059070e24e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

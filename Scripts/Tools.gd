@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 var width
 var height
 var rng = RandomNumberGenerator.new()
@@ -131,6 +131,14 @@ func distance(a1: float, b1: float, x1: float, y1: float):
 	var b2 = abs(b1 - y1)
 	return sqrt((a2 * a2) + (b2 * b2))
 
+func v_distance(vec1, vec2):
+	# Pythagorean distance between two points, vec1 - Vector2(a,b) and vec2 - Vector2(x,y)
+	# Returns an unrounded float
+	var a2 = abs(vec1.x - vec2.x)
+	var b2 = abs(vec1.y - vec2.y)
+	return sqrt((a2 * a2) + (b2 * b2))
+	
+
 func get_tiles_in_zone(zone_start, zone_end):
 	var leftmost = zone_start.x
 	var topmost = zone_start.y
@@ -243,3 +251,32 @@ func get_random_coordinates(super_array, number_of_coordinates):
 				random_coordinates.append(coord_pair)
 				break
 	return random_coordinates
+
+
+func list_files_in_directory(path):
+	var files = []
+	var dir = Directory.new()
+	dir.open(path)
+	dir.list_dir_begin()
+
+	while true:
+		var file = dir.get_next()
+		if file == "":
+			break
+		elif not file.begins_with("."):
+			files.append(file)
+
+	dir.list_dir_end()
+
+	return files
+
+func draw_circle_arc(center, radius, angle_from, angle_to, color):
+	var nb_points = 32
+	var points_arc = PoolVector2Array()
+
+	for i in range(nb_points + 1):
+		var angle_point = deg2rad(angle_from + i * (angle_to-angle_from) / nb_points - 90)
+		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
+
+	for index_point in range(nb_points):
+		draw_line(points_arc[index_point], points_arc[index_point + 1], color)

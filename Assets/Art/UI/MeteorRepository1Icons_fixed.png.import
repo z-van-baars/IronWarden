@@ -2,16 +2,11 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/MeteorRepository1Icons_fixed.png-03e083817cc56d45c62f4a36e3f39e43.stex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://Assets/Art/UI/MeteorRepository1Icons_fixed.png"
-dest_files=[ "res://.import/MeteorRepository1Icons_fixed.png-03e083817cc56d45c62f4a36e3f39e43.stex" ]
-
 [params]
 
 compress/mode=0
@@ -20,7 +15,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

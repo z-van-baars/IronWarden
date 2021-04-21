@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ouroborous-b_more_industrial.ogg-cdd900618081e80555da52c3b007c479.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Stream/ouroborous-b_more_industrial.ogg"
+dest_files=[ "res://.import/ouroborous-b_more_industrial.ogg-cdd900618081e80555da52c3b007c479.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

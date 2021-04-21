@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/on_my_way_2.ogg-766158b15ea6b2429b4e7c8fbcd649ba.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/Conscript/on_my_way_2.ogg"
+dest_files=[ "res://.import/on_my_way_2.ogg-766158b15ea6b2429b4e7c8fbcd649ba.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

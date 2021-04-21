@@ -1,71 +1,134 @@
 extends Node2D
-onready var tiles = []
+onready var grid
+onready var tools
+onready var res
+onready var structures
+onready var nav
+
 onready var width = 50
 onready var height = 50
-onready var tools = get_tree().root.get_node("Main/Tools")
-onready var resources = get_tree().root.get_node("Main/Resources")
-onready var structures = get_tree().root.get_node("Main/Structures")
-onready var units = get_tree().root.get_node("Main/Units")
-onready var scenery = get_tree().root.get_node("Main/Scenery")
+
+
 onready var n_ore = int(sqrt(width * height) / 3)
 onready var n_gem = int(sqrt(width * height) / 5)
-onready var n_tree = int(sqrt(width * height) * 2)
+# onready var n_forests = int(sqrt(width * height) / 10)
+onready var n_forests = 1
+# onready var forest_size = int(sqrt(width * height) * 3)
+onready var forest_size = 25
+onready var forest_radius = 6.5
+
+onready var n_small_forests = 1
+onready var small_forest_size = 12
+onready var small_forest_radius = 3
 onready var n_chicken = int(sqrt(width * height) / 5)
 
 
+func set_module_refs():
+	grid = $Grid
+	tools = get_tree().root.get_node("Main/Tools")
+	res = get_tree().root.get_node("Main/GameObjects/Resources")
+	structures = get_tree().root.get_node("Main/GameObjects/Structures")
+	nav = get_tree().root.get_node("Main/Nav2D")
+
 func map_gen():
-	wipe_map()
-	random_resources()
-	random_scenery()
-	paint_map_tiles()
+	tools.set_map_parameters()
+	grid.set_module_refs()
+	nav.set_module_refs()
 
-func wipe_map():
+	grid.set_map_parameters(width, height)
 	$TileMap.clear()
-	units = []
-	scenery = []
-	blank_grassland()
+	grid.wipe_map()
+
+	grid.blank_grassland()
+
+	random_resources()
+	paint_map_terrain()
 
 
-func blank_grassland():
-	tiles = []
-	resources.tiles = []
-	structures.tiles = []
-	for y in range(height):
-		var tile_row = []
-		var resource_row = []
-		var structures_row = []
-		for x in range(width):
-			tile_row.append(0)
-			resource_row.append(-1)
-			structures_row.append(-1)
-		tiles.append(tile_row)
-		resources.tiles.append(resource_row)
-		structures.tiles.append(structures_row)
-		
-
-
-func paint_map_tiles():
+func paint_map_terrain():
 	for y in range(height):
 		for x in range(width):
-			$TileMap.set_cellv(Vector2(x, y), tiles[y][x])
+			var tile_in_question = grid.get_cell(Vector2(x, y))
+			$TileMap.set_cellv(
+				Vector2(x, y),
+				grid.get_cell(Vector2(x, y)).get_base())
 
+func blank_forest():
+	for _y in range(grid.tiles.size()):
+		print(_y)
+		for _x in range(grid.tiles[0].size()):
+			res.add_deposit(res.DepositTypes.TREE, Vector2(_x, _y))
 
 func random_resources():
-	var ore_deposit_locs = tools.get_random_coordinates(tiles, n_ore)
+	generate_forests(n_forests, forest_size, forest_radius)
+	generate_forests(n_small_forests, small_forest_size, small_forest_radius)
+
+	var ore_deposit_locs = tools.get_random_coordinates(grid.tiles, n_ore)
+	var ore_count = 0
 	for ore_deposit in ore_deposit_locs:
-		resources.add_deposit("Ore Deposit", ore_deposit)
+		if grid.get_cell(ore_deposit).is_buildable():
+			res.add_deposit(res.DepositTypes.ORE, ore_deposit)
+			ore_count += 1
 
-	var gem_deposit_locs = tools.get_random_coordinates(tiles, n_gem)
+		# ore clustering
+		var ore_neighbors = tools.get_nearby_tiles(ore_deposit, 2)
+		var valid_ore_neighbors = []
+		for o_n in ore_neighbors:
+			if grid.get_cell(o_n).is_buildable():
+				valid_ore_neighbors.append(o_n)
+		for _x in range(randi()%5+2):
+			if valid_ore_neighbors.empty(): break
+			var r_neighbor = tools.r_choice(valid_ore_neighbors)
+			valid_ore_neighbors.erase(r_neighbor)
+			res.add_deposit(res.DepositTypes.ORE, r_neighbor)
+			ore_count += 1
+
+	var gem_count = 0
+	var gem_deposit_locs = tools.get_random_coordinates(grid.tiles, n_gem)
 	for gem_deposit in gem_deposit_locs:
-		resources.add_deposit("Gem Deposit", gem_deposit)
+		if grid.get_cell(gem_deposit).is_buildable():
+			res.add_deposit(res.DepositTypes.GEM, gem_deposit)
+			gem_count += 1
 
-	var tree_locs = tools.get_random_coordinates(tiles, n_tree)
-	for tree in tree_locs:
-		resources.add_deposit("Tree", tree)
+		# clustering
+		var gem_neighbors = tools.get_nearby_tiles(gem_deposit, 2)
+		var valid_gem_neighbors = []
+		for g_n in gem_neighbors:
+			if grid.get_cell(g_n).is_buildable():
+				valid_gem_neighbors.append(g_n)
+		for _x in range(randi()%3+0):
+			if valid_gem_neighbors.empty(): break
+			var r_neighbor = tools.r_choice(valid_gem_neighbors)
+			valid_gem_neighbors.erase(r_neighbor)
+			res.add_deposit(res.DepositTypes.GEM, r_neighbor)
+			gem_count += 1
 
-	var space_chicken_locs = tools.get_random_coordinates(tiles, n_chicken)
+
+	var space_chicken_locs = tools.get_random_coordinates(grid.tiles, n_chicken)
+	var chicken_count = 0
 	for space_chicken in space_chicken_locs:
-		resources.add_deposit("Space Chicken", space_chicken)
+		if grid.get_cell(space_chicken).is_buildable():
+			res.add_deposit(res.DepositTypes.SPACE_CHICKEN, space_chicken)
+			chicken_count += 1
+	
+	
+	print("Ore Deposits: " + str(ore_count) + " / " + str(n_ore))
+	print("Gem Deposits: " + str(gem_count) + " / " + str(n_gem))
+	print("Chicken Deposits: " + str(chicken_count) + " / " + str(n_chicken))
 
-func random_scenery():
-	pass
+
+func generate_forests(n_forests, forest_size, forest_radius):
+	for _f in range(n_forests):
+		var forest_start
+		while true:
+			forest_start = tools.get_random_coordinates(grid.tiles, 1)[0]
+			if grid.get_cell(forest_start).get_resource() != 1:
+				break
+		res.add_deposit(res.DepositTypes.TREE, forest_start)
+		var evaluated = [forest_start]
+		
+		var forest_tiles_in_radius = tools.get_nearby_tiles(forest_start, forest_radius)
+		for f_tile in forest_tiles_in_radius:
+			res.add_deposit(res.DepositTypes.TREE, f_tile)
+			evaluated.append(f_tile)
+

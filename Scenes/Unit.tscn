@@ -1,95 +1,160 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Unit.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Art/spess.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Art/selection_border.png" type="Texture" id=3]
-[ext_resource path="res://Assets/Art/selection_border_small.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Art/Tiles/98x52/grass_1.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/Units/imperium/techpriest/down_left.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Art/UI/selection_border_large.png" type="Texture" id=4]
 [ext_resource path="res://Styles/shieldbarbackground.tres" type="StyleBox" id=5]
 [ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=6]
 [ext_resource path="res://Styles/healthbarvalue.tres" type="StyleBox" id=7]
 [ext_resource path="res://Styles/healthbarbackground.tres" type="StyleBox" id=8]
+[ext_resource path="res://Assets/Art/UI/selection_border_small.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Art/Particles/muzzle_03.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Art/Effects/images/muzzle/muzzle2_0008.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Art/Units/imperium/gun.png" type="Texture" id=12]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 3.19797
+radius = 4.39801
+
+[sub_resource type="Animation" id=4]
+resource_name = "Fire"
+length = 0.25
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -6, -18.776 ), Vector2( -6, -18.776 ), Vector2( 3.8147e-06, -18.7757 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Weapon/Light2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Weapon/Sprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 6.92264
+
+[sub_resource type="CircleShape2D" id=3]
+
+[sub_resource type="Curve2D" id=5]
+_data = {
+"points": PoolVector2Array(  )
+}
 
 [node name="Unit" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
-[node name="RangeFinder" type="RayCast2D" parent="."]
+[node name="TileBase" type="Sprite" parent="."]
 visible = false
-cast_to = Vector2( 0, 100 )
-
-[node name="PathChecker" type="RayCast2D" parent="."]
-visible = false
-cast_to = Vector2( 0, 100 )
-
-[node name="FootPrint" type="CollisionShape2D" parent="."]
-position = Vector2( 0.0165844, 0.00634766 )
-scale = Vector2( 1.75, 1 )
-shape = SubResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Target" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 0.113725, 0.113725, 1 )
 scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 3 )
+texture = ExtResource( 9 )
 region_rect = Rect2( 196, 132, 56, 56 )
 
 [node name="SelectionBox" type="Sprite" parent="."]
 visible = false
-position = Vector2( -0.619015, -0.0538483 )
-texture = ExtResource( 4 )
+texture = ExtResource( 9 )
+
+[node name="FootPrint" type="CollisionShape2D" parent="."]
+scale = Vector2( 1.75, 1 )
+shape = SubResource( 1 )
 
 [node name="VehicleSelectionBox" type="Sprite" parent="."]
 visible = false
-position = Vector2( 0.0165844, 0 )
 scale = Vector2( 0.744752, 0.744752 )
+texture = ExtResource( 4 )
+
+[node name="UpLeftSprite" type="Sprite" parent="."]
+position = Vector2( 0, -76 )
 texture = ExtResource( 3 )
 
 [node name="UpSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+position = Vector2( 0, -76 )
+texture = ExtResource( 3 )
 
 [node name="UpRightSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+position = Vector2( 0, -76 )
+texture = ExtResource( 3 )
 
 [node name="RightSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+position = Vector2( 0, -76 )
+texture = ExtResource( 3 )
 
 [node name="DownRightSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+position = Vector2( 0, -76 )
+texture = ExtResource( 3 )
 
 [node name="DownSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+position = Vector2( 0, -76 )
+texture = ExtResource( 3 )
 
 [node name="DownLeftSprite" type="Sprite" parent="."]
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+position = Vector2( 0, -76 )
+texture = ExtResource( 3 )
 
 [node name="LeftSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+position = Vector2( 0, -76 )
+texture = ExtResource( 3 )
 
-[node name="UpLeftSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 2.64639, -50.9009 )
-texture = ExtResource( 2 )
+[node name="Weapon" type="Node2D" parent="."]
+position = Vector2( -6, -18.776 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon"]
+anims/Fire = SubResource( 4 )
+
+[node name="Weapon" type="Sprite" parent="Weapon"]
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 12 )
+offset = Vector2( 100, 0 )
+
+[node name="Light2D" type="Light2D" parent="Weapon/Weapon"]
+position = Vector2( 219.017, 0.128418 )
+rotation = 1.5708
+texture = ExtResource( 10 )
+color = Color( 0.988235, 0.564706, 0.0235294, 1 )
+
+[node name="Sprite" type="Sprite" parent="Weapon/Weapon"]
+position = Vector2( 196.555, -1.38208 )
+rotation = -1.5708
+texture = ExtResource( 11 )
 
 [node name="ShieldBar" type="ProgressBar" parent="."]
 visible = false
 margin_left = -13.0
-margin_top = -39.0
+margin_top = -51.0
 margin_right = 13.0
-margin_bottom = -36.0
+margin_bottom = -48.0
 custom_styles/fg = ExtResource( 6 )
 custom_styles/bg = ExtResource( 5 )
 value = 80.0
@@ -99,10 +164,11 @@ __meta__ = {
 }
 
 [node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
 margin_left = -13.0
-margin_top = -35.0
+margin_top = -47.0
 margin_right = 13.0
-margin_bottom = -32.0
+margin_bottom = -44.0
 custom_styles/fg = ExtResource( 7 )
 custom_styles/bg = ExtResource( 8 )
 value = 80.0
@@ -111,19 +177,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ContactZone" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2( 1.75, 1 )
+shape = SubResource( 2 )
+
 [node name="BBoxHuman" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="Borders" type="CollisionPolygon2D" parent="BBoxHuman"]
 visible = false
-polygon = PoolVector2Array( 5.56509, -24.5965, -0.0474014, -27.1077, -5.05421, -24.484, -6.77435, -18.5251, -8.35843, 1.65974, -0.00547791, 4.24518, 7.85028, 1.75918, 7.37543, -18.0611 )
+polygon = PoolVector2Array( 6.54823, -17.7914, -0.0444412, -20.4773, -6.39294, -17.9134, -10.9101, -8.51278, -11.0322, 27.5027, 0.199745, 31.1653, 11.3096, 27.5027, 11.1875, -7.90235 )
 
 [node name="BBoxVehicle" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="Borders" type="CollisionPolygon2D" parent="BBoxVehicle"]
 visible = false
-polygon = PoolVector2Array( 20.3808, -31.2398, 0.185089, -34.3953, -13.945, -31.4543, -28.2098, -24.9002, -28.9808, -1.63952, -14.6461, 8.3627, 0.0273132, 11.9916, 18.6452, 7.41602, 31.8986, -1.89292, 30.9519, -24.6131 )
+polygon = PoolVector2Array( 15.0166, -17.4376, -0.130196, -19.8043, -14.0844, -17.303, -28.7348, -4.85018, -28.6127, 17.2475, -16.7703, 31.2874, 0.0776443, 32.0199, 22.59, 31.6317, 31.899, 16.3271, 29.8478, -7.18194 )
+
+[node name="Range" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+scale = Vector2( 18.85, 10 )
+shape = SubResource( 3 )
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 5 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 [connection signal="input_event" from="BBoxHuman" to="." method="_on_BBox_input_event"]
 [connection signal="mouse_entered" from="BBoxHuman" to="." method="_on_BBox_mouse_entered"]
 [connection signal="mouse_exited" from="BBoxHuman" to="." method="_on_BBox_mouse_exited"]

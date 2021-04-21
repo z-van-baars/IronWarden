@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/hammer_tink4.ogg-a3ef029e78cb8d27b075c2143663b06c.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/Techmarine/hammer_tink4.ogg"
+dest_files=[ "res://.import/hammer_tink4.ogg-a3ef029e78cb8d27b075c2143663b06c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -3,10 +3,41 @@ extends KinematicBody2D
 # Signal Declarations
 signal left_clicked
 signal right_clicked
-signal hovered
-signal unhovered
-signal selected
-signal deselected
+signal confirm
+signal update
+
+# Enums
+enum Tasks {
+	TASK_IDLE,
+	TASK_GATHER,
+	TASK_ATTACK_TARGET,
+	TASK_BUILD_STRUCTURE
+}
+
+enum States {
+	STATE_MOVE,
+	STATE_ATTACK,
+	STATE_EXTRACT,
+	STATE_IDLE
+}
+
+enum Stats {
+	UNIT_ID,
+	DISPLAY_NAME,
+	SPEED,
+	ARMOR,
+	HEALTH,
+	MAXHEALTH,
+	SHIELDS,
+	MAXSHIELDS,
+	ATTACK,
+	RANGE,
+	BUILD_TIME,
+	GATHER_TIME,
+	CARRY_CAP,
+	COST
+}
+
 
 # Module References
 var tools
@@ -27,31 +58,27 @@ var final_target : Vector2
 var path = []
 
 var target_unit = null
-var state = "Idle"
-var task = "Idle"
+var state
+var task
 
 
 # variable statline properties, filled out for different units programmatically
 var can_path = true
 var can_gather = false
+var can_build = false
+var build_options = []
+var tech_options = []
 
-var display_name
-var speed
-var armor
-var health
-var maxhealth
-var attack
-var attack_range
-var gather_time
-var carry_cap
+var utype
+var _stats
 
 onready var bounding_boxes = {
 	"human": $BBoxHuman,
 	"vehicle": $BBoxVehicle}
 
 onready var selection_border_size = {
-	"human": preload("res://Assets/Art/selection_border_small.png"),
-	"vehicle": preload("res://Assets/Art/selection_border_large.png")}
+	"human": preload("res://Assets/Art/UI/selection_border_small.png"),
+	"vehicle": preload("res://Assets/Art/UI/selection_border_large.png")}
 
 onready var directional_sprites = {
 	"up": $UpSprite,
@@ -63,6 +90,9 @@ onready var directional_sprites = {
 	"left": $LeftSprite,
 	"upleft": $UpLeftSprite}
 
+
+
+
 func _ready():
 	set_module_refs()
 
@@ -72,40 +102,82 @@ func set_module_refs():
 	nav2d = get_tree().root.get_node("Main/Nav2D")
 	player = get_tree().root.get_node("Main/Player")
 	dis = get_tree().root.get_node("Main/Dispatcher")
-	structures = get_tree().root.get_node("Main/Structures")
-	units = get_tree().root.get_node("Main/Units")
-	res = get_tree().root.get_node("Main/Resources")
+	structures = get_tree().root.get_node("Main/GameObjects/Structures")
+	units = get_tree().root.get_node("Main/GameObjects/Units")
+	res = get_tree().root.get_node("Main/GameObjects/Resources")
+
+func connect_signals():
+	self.connect("left_clicked", dis, "_on_Unit_left_clicked")
+	self.connect("confirm", dis, "_on_Unit_confirm")
+	self.connect("update", dis, "_on_Unit_update")
+
+func setup(unit_type, location):
+	set_module_refs()
+	connect_signals()
+	load_stats(unit_type)
+	position = location
 	zero_target()
-	self.connect("hovered", dis, "_on_Unit_hovered")
-	self.connect("unhovered", dis, "_on_Unit_unhovered")
-	self.connect("selected", dis, "_on_Unit_selected")
-	self.connect("deselected", dis, "_on_Unit_deselected")
-	self.connect("left_clicked",
-		player,
-		"_on_Unit_left_click")
+	set_task_idle()
+
+func confirm(): emit_signal("confirm", self)
+
+func empty_lading(): pass
+
+func set_task_idle(): task = Tasks.TASK_IDLE
+
+func set_state_idle(): state = States.STATE_IDLE
+
+func set_state_move(): state = States.STATE_MOVE
+
+func set_state_extract(): state = States.STATE_EXTRACT
+
+func set_state_attack(): state = States.STATE_ATTACK
 
 func load_stats(unit_type):
-	set_module_refs()
-	var _stats = units.statlines[unit_type]
-	display_name = _stats["display name"]
-	speed = _stats["speed"]
-	armor = _stats["armor"]
-	health = _stats["maxhealth"]
-	maxhealth = _stats["maxhealth"]
-	attack = _stats["attack"]
-	attack_range = _stats["range"]
-	gather_time = _stats["gather time"]
-	carry_cap = _stats["carry cap"]
-	if unit_type == "Engineer":
+	_stats = units.statlines[unit_type]
+	_stats[Stats.HEALTH] = units.statlines[unit_type][Stats.MAXHEALTH]
+	_stats[Stats.SHIELDS] = units.statlines[unit_type][Stats.MAXSHIELDS]
+	
+	utype = unit_type
+	if unit_type == units.UnitTypes.UNIT_TECHPRIEST:
 		can_gather = true
-
-
+		can_build = true
+		empty_lading()
 	set_icons(unit_type)
 	bounding_boxes[units.box_size[unit_type]].input_pickable = true
 	$SelectionBox.texture = selection_border_size[units.box_size[unit_type]]
 
-func is_boxable():
-	return true
+func get_unit_id(): return _stats[Stats.UNIT_ID]
+
+func get_display_name(): return _stats[Stats.DISPLAY_NAME]
+
+func get_speed(): return _stats[Stats.SPEED]
+
+func get_armor(): return _stats[Stats.ARMOR]
+
+func get_health(): return _stats[Stats.HEALTH]
+
+func get_maxhealth(): return _stats[Stats.MAXHEALTH]
+
+func get_shields(): return _stats[Stats.SHIELDS]
+
+func get_maxshields(): return _stats[Stats.MAXSHIELDS]
+
+func get_attack(): return _stats[Stats.ATTACK]
+
+func get_range(): return _stats[Stats.RANGE]
+
+func get_build_time(): return _stats[Stats.BUILD_TIME]
+
+func get_gather_time(): return _stats[Stats.GATHER_TIME]
+
+func get_carry_cap(): return _stats[Stats.CARRY_CAP]
+
+func get_cost(): return _stats[Stats.COST]
+
+func is_boxable(): return true
+
+func get_center(): return Vector2(position.x, position.y)
 
 
 func set_icons(unit_type):
@@ -121,19 +193,29 @@ func set_icons(unit_type):
 
 func _draw():
 	$Target.hide()
-	if selected == true:
-		if path.size() > 0 and get_tree().root.get_node("Main").draw_paths == true:
-			var path_pts = []
-			path_pts.append(position - position)
-			path_pts.append(step_target - position)
-			for each_point in path:
-				path_pts.append(each_point - position)
-			draw_polyline(path_pts, Color.red, 3)
-		if final_target != null and final_target != position:
-			$Target.show()
-			$Target.position = final_target - position
+	if not selected: return
+	if not get_tree().root.get_node("Main").draw_paths: return
+	if not path.empty():
+		var path_pts = []
+		path_pts.append(position - position)
+		path_pts.append(step_target - position)
+		for each_point in path:
+			path_pts.append(each_point - position)
+		draw_polyline(path_pts, Color.red, 3)
+	if final_target != null and final_target != position:
+		# $Target.show()
+		$Target.position = final_target - position
+
+func update_bars():
+	if get_maxshields() != 0:
+		$ShieldBar.max_value = get_maxshields()
+		$ShieldBar.value = get_shields()
+	$HealthBar.max_value = get_maxhealth()
+	$HealthBar.value = get_health()
+
 
 func _process(delta):
+	update_bars()
 	if target_unit != null:
 		# Check if our target moved and repath if so
 		if target_unit.position != final_target:
@@ -158,28 +240,39 @@ func _physics_process(delta):
 		direction = direction.normalized()
 
 	# move and junk
-	var movement = speed * direction * delta
-	move_and_collide(movement)
-	
+	var movement = get_speed() * direction * delta
+	var collisions = move_and_collide(movement)
+	if not collisions == null:
+		pass
+		# print(collisions)
 	# set animation / sprite based on last direction modulo current direction
 	if direction != last_direction:
 		get_facing()
 	
 	last_direction = direction
 
-func get_center():
-	return Vector2(position.x, position.y + 3)
-
 func zero_target():
 	final_target = position
-	direction = Vector2(0, 0)
 	path = []
 	step_target = position
+
+func check_contact(queried_object):
+	var space = get_world_2d().direct_space_state
+	var query = Physics2DShapeQueryParameters.new()
+	var contact_zone = CircleShape2D.new()
+	contact_zone.radius = 26
+	query.set_shape(contact_zone)
+	query.transform = Transform2D(0, get_center())
+	var collisions = space.intersect_shape(query)
+	for entry in collisions:
+		if entry.collider == queried_object:
+			return true
+	return false
 
 func get_step_target():
 	var new_step_target = nav.map_to_world(path[0])
 	path.remove(0)
-	step_target = Vector2(new_step_target.x, new_step_target.y + 32)
+	step_target = Vector2(new_step_target.x, new_step_target.y)
 	direction = (step_target - position).normalized()
 
 func path_to(target_world_pos):
@@ -236,36 +329,29 @@ func get_sprite_direction(direction: Vector2):
 
 func select():
 	selected = true
-	$SelectionBox.visible = true
-	$HealthBar.visible = true
-	emit_signal("selected", self)
+	$SelectionBox.show()
+	$HealthBar.show()
 
 func deselect():
 	selected = false
-	$SelectionBox.visible = false
-	$HealthBar.visible = false
-	emit_signal("deselected")
+	$SelectionBox.hide()
+	$HealthBar.hide()
 
 func _health_changed():
-	$HealthBar.value = (health / maxhealth) * 100
+	$HealthBar.value = get_health()
 
 func _on_BBox_mouse_entered():
-	emit_signal("hovered", self)
-
-	$SelectionBox.visible = true
-	$HealthBar.visible = true
-
+	$SelectionBox.show()
+	$HealthBar.show()
 
 func _on_BBox_mouse_exited():
-	emit_signal("unhovered")
-	if not selected:
-		$SelectionBox.visible = false
-		$HealthBar.visible = false
-
+	if selected: return
+	$SelectionBox.hide()
+	$HealthBar.hide()
 
 func _on_BBox_input_event(viewport, event, shape_idx):
-	if event.is_action_pressed("left_clicked"):
+	if event.is_action_released("left_click"):
 		emit_signal("left_clicked", self)
-	elif event.is_action_pressed("right_clicked"):
+	elif event.is_action_pressed("right_click"):
 		emit_signal("right_clicked", self)
 
