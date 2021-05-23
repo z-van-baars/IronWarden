@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/affirmative_1.ogg-cd46e03d7ded694f75e8c734c6270b34.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/confirm/affirmative_1.ogg"
+dest_files=[ "res://.import/affirmative_1.ogg-cd46e03d7ded694f75e8c734c6270b34.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

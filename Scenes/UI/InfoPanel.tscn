@@ -1,0 +1,97 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/UI/InfoPanel.gd" type="Script" id=1]
+[ext_resource path="res://Styles/UI/InfoPanelDefault.tres" type="StyleBox" id=2]
+[ext_resource path="res://Fonts/SourceHanSerifSC-Regular.otf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/biomass.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/alloy.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/warpstone.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/energy.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Art/UI/Icons/MeteorRepository1Icons_fixed.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+font_data = ExtResource( 3 )
+
+[node name="InfoPanel" type="Control"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 154.0
+margin_bottom = 63.0
+custom_styles/panel = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="Panel"]
+margin_left = 8.0
+margin_top = 4.0
+margin_right = 146.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 1 )
+text = "Placeholder Unit Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CostLabel" type="Label" parent="Panel"]
+margin_left = 8.0
+margin_top = 22.0
+margin_right = 101.0
+margin_bottom = 40.0
+custom_fonts/font = SubResource( 1 )
+text = "Cost 15 Biomass"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Alloy" type="Sprite" parent="Panel/CostLabel"]
+visible = false
+position = Vector2( 0, 1 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Biomass" type="Sprite" parent="Panel/CostLabel"]
+visible = false
+position = Vector2( 0, 1 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Warpstone" type="Sprite" parent="Panel/CostLabel"]
+visible = false
+position = Vector2( 0, 1 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Energy" type="Sprite" parent="Panel/CostLabel"]
+visible = false
+position = Vector2( 0, 1 )
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 7 )
+centered = false
+
+[node name="Command" type="Sprite" parent="Panel/CostLabel"]
+visible = false
+position = Vector2( 0, 1 )
+texture = ExtResource( 8 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 101, 124, 18, 18 )
+
+[node name="StatsLabel" type="Label" parent="Panel"]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 146.0
+margin_bottom = 58.0
+custom_fonts/font = SubResource( 1 )
+text = "Placeholder Unit Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}

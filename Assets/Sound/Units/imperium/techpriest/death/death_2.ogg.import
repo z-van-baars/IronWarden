@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/death_2.ogg-e10095862e30ff5442bb911c3b6e05f6.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/death/death_2.ogg"
+dest_files=[ "res://.import/death_2.ogg-e10095862e30ff5442bb911c3b6e05f6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

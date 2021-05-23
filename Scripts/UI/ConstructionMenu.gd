@@ -1,23 +1,25 @@
 extends Control
-signal play_tick_1
+signal tick1
+signal structure_button_clicked
+signal exit
 
 var player
 var st
-var structure_button_scn = preload("res://Scenes/UI/StructureButton.tscn")
+var dis
+var structure_type = null
+var structure_button_scn = preload("res://Scenes/UI/ConstructionButton.tscn")
 
-var builders
 
-
-func _ready():
-	player = get_tree().root.get_node("Main/Player")
+func new_game():
+	player = get_tree().root.get_node("Main").local_player
 	st = get_tree().root.get_node("Main/GameObjects/Structures")
+	dis = get_tree().root.get_node("Main/Dispatcher")
 	clear_all()
 
 
 func clear_all():
 	for child in $Panel/ButtonGrid.get_children():
 		child.queue_free()
-	builders = []
 	hide()
 
 func check_cost(resource_cost):
@@ -33,22 +35,46 @@ func set_cost_modulators():
 			build_button.disable_button()
 
 func construct_buttons():
-	for structure in player.construction_options:
+	for structure in player.get_construction_options():
 		var new_button = structure_button_scn.instance()
 		$Panel/ButtonGrid.add_child(new_button)
 		new_button.setup(self, structure)
 
-func _on_Structure_Button_clicked(structure_type):
-	if check_cost(st.statlines[structure_type]["cost"]) == true:
-		emit_signal("play_tick_1")
+func _on_Dispatcher_selection_cleared():
+	clear_all()
+
+func _on_StructureButton_clicked(s_type):
+	structure_type = s_type
+	if check_cost(st.get_cost(structure_type)) == true:
+		emit_signal("tick1")
+		$Panel/ButtonGrid.hide()
+		$CancelButton.show()
+		emit_signal("structure_button_clicked", structure_type)
 	else:
 		pass
 
-func _on_Dispatcher_builder_unit_selected(builder_units):
-	builders = builder_units
+func get_structure_type():
+	return structure_type
+
+
+func _on_CancelButton_pressed():
+	emit_signal("cancel_clicked", dis, "_on_Construction_Menu_Cancel_clicked")
+	$Panel/ButtonGrid.show()
+	$CancelButton.hide()
+
+
+func _on_Dispatcher_open_construction_menu():
+	if visible: return
 	construct_buttons()
 	show()
+	$Panel/ButtonGrid.show()
+	$CancelButton.hide()
 
 
-func _on_Dispatcher_selection_cleared():
+func _on_ExitButton_pressed():
 	clear_all()
+	emit_signal("exit")
+
+
+func _on_Dispatcher_structure_placement_right_click():
+	_on_CancelButton_pressed()

@@ -56,12 +56,12 @@ func path_to(start_tile, target_tile):
 		return recalculate_path()
 
 
-func astar_add_walkable_cells(obstacles = []):
+func astar_add_walkable_cells(obstacle_array = []):
 	var points_array = []
 	for y in range(map_height):
 		for x in range(map_width):
 			var point = Vector2(x, y)
-			if point in obstacles:
+			if point in obstacle_array:
 				continue
 			
 			points_array.append(point)

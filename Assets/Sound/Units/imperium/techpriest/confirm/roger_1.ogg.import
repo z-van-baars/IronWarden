@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/roger_1.ogg-94734e083c7e5104d9794101517f3060.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/confirm/roger_1.ogg"
+dest_files=[ "res://.import/roger_1.ogg-94734e083c7e5104d9794101517f3060.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

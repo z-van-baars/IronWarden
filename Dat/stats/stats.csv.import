@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://Dat/stats/stats.aa.translation", "res://Dat/stats/stats.aa_DJ.translation", "res://Dat/stats/stats.aa_ER.translation", "res://Dat/stats/stats.aa_ET.translation", "res://Dat/stats/stats.af.translation", "res://Dat/stats/stats.af_ZA.translation", "res://Dat/stats/stats.agr_PE.translation", "res://Dat/stats/stats.ak_GH.translation", "res://Dat/stats/stats.am_ET.translation", "res://Dat/stats/stats.an_ES.translation", "res://Dat/stats/stats.anp_IN.translation", "res://Dat/stats/stats.ar.translation", "res://Dat/stats/stats.ar_AE.translation", "res://Dat/stats/stats.ar_BH.translation", "res://Dat/stats/stats.ar_DZ.translation", "res://Dat/stats/stats.ar_EG.translation", "res://Dat/stats/stats.ar_IQ.translation", "res://Dat/stats/stats.ar_JO.translation" ]
+
+source_file="res://Dat/stats/stats.csv"
+dest_files=[ "res://Dat/stats/stats.aa.translation", "res://Dat/stats/stats.aa_DJ.translation", "res://Dat/stats/stats.aa_ER.translation", "res://Dat/stats/stats.aa_ET.translation", "res://Dat/stats/stats.af.translation", "res://Dat/stats/stats.af_ZA.translation", "res://Dat/stats/stats.agr_PE.translation", "res://Dat/stats/stats.ak_GH.translation", "res://Dat/stats/stats.am_ET.translation", "res://Dat/stats/stats.an_ES.translation", "res://Dat/stats/stats.anp_IN.translation", "res://Dat/stats/stats.ar.translation", "res://Dat/stats/stats.ar_AE.translation", "res://Dat/stats/stats.ar_BH.translation", "res://Dat/stats/stats.ar_DZ.translation", "res://Dat/stats/stats.ar_EG.translation", "res://Dat/stats/stats.ar_IQ.translation", "res://Dat/stats/stats.ar_JO.translation" ]
+
+[params]
+
+compress=true
+delimiter=0

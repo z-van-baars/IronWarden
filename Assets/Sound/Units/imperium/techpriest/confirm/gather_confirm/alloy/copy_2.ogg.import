@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/copy_2.ogg-e62ef2019ee6a2554a00e6bc3f9c3cf4.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/confirm/gather_confirm/alloy/copy_2.ogg"
+dest_files=[ "res://.import/copy_2.ogg-e62ef2019ee6a2554a00e6bc3f9c3cf4.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -2,7 +2,7 @@ extends Node2D
 
 signal selection_box_end
 
-onready var player = get_tree().root.get_node("Main/Player")
+onready var local_player
 var selected_units = []
 
 var start = Vector2.ZERO
@@ -13,24 +13,29 @@ var bottom_right = Vector2.ZERO
 
 var selection_rect = RectangleShape2D.new()
 
-func _ready():
+func connect_local_player():
+	local_player = get_tree().root.get_node("Main").local_player
 	self.connect(
 		"selection_box_end",
-		player,
+		local_player,
 		"_on_Selection_Box_end"
 	)
 
 func reset():
 	$Panel.rect_position = Vector2.ZERO
-	$Timer.wait_time = 0.1
+	$Timer.stop()
 	selected_units = []
+	hide()
 
-func start(mouse_pos):
+func start_box(mouse_pos):
 	start = mouse_pos
 	$Timer.start()
 	show()
 
-func _process(delta):
+func check_timer():
+	return $Timer.is_stopped()
+
+func _process(_delta):
 	stop = get_viewport().get_canvas_transform().xform_inv(get_viewport().get_mouse_position())
 	var size = get_viewport().get_canvas_transform().xform_inv(get_viewport().get_mouse_position()) - start
 	
@@ -65,9 +70,8 @@ func set_area():
 	# $Area2D/Borders.shape.extents = $Panel.rect_size / 2
 	selection_rect.extents = (start - stop) / 2
 
-func close():
-	if $Timer.is_stopped() == false:
-		hide()
+func close_box():
+	if not check_timer():
 		reset()
 		return
 	var space = get_world_2d().direct_space_state

@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/UI/Techtree/Box.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Art/Units/imperium/marine/icon.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/SourceHanSerifSC-Regular.otf" type="DynamicFontData" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.266667, 0.270588, 0.376471, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+shadow_color = Color( 0, 0, 0, 0.392157 )
+shadow_size = 2
+shadow_offset = Vector2( -2, 2 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.133333, 0.133333, 0.133333, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="DynamicFont" id=3]
+size = 10
+font_data = ExtResource( 3 )
+
+[node name="Box" type="Node2D"]
+script = ExtResource( 1 )
+display_name = "Default Unit/ Building / Tech"
+armor = 3
+
+[node name="Connector" type="Line2D" parent="."]
+points = PoolVector2Array( 55, 0, 55, -10, 55, -11, 55, -21 )
+width = 2.0
+default_color = Color( 0.882353, 0.882353, 0.882353, 1 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 110.0
+margin_bottom = 110.0
+hint_tooltip = "Cost: 
+Health   10
+Shields   0
+Armor   3
+Attack   0
+Range   0
+"
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PortraitBG" type="Panel" parent="Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -35.0
+margin_top = 1.0
+margin_right = 35.0
+margin_bottom = 71.0
+mouse_filter = 1
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Portrait" type="Sprite" parent="Panel/PortraitBG"]
+position = Vector2( 3.3059, 3 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Title" type="Label" parent="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -43.0
+margin_top = 18.0
+margin_right = 43.0
+margin_bottom = 52.0
+mouse_filter = 1
+custom_fonts/font = SubResource( 3 )
+text = "Default Unit/ Building / Tech"
+align = 1
+autowrap = true
+clip_text = true
+max_lines_visible = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 110.0
+margin_bottom = 110.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="item_rect_changed" from="." to="." method="_on_Box_item_rect_changed"]
+[connection signal="script_changed" from="." to="." method="_on_Box_script_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

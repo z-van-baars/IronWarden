@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/copy_2.ogg-b2e9d21edb7771e24225c088e6e7cf3f.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/marine/confirm/copy_2.ogg"
+dest_files=[ "res://.import/copy_2.ogg-b2e9d21edb7771e24225c088e6e7cf3f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

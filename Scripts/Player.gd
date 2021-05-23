@@ -2,193 +2,253 @@ extends Node2D
 
 signal toggle_debug_menu
 signal toggle_spawn_mode
+signal escape_key_pressed
+signal enter_key_pressed
 signal resources_changed
 signal unit_selected
 signal resource_selected
 signal selection_cleared
 signal unit_move_to
+signal construction_mode_right_clicked
+signal new_construction
 
-
-var res
-var units
-var st
-
-var unit_scn
-
-onready var dragging = false
-onready var selected_units = []
-onready var spawn_mode = get_tree().root.get_node("Main").spawn_mode
-onready var last_clicked = null
-onready var selection_box = get_tree().root.get_node("Main/SelectionBox")
-
-onready var resources
-
-onready var construction_options = []
-
-
-func _ready():
-	set_module_refs()
-	for each in selected_units:
-		each.selected = true
-
-
-func set_module_refs():
-	res = get_tree().root.get_node("Main/GameObjects/Resources")
-	units = get_tree().root.get_node("Main/GameObjects/Units")
-	st = get_tree().root.get_node("Main/GameObjects/Structures")
-	unit_scn = preload("res://Scenes/Unit.tscn")
-
-func set_initial_construction_options():
-	construction_options = [
-		st.StructureTypes.STRUCT_COMMAND_POST,
-		st.StructureTypes.STRUCT_BIOMASS_REACTOR,
-		st.StructureTypes.STRUCT_ALLOY_FOUNDRY,
-		st.StructureTypes.STRUCT_WARPSTONE_REFINERY,
-		st.StructureTypes.STRUCT_ENERGY_CONDUIT
-	]
-
-func set_initial_resources():
-	resources = {
-		res.ResourceTypes.BIOMASS: 200,
-		res.ResourceTypes.ALLOY: 600,
-		res.ResourceTypes.WARPSTONE: 0,
-		res.ResourceTypes.ENERGY: 100,
-		res.ResourceTypes.COMMAND: 0
+enum Players {
+	PLAYER0,
+	PLAYER1,
+	PLAYER2,
+	PLAYER3,
+	PLAYER4,
+	PLAYER5,
+	PLAYER6,
+	PLAYER7
 	}
 
 
-func clear_selected():
-	for each in selected_units:
+
+var _nickname = "" setget set_name, get_name
+var _network_id = null
+var _color = null
+var _is_host = false setget set_host, get_host
+var _is_local = false setget set_local, get_local
+var _player_num
+
+onready var unit_scn
+onready var main
+onready var dis
+onready var grid
+onready var res
+onready var units
+onready var st
+onready var chatbox_cooldown
+onready var _resources = {}
+onready var _cps = []
+onready var tools
+onready var _selected_units = []
+onready var construction_mode = false
+onready var construction_build_id = null
+
+onready var selection_box = get_tree().root.get_node("Main/SelectionBox")
+
+onready var _construction_options = []
+onready var last_clicked = null
+
+func _ready():
+	set_process(false)
+
+func setup():
+	set_module_refs()
+	connect_signals()
+	set_process(true)
+
+func set_module_refs():
+	main = get_tree().root.get_node("Main")
+	dis = get_tree().root.get_node("Main/Dispatcher")
+	grid = main.get_node("GameMap/Grid")
+	res = main.get_node("GameObjects/Resources")
+	units = main.get_node("GameObjects/Units")
+	st = main.get_node("GameObjects/Structures")
+	chatbox_cooldown = main.get_node("UILayer/ChatBox/InputCooldown")
+	unit_scn = preload("res://Scenes/Unit.tscn")
+	tools = main.get_node("Tools")
+
+func connect_signals():
+	self.connect("toggle_debug_menu", dis, "_on_Player_toggle_debug_menu")
+	self.connect("toggle_spawn_mode", dis, "_on_Player_toggle_spawn_menu")
+	self.connect("escape_key_pressed", dis, "_on_Player_escape_key_pressed")
+	self.connect("enter_key_pressed", dis, "_on_Player_enter_key_pressed")
+	self.connect("resources_changed", dis, "_on_Player_resources_changed")
+	self.connect("unit_selected", dis, "_on_Player_unit_selected")
+	self.connect("resource_selected", dis, "_on_Player_resource_selected")
+	self.connect("selection_cleared", dis, "_on_Player_selection_cleared")
+	self.connect("unit_move_to", dis, "_on_Player_unit_move_to")
+	self.connect("construction_mode_right_clicked", dis, "_on_Player_construction_mode_right_clicked")
+	self.connect("new_construction", dis, "_on_Player_new_construction")
+
+func on_start(tile_map):
+	pass
+
+
+func set_local(is_local):
+	_is_local = is_local
+
+func get_local():
+	return _is_local
+
+func set_host(is_host):
+	_is_host = is_host
+	if _is_host:
+		set_player_number(Players.PLAYER0)
+
+func set_network_id(net_id):
+	_network_id = net_id
+
+func get_network_id():
+	return _network_id
+
+func get_host():
+	return _is_host
+
+func set_name(new_name):
+	_nickname = new_name
+
+func get_name():
+	return _nickname
+
+func set_color(color):
+	_color = color
+
+func get_color():
+	return _color
+
+func get_player_number():
+	return _player_num
+
+func set_player_number(player_n):
+	_player_num = player_n
+
+func add_base(cp):
+	_cps.append(cp)
+
+func get_base():
+	return _cps[0]
+
+func delete_base(cp):
+	_cps.erase(cp)
+
+func import_profile(player_profile):
+	set_name(player_profile.get_name())
+	# do some hotkey and settings stuff after this
+	# Idk maybe this should be moved out of the base player class
+
+func set_initial_construction_options() -> void:
+	_construction_options = [
+		StructureTypes.STRUCT.COMMAND_POST,
+		StructureTypes.STRUCT.BIOMASS_REACTOR,
+		StructureTypes.STRUCT.ALLOY_FOUNDRY,
+		StructureTypes.STRUCT.WARPSTONE_REFINERY,
+		StructureTypes.STRUCT.ENERGY_CONDUIT,
+		StructureTypes.STRUCT.BARRACKS,
+		StructureTypes.STRUCT.TOWER
+	]
+
+func get_construction_options() -> Array: 
+	return _construction_options
+
+func set_initial_resources() -> void:
+	_resources = {
+		ResourceTypes.RES.BIOMASS: 10000,
+		ResourceTypes.RES.ALLOY: 10000,
+		ResourceTypes.RES.WARPSTONE: 10000,
+		ResourceTypes.RES.ENERGY: 10000,
+		ResourceTypes.RES.COMMAND: 0
+	}
+
+func get_resources() -> Dictionary:
+	return _resources
+
+func clear_selected() -> void:
+	for each in _selected_units:
 		each.deselect()
-	selected_units = []
+	_selected_units = []
 	emit_signal("selection_cleared")
 
-func _unhandled_input(event):
-	if event.is_action_pressed("exit"):
-		get_tree().quit()
-	if event.is_action_pressed("~"):
-		emit_signal("toggle_debug_menu")
-	if event.is_action_pressed("ui_space"):
-		if selected_units != []:
-			$Camera2D.center_on_coordinates(selected_units[0].get_center())
-	if event.is_action_pressed("spawn_mode"):
-		spawn_mode = true
-		emit_signal("toggle_spawn_mode")
-	if event.is_action_released("spawn_mode"):
-		spawn_mode = false
-		emit_signal("toggle_spawn_mode")
-		
-	if event.is_action_pressed("left_click"):
-		clear_selected()
-		selection_box.start(get_viewport().get_canvas_transform().xform_inv(get_viewport().get_mouse_position()))
-	if event.is_action_released("left_click"):
-		selection_box.close()
+func get_selected() -> Array:
+	return _selected_units
 
-		if spawn_mode == true:
-			var new_unit = unit_scn.instance()
-			units.add_child(new_unit)
-			new_unit.position = get_viewport().get_canvas_transform().xform_inv(get_viewport().get_mouse_position())
-			new_unit.load_stats("Rhino")
-
-	if event.is_action_pressed("right_click") and !selected_units.empty():
-		var click_loc = get_viewport().get_canvas_transform().xform_inv(event.position * $Camera2D._zoom_level)
-		selected_units[0].confirm()
-		for each in selected_units:
-			if "can_path" in each and each.can_path:
-				each.path_to(click_loc)
-				each.set_task_idle()
-				emit_signal("unit_move_to", click_loc)
-				
-			elif "build_options" in each:
-				each.set_rally_point(click_loc)
-				emit_signal("unit_move_to", click_loc)
-
-
+func _unhandled_input(_event):
+	pass
 func _on_Selection_Box_end(newly_selected):
-	clear_selected()
-	if newly_selected.empty(): return
-	for each in newly_selected:
-		selected_units.append(each)
-		each.select()
-	emit_signal("unit_selected", selected_units[0])
+	pass
 
-
-func gatherers_selected():
-	if selected_units.empty(): return false
-	for each in selected_units:
-		if "can_gather" in each and each.can_gather: return true
+func gatherers_selected() -> bool:
+	if _selected_units.empty(): return false
+	for each in _selected_units:
+		if each.has_method("can_gather") and each.can_gather(): return true
 	return false
 
-func builders_selected():
-	if selected_units.empty(): return false
-	for each in selected_units:
-		if "can_build" in each and each.can_build: return true
-	return false
-	
-
-
-func kill():
-	get_tree().reload_current_scene()
-
-
-func credit_resources(resource_cost):
-	var prev_resources = {}
-	for resource in resources.keys():
-		prev_resources[resource] = resources[resource]
-	for resource in resource_cost.keys():
-
-		resources[resource] += resource_cost[resource]
-	emit_signal("resources_changed")
-
-
-func debit_resources(resource_cost, cost_producer):
-	var prev_resources = {}
-	for resource in resources.keys():
-		prev_resources[resource] = resources[resource]
-	for resource in resource_cost.keys():
-		assert(resource_cost[resource] <= resources[resource])
-
-		resources[resource] -= resource_cost[resource]
-	emit_signal("resources_changed")
-
-
-func _on_Dispatcher_resource_right_clicked(resource):
-	if selected_units.empty(): return
-	if !gatherers_selected(): return
+func get_gatherers(selected : Array) -> Array:
 	var gatherer_units = []
-	for each_unit in selected_units:
-		if "can_gather" in each_unit and each_unit.can_gather:
+	for each_unit in selected:
+		if each_unit.has_method("can_gather") and each_unit.can_gather():
 			gatherer_units.append(each_unit)
+	return gatherer_units
 
-	for gatherer in gatherer_units:
-		gatherer.set_resource_target(resource)
-		gatherer.set_task_gather()
-		resource.gather_target_set(gatherer)
+func constructors_selected() -> bool:
+	if _selected_units.empty(): return false
+	for each in _selected_units:
+		if each.has_method("can_construct") and each.can_construct(): return true
+	return false
 
-func select_all_onscreen(unit):
-	selected_units = [unit]
-	for each_unit in selected_units:
-		each_unit.select()
+func get_constructors(selected : Array) -> Array:
+	var constructor_units = []
+	for each_unit in selected:
+		if each_unit.has_method("can_construct") and each_unit.can_construct():
+			constructor_units.append(each_unit)
+	return constructor_units
+
+func check_resources(check_amounts : Dictionary) -> Dictionary:
+	var checked_resources = {}
+	for resource in check_amounts.keys():
+
+		checked_resources[resource] = (
+			_resources[resource] >= check_amounts[resource])
+	return checked_resources
+
+func credit_resources(credit_amounts) -> void:
+	var prev_resources = {}
+	for resource in _resources.keys():
+		prev_resources[resource] = _resources[resource]
+
+	for resource in credit_amounts.keys():
+
+		_resources[resource] += credit_amounts[resource]
+	emit_signal("resources_changed")
 
 
-func _on_Dispatcher_unit_left_clicked(unit):
-	clear_selected()
-	#doubleclick select all goes here
-	if $DoubleClickTimer.is_stopped() == false and last_clicked == unit:
-		select_all_onscreen(unit)
-		emit_signal("unit_selected", selected_units[0])
-		return
-	last_clicked = unit
-	$DoubleClickTimer.start()
-	selected_units = [unit]
-	unit.select()
-	emit_signal("unit_selected", unit)
+func debit_resources(debit_amounts) -> void:
+	var prev_resources = {}
+	for resource in _resources.keys():
+		prev_resources[resource] = _resources[resource]
 
 
-func _on_Dispatcher_resource_left_clicked(resource):
-	clear_selected()
+	for resource in debit_amounts.keys():
+		assert(debit_amounts[resource] <= _resources[resource])
 
-	last_clicked = resource
-	selected_units = [resource]
-	resource.select()
-	emit_signal("resource_selected", resource)
+		_resources[resource] -= debit_amounts[resource]
+	emit_signal("resources_changed")
+
+func _on_Dispatcher_construction_mode_entered(structure_type : int) -> void:
+	construction_mode = true
+	construction_build_id = structure_type
+
+
+func _on_Dispatcher_construction_mode_exited() -> void:
+	construction_mode = false
+	construction_build_id = null
+
+func _on_Dispatcher_name_changed(new_name : String) -> void:
+	set_name(new_name)
+
+
+
+

@@ -13,6 +13,23 @@ func is_blocked(tile_coordinates):
 	# if building_map[tile_coordinates.y][tile_coordinates.x] != null: return true
 	return false
 
+func index_wrap(array, requested_index):
+	# wraps an index value around to the start of an array to prevent index errors
+	if requested_index >= array.size():
+		return 0
+	return requested_index
+
+func comma_sep(number):
+	var string = str(number)
+	var mod = string.length() % 3
+	var comma_string = ""
+
+	for i in range(0, string.length()):
+		if i != 0 && i % 3 == mod:
+			comma_string += ","
+		comma_string += string[i]
+	return comma_string
+
 func set_map_parameters():
 	width = get_tree().root.get_node("Main/GameMap").width
 	height = get_tree().root.get_node("Main/GameMap").height
@@ -23,7 +40,7 @@ func r_choice(some_array):
 func shuffleList(list):
 	var shuffledList = []
 	var indexList = range(list.size())
-	for i in range(list.size()):
+	for _i in range(list.size()):
 		randomize()
 		var x = randi()%indexList.size()
 		shuffledList.append(list[x])
@@ -82,6 +99,7 @@ func get_neighbor_tiles(tile_address: Vector2):
 func get_nearby_tiles(center_tile: Vector2, radius: float, inclusive=false):
 	var nearby_tiles: Array = []
 	# inclusive means leaving out the center tile if false, including if true
+	if inclusive: nearby_tiles.append(center_tile)
 	for y in range(radius * 2 + 1):
 		for x in range(radius * 2 + 1):
 			if not in_map(Vector2(
@@ -154,9 +172,9 @@ func get_tiles_in_zone(zone_start, zone_end):
 	var x_index = leftmost
 	var y_index = topmost
 
-	for y in range(bottommost - topmost + 1):
+	for _y in range(bottommost - topmost + 1):
 		x_index = leftmost
-		for x in range(rightmost - leftmost + 1):
+		for _x in range(rightmost - leftmost + 1):
 			all_tiles.append(Vector2(x_index, y_index))
 			x_index += 1
 		y_index += 1
@@ -175,7 +193,7 @@ func sort_list(item_list, low=true):
 		return sorted_list
 	return sorted_list.invert()
 
-func element_sort(item_list, e_index=0):
+func element_sort(item_list, _e_index=0):
 	var sorted_list = [item_list[0]]
 	for each in item_list.slice(1, item_list.size()-1):
 		for sorted_item in sorted_list:
@@ -211,21 +229,16 @@ func get_tile_from_position(tile, position_id):
 		5: Vector2(0, 1),
 		6: Vector2(-1, 1),
 		7: Vector2(-1, 0)}
-	return tile + position_id
+	return tile + tile_positions[position_id]
 	
 func radius_random(center, radius, min_radius=0):
 	"""Returns a random point within a circle defined by the supplied center
 	point and radius arguments"""
-	var random_vec_x = randf()
-	var random_vec_y = 1.0 - random_vec_x
-	if randf() > 0.5:
-		random_vec_x = -random_vec_x
-	if randf() > 0.5:
-		random_vec_y = -random_vec_y
-	var randomized_vector_normalized = Vector2(random_vec_x, random_vec_y).normalized()
-	return randomized_vector_normalized * rng.randi_range(min_radius, radius)
+	var rand_vector = Vector2(0, 1).rotated(rng.randf_range(0, 6.2))
 
-func circ_random(center, radius):
+	return center + rand_vector * rng.randf_range(min_radius, radius)
+
+func circ_random(_center, radius):
 	"""Returns a random point along the outer circumference of a circle defined
 	by the supplied center point and radius arguments"""
 	var random_vec_x = randf()
@@ -280,3 +293,51 @@ func draw_circle_arc(center, radius, angle_from, angle_to, color):
 
 	for index_point in range(nb_points):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color)
+
+
+func get_formation(center, unit_array, unit_radius, rotation_angle):
+	var rank_width = ceil(unit_array.size() * 0.3)
+	var n_ranks = ceil(unit_array.size() / rank_width)
+	#return get_raw_positions(rank_width, unit_array.size(), unit_radius)
+	return rotate_positions(
+		get_raw_positions(rank_width, unit_array.size(), unit_radius), rotation_angle)
+
+func get_raw_positions(rank_width, n_units, u_radius):
+	var positions = []
+	var current_position = Vector2(
+		-(rank_width * u_radius / 2), 0)
+	var rank = 0
+	while positions.size() < n_units:
+		for _c in range(rank_width):
+			positions.append(current_position)
+			current_position += Vector2(u_radius, 0)
+			
+			if positions.size() == n_units:
+				return positions
+		rank += 1
+		current_position = Vector2(-(min(rank_width, n_units - positions.size()) / 2) * u_radius, rank * u_radius)
+	return positions
+
+		
+func rotate_positions(positions, rotation_angle):
+	var positions_rotated = []
+	for each in positions:
+		
+		var angled_pos = each.rotated(rotation_angle)
+
+		positions_rotated.append(Vector2(-angled_pos.y, angled_pos.x))
+	return positions_rotated
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

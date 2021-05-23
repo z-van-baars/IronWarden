@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Art/Structures/4x4.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Art/UI/selection_box_4x4.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=6]
 [ext_resource path="res://Styles/healthbarvalue.tres" type="StyleBox" id=7]
 [ext_resource path="res://Styles/healthbarbackground.tres" type="StyleBox" id=8]
+[ext_resource path="res://Assets/Art/Structures/foundations/4x4.png" type="Texture" id=9]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.87451, 0.87451, 0.87451, 1 )
@@ -15,12 +16,20 @@ bg_color = Color( 0.87451, 0.87451, 0.87451, 1 )
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.466667, 0.466667, 0.466667, 1 )
 
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array(  )
+}
+
 [node name="Structure" type="KinematicBody2D"]
 script = ExtResource( 4 )
 
 [node name="NavPolygon2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, -10 )
 scale = Vector2( 1.1, 1.1 )
+
+[node name="ContactZone" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PoolVector2Array( 0, 1, 48, 26, 0, 51, -48, 26 )
 disabled = true
 
 [node name="CollisionPolygon1x" type="CollisionPolygon2D" parent="."]
@@ -54,6 +63,11 @@ texture = ExtResource( 2 )
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -42 )
 texture = ExtResource( 3 )
+
+[node name="Foundation" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -42 )
+texture = ExtResource( 9 )
 
 [node name="ShieldBar" type="ProgressBar" parent="."]
 visible = false
@@ -123,8 +137,11 @@ disabled = true
 [node name="X4" type="CollisionPolygon2D" parent="BBox"]
 visible = false
 scale = Vector2( -1.29389, 1.3705 )
-polygon = PoolVector2Array( 147.258, 77.9395, -0.507568, 152.066, -146.322, 77.9395, -100.058, 35.7971, -47.1801, -8.18201, -22, -21.8512, 3.17995, -42.0578, 39.0615, -43.2464, 78.0906, -21.8512, 111.454, 32.2312 )
+polygon = PoolVector2Array( 135.125, 71.6619, -0.343906, 142.489, -137.432, 69.6237, -108.287, 48.7322, -46.2199, -0.184364, -23.5518, -14.4517, 0.19581, -21.0758, 22.3242, -13.9421, 54.1676, -0.69391, 97.8847, 36.5031 )
 disabled = true
+
+[node name="SpawnArea" type="Path2D" parent="."]
+curve = SubResource( 3 )
 [connection signal="timeout" from="BuildTimer" to="." method="_on_BuildTimer_timeout"]
 [connection signal="input_event" from="BBox" to="." method="_on_BBox_input_event"]
 [connection signal="mouse_entered" from="BBox" to="." method="_on_BBox_mouse_entered"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/hammer_tink1.ogg-73406a25867b59608cd868245df0fe2f.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/extract/ore/hammer_tink1.ogg"
+dest_files=[ "res://.import/hammer_tink1.ogg-73406a25867b59608cd868245df0fe2f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

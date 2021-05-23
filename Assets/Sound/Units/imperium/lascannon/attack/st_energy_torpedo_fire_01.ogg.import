@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/st_energy_torpedo_fire_01.ogg-4bd9ee6023f687ebd6fd8884880f0ffc.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/lascannon/attack/st_energy_torpedo_fire_01.ogg"
+dest_files=[ "res://.import/st_energy_torpedo_fire_01.ogg-4bd9ee6023f687ebd6fd8884880f0ffc.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,75 +1,40 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Unit.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Art/Tiles/98x52/grass_1.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Art/Units/imperium/techpriest/down_left.png" type="Texture" id=3]
+[ext_resource path="res://Assets/SpriteFrames/SpriteFrame.tres" type="SpriteFrames" id=3]
 [ext_resource path="res://Assets/Art/UI/selection_border_large.png" type="Texture" id=4]
 [ext_resource path="res://Styles/shieldbarbackground.tres" type="StyleBox" id=5]
 [ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=6]
 [ext_resource path="res://Styles/healthbarvalue.tres" type="StyleBox" id=7]
 [ext_resource path="res://Styles/healthbarbackground.tres" type="StyleBox" id=8]
 [ext_resource path="res://Assets/Art/UI/selection_border_small.png" type="Texture" id=9]
-[ext_resource path="res://Assets/Art/Particles/muzzle_03.png" type="Texture" id=10]
-[ext_resource path="res://Assets/Art/Effects/images/muzzle/muzzle2_0008.png" type="Texture" id=11]
-[ext_resource path="res://Assets/Art/Units/imperium/gun.png" type="Texture" id=12]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 4.39801
-
-[sub_resource type="Animation" id=4]
-resource_name = "Fire"
-length = 0.25
-loop = true
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( -6, -18.776 ), Vector2( -6, -18.776 ), Vector2( 3.8147e-06, -18.7757 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Weapon/Light2D:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ false, true, false ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Weapon/Sprite:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ false, true, false ]
-}
+radius = 16.0
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 6.92264
+radius = 39.0
 
 [sub_resource type="CircleShape2D" id=3]
+radius = 3.0
 
-[sub_resource type="Curve2D" id=5]
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.501961, 1, 0.380392, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.0588235, 0.388235, 0.0862745, 1 )
+
+[sub_resource type="Curve2D" id=6]
 _data = {
 "points": PoolVector2Array(  )
 }
 
 [node name="Unit" type="KinematicBody2D"]
+collision_mask = 0
 script = ExtResource( 1 )
+
+[node name="Sounds" type="Node2D" parent="."]
 
 [node name="TileBase" type="Sprite" parent="."]
 visible = false
@@ -78,85 +43,52 @@ texture = ExtResource( 2 )
 [node name="Target" type="Sprite" parent="."]
 visible = false
 modulate = Color( 1, 0.113725, 0.113725, 1 )
-scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 9 )
 region_rect = Rect2( 196, 132, 56, 56 )
+
+[node name="GatherShape" type="CollisionShape2D" parent="."]
+visible = false
+modulate = Color( 1, 0.282353, 0.282353, 1 )
+scale = Vector2( 1.75, 1 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Range" type="Area2D" parent="."]
+visible = false
+scale = Vector2( 1.75, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+modulate = Color( 0.65098, 0.0352941, 0.960784, 0.235294 )
+shape = SubResource( 2 )
+disabled = true
+
+[node name="FootPrint" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2( 1.75, 1 )
+shape = SubResource( 3 )
 
 [node name="SelectionBox" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 9 )
-
-[node name="FootPrint" type="CollisionShape2D" parent="."]
-scale = Vector2( 1.75, 1 )
-shape = SubResource( 1 )
 
 [node name="VehicleSelectionBox" type="Sprite" parent="."]
 visible = false
 scale = Vector2( 0.744752, 0.744752 )
 texture = ExtResource( 4 )
 
-[node name="UpLeftSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="UpSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="UpRightSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="RightSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="DownRightSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="DownSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="DownLeftSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="LeftSprite" type="Sprite" parent="."]
-position = Vector2( 0, -76 )
-texture = ExtResource( 3 )
-
-[node name="Weapon" type="Node2D" parent="."]
-position = Vector2( -6, -18.776 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon"]
-anims/Fire = SubResource( 4 )
-
-[node name="Weapon" type="Sprite" parent="Weapon"]
-scale = Vector2( 0.2, 0.2 )
-texture = ExtResource( 12 )
-offset = Vector2( 100, 0 )
-
-[node name="Light2D" type="Light2D" parent="Weapon/Weapon"]
-position = Vector2( 219.017, 0.128418 )
-rotation = 1.5708
-texture = ExtResource( 10 )
-color = Color( 0.988235, 0.564706, 0.0235294, 1 )
-
-[node name="Sprite" type="Sprite" parent="Weapon/Weapon"]
-position = Vector2( 196.555, -1.38208 )
-rotation = -1.5708
-texture = ExtResource( 11 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -59 )
+frames = ExtResource( 3 )
 
 [node name="ShieldBar" type="ProgressBar" parent="."]
 visible = false
-margin_left = -13.0
-margin_top = -51.0
-margin_right = 13.0
-margin_bottom = -48.0
+margin_left = -12.0
+margin_top = -54.0
+margin_right = 14.0
+margin_bottom = -51.0
 custom_styles/fg = ExtResource( 6 )
 custom_styles/bg = ExtResource( 5 )
+step = 1.0
 value = 80.0
 percent_visible = false
 __meta__ = {
@@ -165,51 +97,97 @@ __meta__ = {
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 visible = false
-margin_left = -13.0
-margin_top = -47.0
-margin_right = 13.0
-margin_bottom = -44.0
+margin_left = -12.0
+margin_top = -50.0
+margin_right = 14.0
+margin_bottom = -47.0
 custom_styles/fg = ExtResource( 7 )
 custom_styles/bg = ExtResource( 8 )
+step = 1.0
 value = 80.0
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ContactZone" type="CollisionShape2D" parent="."]
+[node name="BumpBar" type="ProgressBar" parent="."]
 visible = false
-scale = Vector2( 1.75, 1 )
-shape = SubResource( 2 )
+margin_left = -19.0
+margin_top = 1.0
+margin_right = 25.0
+margin_bottom = 4.0
+rect_rotation = -90.0
+custom_styles/fg = SubResource( 4 )
+custom_styles/bg = SubResource( 5 )
+max_value = 1.0
+value = 1.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BumpLabel" type="Label" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -29.0
+margin_top = -29.0
+margin_right = -21.0
+margin_bottom = -15.0
+grow_horizontal = 0
+text = "1"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BBoxHuman" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="Borders" type="CollisionPolygon2D" parent="BBoxHuman"]
 visible = false
-polygon = PoolVector2Array( 6.54823, -17.7914, -0.0444412, -20.4773, -6.39294, -17.9134, -10.9101, -8.51278, -11.0322, 27.5027, 0.199745, 31.1653, 11.3096, 27.5027, 11.1875, -7.90235 )
+polygon = PoolVector2Array( 6.43853, -41.2661, -0.0250816, -45.1442, -5.78638, -41.1362, -10.2264, -31.7838, -10.8205, 1.42302, 0.40509, 4.73547, 11.6307, 0.686913, 11.5957, -31.406 )
 
 [node name="BBoxVehicle" type="Area2D" parent="."]
 input_pickable = false
 
 [node name="Borders" type="CollisionPolygon2D" parent="BBoxVehicle"]
 visible = false
-polygon = PoolVector2Array( 15.0166, -17.4376, -0.130196, -19.8043, -14.0844, -17.303, -28.7348, -4.85018, -28.6127, 17.2475, -16.7703, 31.2874, 0.0776443, 32.0199, 22.59, 31.6317, 31.899, 16.3271, 29.8478, -7.18194 )
-
-[node name="Range" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
-scale = Vector2( 18.85, 10 )
-shape = SubResource( 3 )
+polygon = PoolVector2Array( 24.8958, -36.1723, -0.216873, -41.8601, -22.6854, -36.8671, -47.772, -16.283, -47.0585, 19.6288, -24.6271, 41.0792, 0.0776443, 44.4079, 26.9673, 41.634, 50.84, 22.2023, 49.9134, -19.9571 )
 
 [node name="Path2D" type="Path2D" parent="."]
-curve = SubResource( 5 )
+curve = SubResource( 6 )
+
+[node name="BumpTimer" type="Timer" parent="Path2D"]
+one_shot = true
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+
+[node name="GatherTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ConstructionTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="AnimationTimer" type="Timer" parent="."]
+one_shot = true
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="input_event" from="BBoxHuman" to="." method="_on_BBox_input_event"]
 [connection signal="mouse_entered" from="BBoxHuman" to="." method="_on_BBox_mouse_entered"]
 [connection signal="mouse_exited" from="BBoxHuman" to="." method="_on_BBox_mouse_exited"]
 [connection signal="input_event" from="BBoxVehicle" to="." method="_on_BBox_input_event"]
 [connection signal="mouse_entered" from="BBoxVehicle" to="." method="_on_BBox_mouse_entered"]
 [connection signal="mouse_exited" from="BBoxVehicle" to="." method="_on_BBox_mouse_exited"]
+[connection signal="timeout" from="GatherTimer" to="." method="_on_GatherTimer_timeout"]
+[connection signal="timeout" from="ConstructionTimer" to="." method="_on_ConstructionTimer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_KillTimer_timeout"]
+[connection signal="timeout" from="AnimationTimer" to="." method="_on_AnimationTimer_timeout"]

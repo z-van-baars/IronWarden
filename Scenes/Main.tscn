@@ -1,14 +1,14 @@
-[gd_scene load_steps=165 format=2]
+[gd_scene load_steps=209 format=2]
 
 [ext_resource path="res://Fonts/SourceHanSerifSC-Regular.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/GameMap.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Art/Tiles/98x52/grass_2.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/UI/ConstructionMenu.gd" type="Script" id=4]
-[ext_resource path="res://Scripts/Player.gd" type="Script" id=5]
-[ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=6]
+[ext_resource path="res://Fonts/UISet/OnscreenDefault.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Assets/Art/Backgrounds/244-2445609_warhammer-40k-chaos-ultramarines-artwork-battle-warhammer-40k.jpg" type="Texture" id=6]
 [ext_resource path="res://Scripts/Tools.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=8]
-[ext_resource path="res://Assets/Art/Resources/gem/gem_1.png" type="Texture" id=9]
+[ext_resource path="res://Scripts/OptionsMenu.gd" type="Script" id=9]
 [ext_resource path="res://Scripts/UI/MapWidget.gd" type="Script" id=10]
 [ext_resource path="res://Scripts/Nav2D.gd" type="Script" id=11]
 [ext_resource path="res://Styles/MenuDefault.tres" type="StyleBox" id=12]
@@ -23,19 +23,19 @@
 [ext_resource path="res://Assets/Art/command_post.png" type="Texture" id=21]
 [ext_resource path="res://Assets/Art/UI/Space Pack/Chair copie.png" type="Texture" id=22]
 [ext_resource path="res://Styles/CountWellDefault.tres" type="StyleBox" id=23]
-[ext_resource path="res://Assets/Art/UI/Icons/Resources/minerals_alt.png" type="Texture" id=24]
-[ext_resource path="res://Assets/Art/UI/Icons/Resources/biomass.png" type="Texture" id=25]
-[ext_resource path="res://Assets/Art/UI/Icons/Resources/alloy.png" type="Texture" id=26]
-[ext_resource path="res://Assets/Art/UI/Icons/Resources/energy.png" type="Texture" id=27]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/biomass.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/alloy.png" type="Texture" id=25]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/warpstone.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Art/UI/Icons/Resources/32/energy.png" type="Texture" id=27]
 [ext_resource path="res://Assets/Art/Backgrounds/battleship_schematic.jpg" type="Texture" id=28]
 [ext_resource path="res://Scripts/Scenery.gd" type="Script" id=29]
 [ext_resource path="res://Scripts/Resources.gd" type="Script" id=30]
-[ext_resource path="res://Assets/Art/Resources/gem/gem_2.png" type="Texture" id=31]
-[ext_resource path="res://Assets/Art/Resources/gem/gem_3.png" type="Texture" id=32]
-[ext_resource path="res://Assets/Art/Resources/gem/gem_5.png" type="Texture" id=33]
-[ext_resource path="res://Assets/Art/Resources/gem/gem_4.png" type="Texture" id=34]
-[ext_resource path="res://Assets/Art/Resources/gem/gem_6.png" type="Texture" id=35]
-[ext_resource path="res://Assets/Art/Creatures/space_chicken.png" type="Texture" id=36]
+[ext_resource path="res://Scenes/UI/Techtree/BuildingBox.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Scenes/UI/Techtree/UnitBox.tscn" type="PackedScene" id=32]
+[ext_resource path="res://Scenes/UI/Techtree/TechBox.tscn" type="PackedScene" id=33]
+[ext_resource path="res://Scripts/UI/TechTree.gd" type="Script" id=34]
+[ext_resource path="res://Scripts/UI/ChatBox.gd" type="Script" id=35]
+[ext_resource path="res://Scripts/Network.gd" type="Script" id=36]
 [ext_resource path="res://Assets/Art/Resources/tree/pine_3.png" type="Texture" id=37]
 [ext_resource path="res://Assets/Sound/UI/Pause 08_bip_1.ogg" type="AudioStream" id=38]
 [ext_resource path="res://Assets/Art/Resources/tree/pine_1.png" type="Texture" id=39]
@@ -60,24 +60,40 @@
 [ext_resource path="res://Assets/Sound/Stream/ouroborous-b_more_industrial.ogg" type="AudioStream" id=58]
 [ext_resource path="res://Scripts/Sound/Stream.gd" type="Script" id=59]
 [ext_resource path="res://Assets/Sound/Error 02_bip_1.ogg" type="AudioStream" id=60]
-[ext_resource path="res://Assets/Sound/Units/Conscript/copy_2.ogg" type="AudioStream" id=61]
-[ext_resource path="res://Assets/Sound/Units/Marine/yes_1.ogg" type="AudioStream" id=62]
-[ext_resource path="res://Assets/Sound/Units/Conscript/hmm_1.ogg" type="AudioStream" id=63]
-[ext_resource path="res://Assets/Sound/Units/Marine/all_teams_ready_2.ogg" type="AudioStream" id=64]
+[ext_resource path="res://Scripts/UI/EventLog.gd" type="Script" id=61]
+[ext_resource path="res://Scripts/BuildPreview.gd" type="Script" id=62]
+[ext_resource path="res://Scripts/Fog.gd" type="Script" id=63]
+[ext_resource path="res://Assets/Sound/UI/Tick 08_bip_1.ogg" type="AudioStream" id=64]
 [ext_resource path="res://Assets/Sound/Units/success_05.ogg" type="AudioStream" id=65]
-[ext_resource path="res://Assets/Sound/Units/Conscript/yes_2.ogg" type="AudioStream" id=66]
-[ext_resource path="res://Assets/Sound/Units/Conscript/on_my_way_1.ogg" type="AudioStream" id=67]
-[ext_resource path="res://Assets/Sound/Units/Conscript/affirmative_2.ogg" type="AudioStream" id=68]
-[ext_resource path="res://Assets/Sound/Units/Conscript/affirmative_1.ogg" type="AudioStream" id=69]
-[ext_resource path="res://Assets/Sound/Units/Conscript/yes_1.ogg" type="AudioStream" id=70]
-[ext_resource path="res://Assets/Sound/Units/Conscript/ready_1.ogg" type="AudioStream" id=71]
-[ext_resource path="res://Assets/Sound/Units/Conscript/roger_1.ogg" type="AudioStream" id=72]
-[ext_resource path="res://Assets/Sound/Units/Conscript/on_my_way_2.ogg" type="AudioStream" id=73]
-[ext_resource path="res://Assets/Sound/Units/Conscript/all_teams_ready_2.ogg" type="AudioStream" id=74]
+[ext_resource path="res://Scenes/UI/InfoPanel.tscn" type="PackedScene" id=66]
+[ext_resource path="res://Styles/shieldbarbackground.tres" type="StyleBox" id=67]
+[ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=68]
+[ext_resource path="res://Scripts/UI/MainMenu.gd" type="Script" id=69]
+[ext_resource path="res://Scenes/UI/BuildButton.tscn" type="PackedScene" id=70]
+[ext_resource path="res://Scenes/UI/QueueButton.tscn" type="PackedScene" id=71]
+[ext_resource path="res://Assets/Sound/UI/deny1.ogg" type="AudioStream" id=72]
+[ext_resource path="res://Assets/Sound/UI/deny2.ogg" type="AudioStream" id=73]
+[ext_resource path="res://Fonts/Gamerock/Gamerock.otf" type="DynamicFontData" id=74]
 [ext_resource path="res://Assets/Art/Tiles/98x52/grass_1.png" type="Texture" id=75]
 [ext_resource path="res://Scripts/GridLayers.gd" type="Script" id=76]
-[ext_resource path="res://Assets/Art/Particles/circle_05.png" type="Texture" id=77]
+[ext_resource path="res://Fonts/Gatty/Gatty-ExtraBold.ttf" type="DynamicFontData" id=77]
 [ext_resource path="res://Scenes/NavMap.gd" type="Script" id=78]
+[ext_resource path="res://Assets/Art/Units/imperium/conscript/icon.png" type="Texture" id=79]
+[ext_resource path="res://Assets/Sound/UI/sfx_20c.ogg" type="AudioStream" id=80]
+[ext_resource path="res://Fonts/Subspace/Subspace.otf" type="DynamicFontData" id=81]
+[ext_resource path="res://Scripts/Cheats.gd" type="Script" id=82]
+[ext_resource path="res://Assets/Sound/UI/radar_ready.ogg" type="AudioStream" id=83]
+[ext_resource path="res://Styles/UI/PalettonTheme/MenuDefault.tres" type="StyleBox" id=84]
+[ext_resource path="res://Assets/Art/UI/color_palette_index.png" type="Texture" id=85]
+[ext_resource path="res://Styles/UI/PalettonTheme/ButtonHover.tres" type="StyleBox" id=86]
+[ext_resource path="res://Styles/UI/PalettonTheme/ButtonPressed.tres" type="StyleBox" id=87]
+[ext_resource path="res://Styles/UI/PalettonTheme/ButtonNormal.tres" type="StyleBox" id=88]
+[ext_resource path="res://Scripts/Particles.gd" type="Script" id=89]
+[ext_resource path="res://Scripts/Effects.gd" type="Script" id=90]
+[ext_resource path="res://Scripts/Projectiles.gd" type="Script" id=91]
+[ext_resource path="res://Scenes/UI/ConstructionButton.tscn" type="PackedScene" id=92]
+[ext_resource path="res://Scripts/UI/MultiplayerMenu.gd" type="Script" id=93]
+[ext_resource path="res://Scripts/MultiplayerLobby.gd" type="Script" id=94]
 
 [sub_resource type="TileSet" id=1]
 0/name = "grass_1.png 0"
@@ -234,90 +250,6 @@ animations = [ {
 } ]
 
 [sub_resource type="TileSet" id=25]
-0/name = "gem_1.png 0"
-0/texture = ExtResource( 9 )
-0/tex_offset = Vector2( 0, -96 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 64, 128 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
-1/name = "gem_2.png 1"
-1/texture = ExtResource( 31 )
-1/tex_offset = Vector2( 0, -96 )
-1/modulate = Color( 1, 1, 1, 1 )
-1/region = Rect2( 0, 0, 64, 128 )
-1/tile_mode = 0
-1/occluder_offset = Vector2( 0, 0 )
-1/navigation_offset = Vector2( 0, 0 )
-1/shape_offset = Vector2( 0, 0 )
-1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape_one_way = false
-1/shape_one_way_margin = 0.0
-1/shapes = [  ]
-1/z_index = 0
-2/name = "gem_3.png 2"
-2/texture = ExtResource( 32 )
-2/tex_offset = Vector2( 0, -96 )
-2/modulate = Color( 1, 1, 1, 1 )
-2/region = Rect2( 0, 0, 64, 128 )
-2/tile_mode = 0
-2/occluder_offset = Vector2( 0, 0 )
-2/navigation_offset = Vector2( 0, 0 )
-2/shape_offset = Vector2( 0, 0 )
-2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-2/shape_one_way = false
-2/shape_one_way_margin = 0.0
-2/shapes = [  ]
-2/z_index = 0
-3/name = "gem_4.png 3"
-3/texture = ExtResource( 34 )
-3/tex_offset = Vector2( 0, -96 )
-3/modulate = Color( 1, 1, 1, 1 )
-3/region = Rect2( 0, 0, 64, 128 )
-3/tile_mode = 0
-3/occluder_offset = Vector2( 0, 0 )
-3/navigation_offset = Vector2( 0, 0 )
-3/shape_offset = Vector2( 0, 0 )
-3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-3/shape_one_way = false
-3/shape_one_way_margin = 0.0
-3/shapes = [  ]
-3/z_index = 0
-4/name = "gem_5.png 4"
-4/texture = ExtResource( 33 )
-4/tex_offset = Vector2( 0, -96 )
-4/modulate = Color( 1, 1, 1, 1 )
-4/region = Rect2( 0, 0, 64, 128 )
-4/tile_mode = 0
-4/occluder_offset = Vector2( 0, 0 )
-4/navigation_offset = Vector2( 0, 0 )
-4/shape_offset = Vector2( 0, 0 )
-4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-4/shape_one_way = false
-4/shape_one_way_margin = 0.0
-4/shapes = [  ]
-4/z_index = 0
-5/name = "gem_6.png 5"
-5/texture = ExtResource( 35 )
-5/tex_offset = Vector2( 0, -96 )
-5/modulate = Color( 1, 1, 1, 1 )
-5/region = Rect2( 0, 0, 64, 128 )
-5/tile_mode = 0
-5/occluder_offset = Vector2( 0, 0 )
-5/navigation_offset = Vector2( 0, 0 )
-5/shape_offset = Vector2( 0, 0 )
-5/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-5/shape_one_way = false
-5/shape_one_way_margin = 0.0
-5/shapes = [  ]
-5/z_index = 0
 9/name = "pine_1.png 9"
 9/texture = ExtResource( 39 )
 9/tex_offset = Vector2( 0, -96 )
@@ -430,20 +362,6 @@ animations = [ {
 16/shape_one_way_margin = 0.0
 16/shapes = [  ]
 16/z_index = 0
-17/name = "space_chicken.png 17"
-17/texture = ExtResource( 36 )
-17/tex_offset = Vector2( 0, -96 )
-17/modulate = Color( 1, 1, 1, 1 )
-17/region = Rect2( 0, 0, 64, 128 )
-17/tile_mode = 0
-17/occluder_offset = Vector2( 0, 0 )
-17/navigation_offset = Vector2( 0, 0 )
-17/shape_offset = Vector2( 0, 0 )
-17/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-17/shape_one_way = false
-17/shape_one_way_margin = 0.0
-17/shapes = [  ]
-17/z_index = 0
 
 [sub_resource type="TileSet" id=26]
 0/name = "command_post.png 0"
@@ -669,44 +587,161 @@ animations = [ {
 "speed": 20.0
 } ]
 
-[sub_resource type="DynamicFont" id=78]
+[sub_resource type="StyleBoxFlat" id=78]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=79]
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=79]
-bg_color = Color( 0.0666667, 0.988235, 0.0117647, 1 )
-
-[sub_resource type="StyleBoxFlat" id=80]
-bg_color = Color( 1, 0.0156863, 0.0156863, 1 )
+[sub_resource type="DynamicFont" id=80]
+size = 26
+font_data = ExtResource( 81 )
 
 [sub_resource type="DynamicFont" id=81]
-size = 12
-font_data = ExtResource( 1 )
+size = 30
+extra_spacing_top = -6
+extra_spacing_bottom = -4
+font_data = ExtResource( 77 )
 
-[sub_resource type="DynamicFont" id=82]
-size = 11
-font_data = ExtResource( 1 )
+[sub_resource type="StyleBoxFlat" id=82]
+bg_color = Color( 0.0666667, 0.988235, 0.0117647, 1 )
 
-[sub_resource type="DynamicFont" id=83]
-font_data = ExtResource( 1 )
+[sub_resource type="StyleBoxFlat" id=83]
+bg_color = Color( 1, 0.0156863, 0.0156863, 1 )
 
 [sub_resource type="DynamicFont" id=84]
+size = 14
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=85]
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=86]
-bg_color = Color( 0, 0, 0, 0 )
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color( 0.117647, 0.831373, 0.92549, 1 )
-border_blend = true
+[sub_resource type="DynamicFont" id=86]
+size = 14
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=87]
+size = 14
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=88]
+size = 14
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=89]
+size = 14
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=90]
+size = 11
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=91]
+bg_color = Color( 1, 1, 1, 0.0980392 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=92]
+bg_color = Color( 0, 0, 0, 0.309804 )
+
+[sub_resource type="DynamicFont" id=93]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=94]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=95]
+bg_color = Color( 0.152941, 0.152941, 0.152941, 0.4 )
+
+[sub_resource type="DynamicFont" id=96]
+size = 18
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=97]
+size = 14
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=98]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=99]
+bg_color = Color( 0.145098, 0.145098, 0.145098, 0.447059 )
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
+
+[sub_resource type="DynamicFont" id=100]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=101]
+size = 18
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=115]
+size = 170
+outline_size = 2
+outline_color = Color( 0.564706, 0.564706, 0.564706, 1 )
+font_data = ExtResource( 74 )
+
+[sub_resource type="DynamicFont" id=103]
+size = 30
+font_data = ExtResource( 77 )
+
+[sub_resource type="DynamicFont" id=104]
+font_data = ExtResource( 77 )
+
+[sub_resource type="DynamicFont" id=105]
+size = 30
+font_data = ExtResource( 77 )
+
+[sub_resource type="DynamicFont" id=106]
+size = 30
+font_data = ExtResource( 77 )
+
+[sub_resource type="DynamicFont" id=107]
+size = 80
+font_data = ExtResource( 77 )
+
+[sub_resource type="DynamicFont" id=108]
+size = 60
+font_data = ExtResource( 77 )
+
+[sub_resource type="DynamicFont" id=109]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=110]
+size = 24
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=111]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=112]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=113]
+size = 80
+font_data = ExtResource( 77 )
+
+[sub_resource type="DynamicFont" id=114]
+size = 36
+font_data = ExtResource( 77 )
 
 [node name="Main" type="Node"]
 script = ExtResource( 8 )
@@ -730,83 +765,51 @@ __meta__ = {
 script = ExtResource( 7 )
 
 [node name="Dispatcher" type="Node" parent="."]
+pause_mode = 2
 script = ExtResource( 17 )
+
+[node name="Network" type="Node2D" parent="."]
+script = ExtResource( 36 )
 
 [node name="Sounds" type="Node" parent="."]
 
 [node name="UI" type="Node2D" parent="Sounds"]
+pause_mode = 2
 script = ExtResource( 55 )
 
-[node name="Tick1" type="AudioStreamPlayer2D" parent="Sounds/UI"]
+[node name="Tick10" type="AudioStreamPlayer" parent="Sounds/UI"]
 stream = ExtResource( 56 )
 
-[node name="Tick2" type="AudioStreamPlayer2D" parent="Sounds/UI"]
+[node name="Pause1" type="AudioStreamPlayer" parent="Sounds/UI"]
 stream = ExtResource( 38 )
 
-[node name="Laser1" type="AudioStreamPlayer2D" parent="Sounds/UI"]
+[node name="Flick1" type="AudioStreamPlayer" parent="Sounds/UI"]
+stream = ExtResource( 80 )
+
+[node name="Tick8" type="AudioStreamPlayer" parent="Sounds/UI"]
+stream = ExtResource( 64 )
+
+[node name="Laser1" type="AudioStreamPlayer" parent="Sounds/UI"]
 stream = ExtResource( 57 )
+
+[node name="Deny1" type="AudioStreamPlayer" parent="Sounds/UI"]
+stream = ExtResource( 72 )
+volume_db = -5.0
+
+[node name="Deny2" type="AudioStreamPlayer" parent="Sounds/UI"]
+stream = ExtResource( 73 )
+
+[node name="Zoinks" type="AudioStreamPlayer" parent="Sounds/UI"]
+stream = ExtResource( 83 )
+
+[node name="SpawnChirp" type="AudioStreamPlayer" parent="Sounds/UI"]
+stream = ExtResource( 65 )
 
 [node name="Units" type="Node2D" parent="Sounds"]
 script = ExtResource( 55 )
 
-[node name="Conscript" type="Node2D" parent="Sounds/Units"]
-
-[node name="Spawn" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 74 )
-volume_db = -5.0
-
-[node name="Select1" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 63 )
-volume_db = -1.0
-
-[node name="Select2" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 70 )
-volume_db = -1.0
-
-[node name="Select3" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 66 )
-volume_db = -1.0
-
-[node name="Select4" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 71 )
-volume_db = -1.0
-
-[node name="Confirm1" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 72 )
-volume_db = -24.0
-
-[node name="Confirm2" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 61 )
-volume_db = -24.0
-
-[node name="Confirm3" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 69 )
-volume_db = -24.0
-
-[node name="Confirm4" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 68 )
-volume_db = -24.0
-
-[node name="Move1" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 67 )
-volume_db = -24.0
-
-[node name="Move2" type="AudioStreamPlayer" parent="Sounds/Units/Conscript"]
-stream = ExtResource( 73 )
-volume_db = -24.0
-
-[node name="EngineerSpawn" type="AudioStreamPlayer2D" parent="Sounds/Units"]
+[node name="UnitSpawn" type="AudioStreamPlayer" parent="Sounds/Units"]
 stream = ExtResource( 65 )
-
-[node name="EngineerSelect2" type="AudioStreamPlayer2D" parent="Sounds/Units"]
-stream = ExtResource( 62 )
-
-[node name="MarineSpawn" type="AudioStreamPlayer2D" parent="Sounds/Units"]
-stream = ExtResource( 64 )
-
-[node name="MarineSelect1" type="AudioStreamPlayer2D" parent="Sounds/Units"]
-stream = ExtResource( 64 )
-volume_db = -2.0
 
 [node name="SetRallyPoint" type="AudioStreamPlayer" parent="Sounds/Units"]
 stream = ExtResource( 60 )
@@ -815,9 +818,11 @@ volume_db = -3.0
 [node name="Stream" type="Node2D" parent="Sounds"]
 script = ExtResource( 59 )
 
-[node name="OuroborousB" type="AudioStreamPlayer2D" parent="Sounds/Stream"]
+[node name="OuroborousB" type="AudioStreamPlayer" parent="Sounds/Stream"]
 stream = ExtResource( 58 )
 volume_db = -2.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Sounds/Stream"]
 
 [node name="GameMap" type="Node2D" parent="."]
 script = ExtResource( 2 )
@@ -846,31 +851,19 @@ script = ExtResource( 78 )
 [node name="NavPoly" type="NavigationPolygonInstance" parent="Nav2D"]
 navpoly = SubResource( 4 )
 
-[node name="Player" type="Node2D" parent="."]
-script = ExtResource( 5 )
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-offset = Vector2( 960, 540 )
-current = true
-script = ExtResource( 6 )
-
-[node name="ShakeTimer" type="Timer" parent="Player/Camera2D"]
-
-[node name="Tween" type="Tween" parent="Player/Camera2D"]
-
-[node name="DoubleClickTimer" type="Timer" parent="Player"]
-wait_time = 0.1
+[node name="Players" type="Node2D" parent="."]
 
 [node name="GroundArrows" type="AnimatedSprite" parent="."]
+visible = false
 position = Vector2( 36.9948, 23.5791 )
 rotation = 0.785398
 frames = SubResource( 24 )
 animation = "arrows"
 script = ExtResource( 52 )
 
-[node name="GameObjects" type="YSort" parent="."]
+[node name="GameObjects" type="Node2D" parent="."]
 
-[node name="Scenery" type="Node2D" parent="GameObjects"]
+[node name="Scenery" type="YSort" parent="GameObjects"]
 script = ExtResource( 29 )
 
 [node name="Resources" type="Node2D" parent="GameObjects"]
@@ -883,7 +876,7 @@ tile_set = SubResource( 25 )
 cell_size = Vector2( 98, 52 )
 format = 1
 
-[node name="Deposits" type="Node2D" parent="GameObjects/Resources"]
+[node name="Deposits" type="YSort" parent="GameObjects/Resources"]
 
 [node name="Structures" type="Node2D" parent="GameObjects"]
 script = ExtResource( 20 )
@@ -895,10 +888,44 @@ tile_set = SubResource( 26 )
 cell_size = Vector2( 98, 52 )
 format = 1
 
-[node name="All" type="Node2D" parent="GameObjects/Structures"]
+[node name="All" type="YSort" parent="GameObjects/Structures"]
 
-[node name="Units" type="Node2D" parent="GameObjects"]
+[node name="Units" type="YSort" parent="GameObjects"]
 script = ExtResource( 19 )
+
+[node name="Projectiles" type="YSort" parent="GameObjects"]
+script = ExtResource( 91 )
+
+[node name="Effects" type="YSort" parent="GameObjects"]
+script = ExtResource( 90 )
+
+[node name="Particles" type="YSort" parent="GameObjects"]
+script = ExtResource( 89 )
+
+[node name="BuildPreview" type="Node2D" parent="GameObjects"]
+visible = false
+script = ExtResource( 62 )
+
+[node name="SelectionBox" type="Sprite" parent="GameObjects/BuildPreview"]
+position = Vector2( 0, -42 )
+
+[node name="Sprite" type="Sprite" parent="GameObjects/BuildPreview"]
+position = Vector2( 0, -42 )
+
+[node name="Fog" type="Node2D" parent="GameObjects"]
+scale = Vector2( 1.9, 1 )
+script = ExtResource( 63 )
+
+[node name="Unexplored" type="Sprite" parent="GameObjects/Fog"]
+centered = false
+
+[node name="Unseen" type="Sprite" parent="GameObjects/Fog"]
+
+[node name="FogTimer" type="Timer" parent="GameObjects/Fog"]
+wait_time = 0.25
+
+[node name="DrawFogTimer" type="Timer" parent="GameObjects/Fog"]
+wait_time = 0.25
 
 [node name="RallyPointFlag" type="Node2D" parent="."]
 visible = false
@@ -918,7 +945,7 @@ modulate = Color( 0.219608, 0.670588, 1, 1 )
 position = Vector2( 11, -28 )
 frames = SubResource( 77 )
 animation = "wave"
-frame = 6
+frame = 5
 playing = true
 
 [node name="SelectionBox" parent="." instance=ExtResource( 18 )]
@@ -930,11 +957,8 @@ script = ExtResource( 51 )
 [node name="UILayer" type="CanvasLayer" parent="."]
 
 [node name="ResourcesWidget" type="Control" parent="UILayer"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -120.0
-margin_right = 225.0
-margin_bottom = -1.0
+margin_right = 1920.0
+margin_bottom = 36.0
 rect_pivot_offset = Vector2( -148.667, 1047.7 )
 mouse_filter = 2
 script = ExtResource( 13 )
@@ -943,17 +967,17 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="UILayer/ResourcesWidget"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -119.006
-margin_right = 225.0
-margin_bottom = -0.00585938
-custom_styles/panel = ExtResource( 12 )
+modulate = Color( 1, 1, 1, 0.25098 )
+margin_top = 1.0
+margin_right = 1920.0
+margin_bottom = 37.0
+custom_styles/panel = SubResource( 78 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BGCompies" type="Sprite" parent="UILayer/ResourcesWidget/Panel"]
+[node name="BGCompies" type="Sprite" parent="UILayer/ResourcesWidget"]
+visible = false
 modulate = Color( 0.160784, 0.666667, 0.984314, 0.423529 )
 position = Vector2( 54.7894, 60.5 )
 texture = ExtResource( 22 )
@@ -961,249 +985,231 @@ region_enabled = true
 region_rect = Rect2( 50, 4, 100, 110 )
 region_filter_clip = true
 
-[node name="SpriteBGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel"]
-margin_left = 61.0
+[node name="Alloy" type="Control" parent="UILayer/ResourcesWidget"]
+margin_left = 56.0
+margin_right = 165.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpriteBGPanel" type="Panel" parent="UILayer/ResourcesWidget/Alloy"]
 margin_top = 8.0
-margin_right = 89.0
-margin_bottom = 89.0
+margin_right = 22.0
+margin_bottom = 30.0
 custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Biomass" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 225.0
-margin_bottom = 119.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Biomass"]
-position = Vector2( 75.9742, 17.2798 )
-scale = Vector2( 0.268642, 0.268642 )
+[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Alloy/SpriteBGPanel"]
+position = Vector2( 10.7586, 11.6524 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 25 )
 
-[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Biomass"]
-margin_left = 89.0
-margin_top = 8.0
-margin_right = 214.0
-margin_bottom = 27.0
-hint_tooltip = "Biomass"
-custom_styles/panel = ExtResource( 23 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BiomassCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Biomass/BGPanel"]
+[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Alloy"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -59.5
-margin_top = -12.0
-margin_right = 59.5
-margin_bottom = 12.0
-custom_fonts/font = SubResource( 78 )
-custom_colors/font_color = Color( 0.509804, 0.92549, 0.0509804, 1 )
-text = "100"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BiomassTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Biomass"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 34.0
-margin_top = -18.0
-margin_right = 260.0
-margin_bottom = 6.0
-custom_fonts/font = SubResource( 78 )
-custom_colors/font_color = Color( 0.509804, 0.92549, 0.0509804, 1 )
-text = "Biomass"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Alloy" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 225.0
-margin_bottom = 119.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Alloy"]
-margin_left = 89.0
-margin_top = 28.0
-margin_right = 214.0
-margin_bottom = 47.0
+margin_left = -31.0
+margin_top = -10.5
+margin_right = 54.0
+margin_bottom = 11.5
 hint_tooltip = "Alloy"
 custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AlloyCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Alloy/BGPanel"]
+[node name="AlloyCount" type="Label" parent="UILayer/ResourcesWidget/Alloy/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -59.5
-margin_top = -12.0
+margin_top = -14.0
 margin_right = 59.5
-margin_bottom = 12.0
-custom_fonts/font = SubResource( 78 )
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 79 )
 custom_colors/font_color = Color( 0.921569, 0.184314, 0.184314, 1 )
-text = "200"
+text = "9,999,999"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Alloy"]
-modulate = Color( 0.968627, 0.176471, 0.176471, 1 )
-position = Vector2( 75.289, 37 )
-scale = Vector2( 0.232635, 0.232635 )
-texture = ExtResource( 26 )
-
-[node name="AlloyTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Alloy"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 36.453
-margin_top = 25.0
-margin_right = 79.453
-margin_bottom = 49.0
-custom_fonts/font = SubResource( 78 )
-custom_colors/font_color = Color( 0.490196, 0.0705882, 0.952941, 1 )
-text = "Alloy"
+[node name="Biomass" type="Control" parent="UILayer/ResourcesWidget"]
+margin_left = 187.0
+margin_right = 296.0
+margin_bottom = 36.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Warpstone" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 225.0
-margin_bottom = 119.0
+[node name="SpriteBGPanel" type="Panel" parent="UILayer/ResourcesWidget/Biomass"]
+margin_top = 8.0
+margin_right = 22.0
+margin_bottom = 30.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Warpstone"]
-self_modulate = Color( 0.839216, 0.839216, 0.839216, 1 )
-position = Vector2( 75.181, 58 )
-scale = Vector2( 0.207691, 0.207691 )
+[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Biomass/SpriteBGPanel"]
+position = Vector2( 10.7586, 11.6524 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 24 )
 
-[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Warpstone"]
-margin_left = 89.0
-margin_top = 49.0
-margin_right = 214.0
-margin_bottom = 68.0
-hint_tooltip = "Minerals"
-custom_styles/panel = ExtResource( 23 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WarpstoneCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Warpstone/BGPanel"]
+[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Biomass"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -59.5
-margin_top = -12.5
-margin_right = 59.5
+margin_left = -31.0
+margin_top = -10.5
+margin_right = 54.0
 margin_bottom = 11.5
-custom_fonts/font = SubResource( 78 )
-custom_colors/font_color = Color( 0.505882, 0.0313726, 0.639216, 1 )
-text = "0"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WarpstoneTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Warpstone"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 35.453
-margin_top = 3.0
-margin_right = 105.453
-margin_bottom = 27.0
-custom_fonts/font = SubResource( 78 )
-custom_colors/font_color = Color( 0.670588, 0.133333, 0.121569, 1 )
-text = "Minerals"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Energy" type="Control" parent="UILayer/ResourcesWidget/Panel"]
-margin_right = 225.0
-margin_bottom = 118.0
-
-[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Energy"]
-margin_left = 89.0
-margin_top = 70.0
-margin_right = 214.0
-margin_bottom = 89.0
-hint_tooltip = "Energy"
+hint_tooltip = "Alloy"
 custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EnergyCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Energy/BGPanel"]
+[node name="BiomassCount" type="Label" parent="UILayer/ResourcesWidget/Biomass/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -59.5
-margin_top = -12.0
+margin_top = -14.0
 margin_right = 59.5
-margin_bottom = 12.0
-custom_fonts/font = SubResource( 78 )
-custom_colors/font_color = Color( 0.788235, 0.780392, 0.211765, 1 )
-text = "100"
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 79 )
+custom_colors/font_color = Color( 0.207843, 0.921569, 0.184314, 1 )
+text = "9,999,999"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Energy"]
-position = Vector2( 74.9346, 78.8438 )
-rotation = 0.888373
-scale = Vector2( 0.176642, 0.176642 )
+[node name="Warpstone" type="Control" parent="UILayer/ResourcesWidget"]
+margin_left = 319.0
+margin_right = 428.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpriteBGPanel" type="Panel" parent="UILayer/ResourcesWidget/Warpstone"]
+margin_top = 8.0
+margin_right = 22.0
+margin_bottom = 30.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Warpstone/SpriteBGPanel"]
+position = Vector2( 10.7586, 11.6524 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 26 )
+
+[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Warpstone"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -31.0
+margin_top = -10.5
+margin_right = 54.0
+margin_bottom = 11.5
+hint_tooltip = "Alloy"
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WarpstoneCount" type="Label" parent="UILayer/ResourcesWidget/Warpstone/BGPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -59.5
+margin_top = -14.0
+margin_right = 59.5
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 79 )
+custom_colors/font_color = Color( 0.776471, 0.184314, 0.921569, 1 )
+text = "9,999,999"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Energy" type="Control" parent="UILayer/ResourcesWidget"]
+margin_left = 447.0
+margin_right = 556.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpriteBGPanel" type="Panel" parent="UILayer/ResourcesWidget/Energy"]
+margin_top = 8.0
+margin_right = 22.0
+margin_bottom = 30.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Energy/SpriteBGPanel"]
+position = Vector2( 10.7586, 11.6524 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 27 )
 
-[node name="EnergyTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Energy"]
-visible = false
+[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Energy"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 36.453
-margin_top = 46.0
-margin_right = 91.453
-margin_bottom = 70.0
-custom_fonts/font = SubResource( 78 )
-custom_colors/font_color = Color( 0.788235, 0.780392, 0.211765, 1 )
-text = "Energy"
+margin_left = -31.0
+margin_top = -10.5
+margin_right = 54.0
+margin_bottom = 11.5
+hint_tooltip = "Alloy"
+custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Command" type="Control" parent="UILayer/ResourcesWidget/Panel"]
+[node name="EnergyCount" type="Label" parent="UILayer/ResourcesWidget/Energy/BGPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -59.5
+margin_top = -14.0
+margin_right = 59.5
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 79 )
+custom_colors/font_color = Color( 0.921569, 0.819608, 0.184314, 1 )
+text = "9,999,999"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Command" type="Control" parent="UILayer/ResourcesWidget"]
+visible = false
 margin_right = 225.0
 margin_bottom = 119.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IconPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Command"]
+[node name="IconPanel" type="Panel" parent="UILayer/ResourcesWidget/Command"]
 margin_left = 115.0
 margin_top = 91.0
 margin_right = 136.0
@@ -1213,14 +1219,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Panel/Command/IconPanel"]
+[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Command/IconPanel"]
 position = Vector2( 10.385, 10.0949 )
 scale = Vector2( 0.887571, 0.887571 )
 texture = ExtResource( 50 )
 region_enabled = true
 region_rect = Rect2( 102, 125, 16, 16 )
 
-[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Panel/Command"]
+[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Command"]
 margin_left = 136.0
 margin_top = 91.0
 margin_right = 186.0
@@ -1230,7 +1236,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CommandCount" type="Label" parent="UILayer/ResourcesWidget/Panel/Command/BGPanel"]
+[node name="CommandCount" type="Label" parent="UILayer/ResourcesWidget/Command/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1239,7 +1245,7 @@ margin_left = -22.5
 margin_top = -13.0
 margin_right = 22.5
 margin_bottom = 11.0
-custom_fonts/font = SubResource( 78 )
+custom_fonts/font = SubResource( 79 )
 custom_colors/font_color = Color( 0.890196, 0.494118, 0.0705882, 1 )
 text = "0"
 align = 1
@@ -1247,7 +1253,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CommandTitle" type="Label" parent="UILayer/ResourcesWidget/Panel/Command"]
+[node name="CommandTitle" type="Label" parent="UILayer/ResourcesWidget/Command"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1257,193 +1263,332 @@ margin_left = 89.453
 margin_top = 67.0
 margin_right = 172.453
 margin_bottom = 91.0
-custom_fonts/font = SubResource( 78 )
+custom_fonts/font = SubResource( 79 )
 custom_colors/font_color = Color( 0.890196, 0.494118, 0.0705882, 1 )
 text = "Command"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterWidget" type="Control" parent="UILayer"]
+[node name="GameClockPanel" type="Panel" parent="UILayer/ResourcesWidget"]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -63.0
+margin_top = -20.0
+margin_right = 63.0
+margin_bottom = 20.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UILayer/ResourcesWidget/GameClockPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -15.0
+margin_right = 50.0
+margin_bottom = 15.0
+custom_fonts/font = SubResource( 80 )
+text = "00 : 00 : 00"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="UILayer/ResourcesWidget/GameClockPanel"]
+
+[node name="QuitButton" type="Button" parent="UILayer/ResourcesWidget"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -89.0
+margin_top = -18.0
+margin_right = -2.0
+margin_bottom = 18.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 81 )
+custom_colors/font_color = Color( 0.662745, 0.984314, 1, 1 )
+text = "QUIT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterWidget" type="Control" parent="UILayer"]
+anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = -323.0
-margin_top = -119.0
-margin_right = 236.0
+margin_top = -130.0
+margin_right = 559.0
 script = ExtResource( 49 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="UILayer/CenterWidget"]
+[node name="UnitPortrait" type="Panel" parent="UILayer/CenterWidget"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -280.0
-margin_top = -59.5
-margin_right = 280.0
-margin_bottom = 59.5
-custom_styles/panel = ExtResource( 12 )
+margin_left = -247.5
+margin_top = -107.5
+margin_right = -205.5
+margin_bottom = -65.5
+custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="UILayer/CenterWidget/Panel"]
-modulate = Color( 0.415686, 0.443137, 0.937255, 0.156863 )
-position = Vector2( 279.828, 59.6069 )
-scale = Vector2( 1.14979, 1.14979 )
-texture = ExtResource( 28 )
-region_enabled = true
-region_rect = Rect2( 18, 94, 486, 102 )
+[node name="Thumbnail" type="Sprite" parent="UILayer/CenterWidget/UnitPortrait"]
+texture = ExtResource( 79 )
+centered = false
+offset = Vector2( 4, 4 )
 
-[node name="UnitHeader" type="Label" parent="UILayer/CenterWidget/Panel"]
-margin_left = 8.0
-margin_top = 2.0
-margin_right = 227.0
-margin_bottom = 38.0
-custom_fonts/font = SubResource( 78 )
-text = "Command Center"
+[node name="HealthBarPanel" type="Panel" parent="UILayer/CenterWidget"]
+margin_left = 74.0
+margin_top = -29.0
+margin_right = 261.0
+margin_bottom = -1.0
+custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthBar" type="ProgressBar" parent="UILayer/CenterWidget/Panel"]
-margin_left = 10.0
-margin_top = 27.0
-margin_right = 72.0
-margin_bottom = 33.0
-custom_styles/fg = SubResource( 79 )
-custom_styles/bg = SubResource( 80 )
+[node name="HealthBar" type="ProgressBar" parent="UILayer/CenterWidget/HealthBarPanel"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 3.0
+margin_top = -11.0
+margin_right = 184.0
+margin_bottom = 11.0
+custom_styles/fg = SubResource( 82 )
+custom_styles/bg = SubResource( 83 )
 value = 80.0
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthLabel" type="Label" parent="UILayer/CenterWidget/Panel"]
+[node name="HealthLabelShadow" type="Label" parent="UILayer/CenterWidget/HealthBarPanel"]
+modulate = Color( 0, 0, 0, 0.345098 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -205.239
-margin_top = -38.5709
-margin_right = -103.239
-margin_bottom = -20.5709
-custom_fonts/font = SubResource( 81 )
+margin_left = -52.5
+margin_top = -10.0
+margin_right = 49.5
+margin_bottom = 11.0
+custom_fonts/font = SubResource( 84 )
 text = "2000 / 2000"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StatBGPanel" type="Panel" parent="UILayer/CenterWidget/Panel"]
-margin_left = 10.0
-margin_top = 36.0
-margin_right = 70.0
-margin_bottom = 99.0
+[node name="HealthLabel" type="Label" parent="UILayer/CenterWidget/HealthBarPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -51.0
+margin_top = -11.0
+margin_right = 51.0
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 84 )
+text = "2000 / 2000"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShieldBarPanel" type="Panel" parent="UILayer/CenterWidget"]
+margin_left = 74.0
+margin_top = -43.0
+margin_right = 235.0
+margin_bottom = -29.0
 custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StatIcons" type="VBoxContainer" parent="UILayer/CenterWidget/Panel/StatBGPanel"]
-margin_left = 4.0
-margin_top = 2.0
-margin_right = 20.0
-margin_bottom = 70.0
-custom_constants/separation = 6
+[node name="ShieldBar" type="ProgressBar" parent="UILayer/CenterWidget/ShieldBarPanel"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 3.0
+margin_top = -4.0
+margin_right = 158.0
+margin_bottom = 4.0
+custom_styles/fg = ExtResource( 68 )
+custom_styles/bg = ExtResource( 67 )
+value = 80.0
+percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Attack" type="Sprite" parent="UILayer/CenterWidget/Panel/StatBGPanel/StatIcons"]
-position = Vector2( 8.92084, 9.13214 )
+[node name="MainPanel" type="Panel" parent="UILayer/CenterWidget"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -65.0
+margin_right = 559.0
+margin_bottom = 65.0
+custom_styles/panel = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundTexture" type="Sprite" parent="UILayer/CenterWidget/MainPanel"]
+modulate = Color( 0.415686, 0.443137, 0.937255, 0.156863 )
+position = Vector2( 279.828, 65.4288 )
+scale = Vector2( 1.14979, 1.26394 )
+texture = ExtResource( 28 )
+region_enabled = true
+region_rect = Rect2( 18, 94, 486, 102 )
+
+[node name="ConstructionButton" type="Button" parent="UILayer/CenterWidget/MainPanel"]
+visible = false
+margin_left = 518.5
+margin_top = 4.5
+margin_right = 553.5
+margin_bottom = 36.5
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  C  "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UnitHeader" type="Label" parent="UILayer/CenterWidget/MainPanel"]
+margin_left = 7.5105
+margin_top = 8.0
+margin_right = 226.51
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 79 )
+text = "Command Center"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatBGPanel" type="Panel" parent="UILayer/CenterWidget/MainPanel"]
+margin_left = 8.0
+margin_top = 38.0
+margin_right = 68.0
+margin_bottom = 126.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack" type="Sprite" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
+position = Vector2( 12.9208, 12.1321 )
 texture = ExtResource( 50 )
 region_enabled = true
 region_rect = Rect2( 0, 57, 16, 16 )
 
-[node name="Armor" type="Sprite" parent="UILayer/CenterWidget/Panel/StatBGPanel/StatIcons"]
-position = Vector2( 7.92084, 28.1321 )
+[node name="AttackLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
+margin_left = 26.0
+margin_top = 1.0
+margin_right = 57.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 86 )
+text = "5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Armor" type="Sprite" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
+position = Vector2( 11.9208, 31.1321 )
 texture = ExtResource( 50 )
 region_enabled = true
 region_rect = Rect2( 34, 40, 16, 16 )
 
-[node name="Range" type="Sprite" parent="UILayer/CenterWidget/Panel/StatBGPanel/StatIcons"]
-position = Vector2( 7.92084, 47.1321 )
+[node name="ArmorLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
+margin_left = 26.0
+margin_top = 21.1321
+margin_right = 57.0
+margin_bottom = 42.1321
+custom_fonts/font = SubResource( 87 )
+text = "5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Range" type="Sprite" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
+position = Vector2( 11.9208, 50.1321 )
 texture = ExtResource( 50 )
 region_enabled = true
 region_rect = Rect2( 51, 24, 16, 16 )
 
-[node name="StatLabels" type="VBoxContainer" parent="UILayer/CenterWidget/Panel/StatBGPanel"]
+[node name="RangeLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
 margin_left = 26.0
-margin_top = 2.0
+margin_top = 38.0
 margin_right = 57.0
-margin_bottom = 64.0
-custom_constants/separation = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Armor" type="Label" parent="UILayer/CenterWidget/Panel/StatBGPanel/StatLabels"]
-margin_right = 31.0
-margin_bottom = 18.0
-custom_fonts/font = SubResource( 81 )
+margin_bottom = 59.0
+custom_fonts/font = SubResource( 88 )
 text = "5"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Attack" type="Label" parent="UILayer/CenterWidget/Panel/StatBGPanel/StatLabels"]
-margin_top = 18.0
-margin_right = 31.0
-margin_bottom = 36.0
-custom_fonts/font = SubResource( 81 )
-text = "5"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Range" type="Label" parent="UILayer/CenterWidget/Panel/StatBGPanel/StatLabels"]
-margin_top = 36.0
-margin_right = 31.0
-margin_bottom = 54.0
-custom_fonts/font = SubResource( 81 )
-text = "5"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ResourceHint" type="Panel" parent="UILayer/CenterWidget/Panel"]
+[node name="ResourceHint" type="Panel" parent="UILayer/CenterWidget/MainPanel"]
 modulate = Color( 1, 1, 1, 0 )
 margin_left = 72.0
-margin_top = 38.0
+margin_top = 51.0
 margin_right = 150.0
-margin_bottom = 58.0
+margin_bottom = 71.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ResourceSprite" type="Sprite" parent="UILayer/CenterWidget/Panel"]
-position = Vector2( 83.7891, 47.4922 )
-scale = Vector2( 0.232635, 0.232635 )
-texture = ExtResource( 26 )
+[node name="ResourceSpriteShadow" type="Sprite" parent="UILayer/CenterWidget/MainPanel"]
+modulate = Color( 0.188235, 0.168627, 0.168627, 1 )
+position = Vector2( 83, 63 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 25 )
 
-[node name="ResourceLabel" type="Label" parent="UILayer/CenterWidget/Panel"]
+[node name="ResourceSprite" type="Sprite" parent="UILayer/CenterWidget/MainPanel"]
+position = Vector2( 83.7891, 62.4922 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 25 )
+
+[node name="ResourceLabel" type="Label" parent="UILayer/CenterWidget/MainPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -184.239
-margin_top = -21.5709
-margin_right = -82.239
-margin_bottom = -3.57086
-custom_fonts/font = SubResource( 81 )
+margin_left = -139.5
+margin_top = -13.571
+margin_right = -37.5
+margin_bottom = 7.429
+custom_fonts/font = SubResource( 89 )
 text = "10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectedUnitsLabel" type="Label" parent="UILayer/CenterWidget/MainPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -139.5
+margin_top = 8.0
+margin_right = -37.5
+margin_bottom = 29.0
+custom_fonts/font = SubResource( 89 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1467,9 +1612,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -84.0
-margin_top = -60.0
+margin_top = -60.2003
 margin_right = 84.0
-margin_bottom = 60.0
+margin_bottom = 59.7997
 custom_styles/panel = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1484,11 +1629,84 @@ margin_left = -79.0
 margin_top = -59.0
 margin_right = 79.0
 margin_bottom = -21.0
-custom_fonts/font = SubResource( 82 )
+custom_fonts/font = SubResource( 90 )
 text = "Someday I will be a minimap"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MapLayers" type="Control" parent="UILayer/MapWidget/Panel"]
+margin_left = 84.0
+margin_top = 60.0
+margin_right = 168.0
+margin_bottom = 121.0
+rect_scale = Vector2( 1.1, 0.6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tiles" type="Sprite" parent="UILayer/MapWidget/Panel/MapLayers"]
+rotation = 0.785398
+scale = Vector2( 2, 2 )
+
+[node name="Units" type="Sprite" parent="UILayer/MapWidget/Panel/MapLayers"]
+rotation = 0.785398
+
+[node name="Unexplored" type="Sprite" parent="UILayer/MapWidget/Panel/MapLayers"]
+visible = false
+rotation = 0.785398
+
+[node name="ScreenBox" type="Control" parent="UILayer/MapWidget/Panel"]
+visible = false
+margin_left = 84.0
+margin_top = 40.0
+margin_right = 124.0
+margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BoxPanel" type="Panel" parent="UILayer/MapWidget/Panel/ScreenBox"]
+margin_right = 64.0
+margin_bottom = 36.0
+custom_styles/panel = SubResource( 91 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MapTimer" type="Timer" parent="UILayer/MapWidget"]
+wait_time = 0.5
+
+[node name="PlayerScorePanel" type="Panel" parent="UILayer/MapWidget"]
+margin_left = -32.0
+margin_top = -34.0
+margin_right = 168.0
+grow_vertical = 0
+custom_styles/panel = SubResource( 92 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MapWidget/PlayerScorePanel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -97.0
+margin_top = -167.0
+margin_right = 97.0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UILayer/MapWidget/PlayerScorePanel/VBoxContainer"]
+margin_top = 147.0
+margin_right = 194.0
+margin_bottom = 167.0
+custom_fonts/font = ExtResource( 5 )
+text = "gma4567"
+align = 2
 
 [node name="DebugMenu" type="Control" parent="UILayer"]
 pause_mode = 2
@@ -1517,7 +1735,7 @@ margin_left = -126.5
 margin_top = 13.0
 margin_right = 126.5
 margin_bottom = 37.0
-custom_fonts/font = SubResource( 83 )
+custom_fonts/font = SubResource( 93 )
 text = "Debug Menu Options"
 align = 1
 __meta__ = {
@@ -1534,7 +1752,7 @@ margin_bottom = 39.0
 custom_styles/hover = ExtResource( 16 )
 custom_styles/pressed = ExtResource( 15 )
 custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 84 )
+custom_fonts/font = SubResource( 94 )
 custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "X"
 
@@ -1564,270 +1782,40 @@ margin_bottom = 68.0
 custom_styles/hover = ExtResource( 16 )
 custom_styles/pressed = ExtResource( 15 )
 custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 84 )
+custom_fonts/font = SubResource( 94 )
 custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "Draw Nav Polys : True"
 
 [node name="DrawSpawnRadius" type="Button" parent="UILayer/DebugMenu/Panel/OptionsContainer"]
-margin_top = 36.0
+margin_top = 72.0
 margin_right = 369.0
-margin_bottom = 68.0
+margin_bottom = 104.0
 custom_styles/hover = ExtResource( 16 )
 custom_styles/pressed = ExtResource( 15 )
 custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 84 )
+custom_fonts/font = SubResource( 94 )
 custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "Draw Spawn Radius: False"
 
 [node name="DrawAttackRange" type="Button" parent="UILayer/DebugMenu/Panel/OptionsContainer"]
-margin_top = 36.0
+margin_top = 108.0
 margin_right = 369.0
-margin_bottom = 68.0
+margin_bottom = 140.0
 custom_styles/hover = ExtResource( 16 )
 custom_styles/pressed = ExtResource( 15 )
 custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 84 )
+custom_fonts/font = SubResource( 94 )
 custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "Draw Attack Range: False"
 
-[node name="BuildMenu" type="Control" parent="UILayer"]
-visible = false
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -235.193
-margin_top = -118.0
-margin_right = 235.807
-rect_pivot_offset = Vector2( -53.3188, -3.24097 )
-script = ExtResource( 48 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="UILayer/BuildMenu"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -264.0
-margin_top = -59.0
-margin_bottom = 59.0
-custom_styles/panel = SubResource( 86 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RallyPointButton" type="Button" parent="UILayer/BuildMenu/Panel"]
-margin_left = 186.76
-margin_top = 9.0
-margin_right = 218.76
-margin_bottom = 41.0
-mouse_filter = 2
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  R "
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ButtonGrid" type="GridContainer" parent="UILayer/BuildMenu/Panel"]
-margin_left = 9.0
-margin_top = 9.0
-margin_right = 177.0
-margin_bottom = 111.0
-mouse_filter = 2
-custom_constants/vseparation = 36
-custom_constants/hseparation = 36
-columns = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ButtonA" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_right = 32.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  A "
-
-[node name="ButtonB" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 68.0
-margin_right = 99.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  B "
-
-[node name="ButtonC" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 135.0
-margin_right = 166.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC2" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 202.0
-margin_right = 233.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC3" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 269.0
-margin_right = 300.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC4" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_top = 68.0
-margin_right = 32.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC5" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 68.0
-margin_top = 68.0
-margin_right = 99.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC6" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 135.0
-margin_top = 68.0
-margin_right = 166.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC7" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 202.0
-margin_top = 68.0
-margin_right = 233.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC8" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 269.0
-margin_top = 68.0
-margin_right = 300.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC9" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_top = 136.0
-margin_right = 32.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC10" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 68.0
-margin_top = 136.0
-margin_right = 99.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC11" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 135.0
-margin_top = 136.0
-margin_right = 166.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC12" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 202.0
-margin_top = 136.0
-margin_right = 233.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
-[node name="ButtonC13" type="Button" parent="UILayer/BuildMenu/Panel/ButtonGrid"]
-margin_left = 269.0
-margin_top = 136.0
-margin_right = 300.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
-
 [node name="ConstructionMenu" type="Control" parent="UILayer"]
-visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -211.0
-margin_top = -117.0
-margin_right = 236.0
+margin_left = -402.0
+margin_top = -130.0
+margin_right = 5.0
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1838,237 +1826,2603 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -265.0
-margin_top = -59.0
-margin_right = -1.0
-margin_bottom = 59.0
-custom_styles/panel = SubResource( 86 )
+margin_left = -407.0
+margin_top = -65.0
+margin_right = 1.0
+margin_bottom = 65.0
+custom_styles/panel = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ButtonGrid" type="GridContainer" parent="UILayer/ConstructionMenu/Panel"]
-margin_left = 9.0
-margin_top = 9.0
-margin_right = 177.0
-margin_bottom = 111.0
+margin_left = 83.0
+margin_top = 4.0
+margin_right = 403.0
+margin_bottom = 124.0
 mouse_filter = 2
-custom_constants/vseparation = 36
-custom_constants/hseparation = 36
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConstructionButton" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton2" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_right = 80.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton3" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_right = 120.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton4" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_right = 160.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton5" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_right = 200.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton6" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 200.0
+margin_right = 240.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton7" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 240.0
+margin_right = 280.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton8" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 280.0
+margin_right = 320.0
+margin_bottom = 40.0
+
+[node name="ConstructionButton9" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 40.0
+margin_right = 40.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton10" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 80.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton11" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_top = 40.0
+margin_right = 120.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton12" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_top = 40.0
+margin_right = 160.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton13" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_top = 40.0
+margin_right = 200.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton14" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 200.0
+margin_top = 40.0
+margin_right = 240.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton15" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 240.0
+margin_top = 40.0
+margin_right = 280.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton16" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 280.0
+margin_top = 40.0
+margin_right = 320.0
+margin_bottom = 80.0
+
+[node name="ConstructionButton17" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 80.0
+margin_right = 40.0
+margin_bottom = 120.0
+
+[node name="ConstructionButton18" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_top = 80.0
+margin_right = 80.0
+margin_bottom = 120.0
+
+[node name="ConstructionButton19" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_top = 80.0
+margin_right = 120.0
+margin_bottom = 120.0
+
+[node name="ConstructionButton20" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 160.0
+margin_bottom = 120.0
+
+[node name="ConstructionButton21" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_top = 80.0
+margin_right = 200.0
+margin_bottom = 120.0
+
+[node name="ConstructionButton22" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 200.0
+margin_top = 80.0
+margin_right = 240.0
+margin_bottom = 120.0
+
+[node name="ConstructionButton23" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 240.0
+margin_top = 80.0
+margin_right = 280.0
+margin_bottom = 120.0
+
+[node name="ConstructionButton24" parent="UILayer/ConstructionMenu/Panel/ButtonGrid" instance=ExtResource( 92 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 280.0
+margin_top = 80.0
+margin_right = 320.0
+margin_bottom = 120.0
+
+[node name="ExitButton" type="Button" parent="UILayer/ConstructionMenu"]
+margin_left = 4.5
+margin_top = 5.0
+margin_right = 39.5
+margin_bottom = 37.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  <  "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CancelButton" type="Button" parent="UILayer/ConstructionMenu"]
+margin_left = 5.0
+margin_top = 36.5
+margin_right = 40.0
+margin_bottom = 68.5
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "  X  "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BuildMenu" type="Control" parent="UILayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -495.0
+margin_top = -130.0
+margin_right = 17.0
+script = ExtResource( 48 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tooltip" type="Panel" parent="UILayer/BuildMenu"]
+visible = false
+margin_left = -88.307
+margin_top = -105.2
+margin_right = 469.693
+margin_bottom = -2.20033
+rect_scale = Vector2( 1.0014, 1 )
+custom_styles/panel = SubResource( 95 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line1" type="Label" parent="UILayer/BuildMenu/Tooltip"]
+margin_left = 7.5
+margin_top = 6.67334
+margin_right = 89.5
+margin_bottom = 30.6733
+custom_fonts/font = SubResource( 96 )
+text = "Techpriest"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Line2" type="Label" parent="UILayer/BuildMenu/Tooltip"]
+margin_left = 7.5
+margin_top = 33.6733
+margin_right = 105.5
+margin_bottom = 60.6733
+custom_fonts/font = SubResource( 97 )
+text = "50 Biomass"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QueuePanel" type="Panel" parent="UILayer/BuildMenu"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -65.0
+margin_right = 250.0
+margin_bottom = 65.0
+custom_styles/panel = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActiveQueueButton" parent="UILayer/BuildMenu/QueuePanel" instance=ExtResource( 71 )]
+anchor_left = 0.039
+anchor_top = 0.058
+anchor_right = 0.306
+anchor_bottom = 0.357
+margin_left = -3.126
+margin_top = -0.54
+margin_right = -25.604
+margin_bottom = 0.589996
+
+[node name="BuildQueue" type="GridContainer" parent="UILayer/BuildMenu/QueuePanel"]
+margin_left = 7.0
+margin_top = 47.0
+margin_right = 207.0
+margin_bottom = 167.0
+mouse_filter = 2
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QueueButton" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="QueueButton6" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_right = 80.0
+margin_bottom = 40.0
+
+[node name="QueueButton7" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_right = 120.0
+margin_bottom = 40.0
+
+[node name="QueueButton8" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_right = 160.0
+margin_bottom = 40.0
+
+[node name="QueueButton2" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_right = 200.0
+margin_bottom = 40.0
+
+[node name="QueueButton3" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 200.0
+margin_right = 240.0
+margin_bottom = 40.0
+
+[node name="QueueButton4" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 40.0
+margin_right = 40.0
+margin_bottom = 80.0
+
+[node name="QueueButton5" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 80.0
+margin_bottom = 80.0
+
+[node name="QueueButton9" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_top = 40.0
+margin_right = 120.0
+margin_bottom = 80.0
+
+[node name="QueueButton10" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_top = 40.0
+margin_right = 160.0
+margin_bottom = 80.0
+
+[node name="QueueButton11" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_top = 40.0
+margin_right = 200.0
+margin_bottom = 80.0
+
+[node name="QueueButton12" parent="UILayer/BuildMenu/QueuePanel/BuildQueue" instance=ExtResource( 71 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 200.0
+margin_top = 40.0
+margin_right = 240.0
+margin_bottom = 80.0
+
+[node name="BuildPanel" type="Panel" parent="UILayer/BuildMenu"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -264.0
+margin_top = -65.0
+margin_bottom = 65.0
+custom_styles/panel = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RallyPointButton" type="Button" parent="UILayer/BuildMenu/BuildPanel"]
+margin_left = 224.76
+margin_top = 7.0
+margin_right = 256.76
+margin_bottom = 39.0
+mouse_filter = 2
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 98 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UILayer/BuildMenu/BuildPanel/RallyPointButton"]
+position = Vector2( 16.6387, 16.411 )
+scale = Vector2( 1.85673, 1.9315 )
+texture = ExtResource( 50 )
+region_enabled = true
+region_rect = Rect2( 13.507, 180.185, 12, 12 )
+
+[node name="ButtonGrid" type="GridContainer" parent="UILayer/BuildMenu/BuildPanel"]
+margin_left = 9.0
+margin_top = 6.0
+margin_right = 309.0
+margin_bottom = 174.0
+mouse_filter = 2
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
 columns = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonA" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_right = 32.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  A "
+[node name="BuildButton" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
 
-[node name="ButtonB" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 68.0
-margin_right = 99.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  B "
+[node name="BuildButton2" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_right = 80.0
+margin_bottom = 40.0
 
-[node name="ButtonC" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 135.0
-margin_right = 166.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton3" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_right = 120.0
+margin_bottom = 40.0
 
-[node name="ButtonC2" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 202.0
-margin_right = 233.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton4" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_right = 160.0
+margin_bottom = 40.0
 
-[node name="ButtonC3" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 269.0
-margin_right = 300.0
-margin_bottom = 32.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton5" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_right = 200.0
+margin_bottom = 40.0
 
-[node name="ButtonC4" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_top = 68.0
-margin_right = 32.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton6" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 40.0
+margin_right = 40.0
+margin_bottom = 80.0
 
-[node name="ButtonC5" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 68.0
-margin_top = 68.0
-margin_right = 99.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton7" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 80.0
+margin_bottom = 80.0
 
-[node name="ButtonC6" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 135.0
-margin_top = 68.0
-margin_right = 166.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton8" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_top = 40.0
+margin_right = 120.0
+margin_bottom = 80.0
 
-[node name="ButtonC7" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 202.0
-margin_top = 68.0
-margin_right = 233.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton9" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_top = 40.0
+margin_right = 160.0
+margin_bottom = 80.0
 
-[node name="ButtonC8" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 269.0
-margin_top = 68.0
-margin_right = 300.0
-margin_bottom = 100.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton10" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_top = 40.0
+margin_right = 200.0
+margin_bottom = 80.0
 
-[node name="ButtonC9" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_top = 136.0
-margin_right = 32.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton11" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 80.0
+margin_right = 40.0
+margin_bottom = 120.0
 
-[node name="ButtonC10" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 68.0
-margin_top = 136.0
-margin_right = 99.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton12" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 40.0
+margin_top = 80.0
+margin_right = 80.0
+margin_bottom = 120.0
 
-[node name="ButtonC11" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 135.0
-margin_top = 136.0
-margin_right = 166.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton13" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 80.0
+margin_top = 80.0
+margin_right = 120.0
+margin_bottom = 120.0
 
-[node name="ButtonC12" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 202.0
-margin_top = 136.0
-margin_right = 233.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton14" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 120.0
+margin_top = 80.0
+margin_right = 160.0
+margin_bottom = 120.0
 
-[node name="ButtonC13" type="Button" parent="UILayer/ConstructionMenu/Panel/ButtonGrid"]
-margin_left = 269.0
-margin_top = 136.0
-margin_right = 300.0
-margin_bottom = 168.0
-custom_styles/hover = ExtResource( 16 )
-custom_styles/pressed = ExtResource( 15 )
-custom_styles/normal = ExtResource( 14 )
-custom_fonts/font = SubResource( 85 )
-custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
-text = "  C "
+[node name="BuildButton15" parent="UILayer/BuildMenu/BuildPanel/ButtonGrid" instance=ExtResource( 70 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 160.0
+margin_top = 80.0
+margin_right = 200.0
+margin_bottom = 120.0
 
-[node name="Light2D" type="Light2D" parent="UILayer"]
+[node name="EventLog" type="Control" parent="UILayer"]
+margin_top = 165.0
+margin_right = 385.0
+margin_bottom = 617.0
+mouse_filter = 2
+script = ExtResource( 61 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/EventLog"]
+margin_right = 385.0
+margin_bottom = 452.0
+mouse_filter = 2
+custom_styles/panel = SubResource( 99 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UILayer/EventLog/Panel"]
+margin_left = 13.0
+margin_top = 11.0
+margin_right = 372.0
+margin_bottom = 436.0
+text = "0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EventUpdateTimer" type="Timer" parent="UILayer/EventLog"]
+wait_time = 0.1
+
+[node name="ChatBox" type="Control" parent="UILayer"]
+pause_mode = 2
 visible = false
-position = Vector2( 2549.36, -1480.91 )
-texture = ExtResource( 77 )
-texture_scale = 25.0
-shadow_enabled = true
-shadow_filter = 1
-[connection signal="builder_unit_selected" from="Dispatcher" to="UILayer/ConstructionMenu" method="_on_Dispatcher_builder_unit_selected"]
+margin_top = -1.10803
+margin_right = 1921.0
+margin_bottom = 1079.89
+script = ExtResource( 35 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cheats" type="Node" parent="UILayer/ChatBox"]
+script = ExtResource( 82 )
+
+[node name="Panel" type="Panel" parent="UILayer/ChatBox"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -575.5
+margin_top = -76.0
+margin_right = 575.5
+margin_bottom = 76.0
+custom_styles/panel = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DebugMenuHeader2" type="Label" parent="UILayer/ChatBox/Panel"]
+margin_left = 26.0
+margin_top = 7.0
+margin_right = 279.0
+margin_bottom = 51.0
+custom_fonts/font = SubResource( 100 )
+custom_colors/font_color = Color( 0.691498, 0.94044, 0.972656, 1 )
+text = "Chat"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="UILayer/ChatBox/Panel"]
+margin_left = 23.0
+margin_top = 56.0
+margin_right = 1133.0
+margin_bottom = 93.0
+custom_fonts/font = SubResource( 101 )
+custom_colors/font_color = Color( 0.605469, 0.953811, 1, 1 )
+placeholder_text = "Enter Message Here"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChatButton" type="Button" parent="UILayer/ChatBox/Panel"]
+margin_left = 23.0
+margin_top = 106.0
+margin_right = 117.0
+margin_bottom = 138.0
+hint_tooltip = "Reset to default"
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "Chat"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CancelButton" type="Button" parent="UILayer/ChatBox/Panel"]
+margin_left = 119.0
+margin_top = 106.0
+margin_right = 242.0
+margin_bottom = 138.0
+hint_tooltip = "Reset to default"
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "Cancel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputCooldown" type="Timer" parent="UILayer/ChatBox"]
+wait_time = 0.15
+one_shot = true
+
+[node name="OptionsMenu" type="Control" parent="UILayer"]
+pause_mode = 2
+visible = false
+margin_right = 1922.0
+margin_bottom = 1082.0
+mouse_filter = 2
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/OptionsMenu"]
+margin_left = 670.261
+margin_top = 113.907
+margin_right = 1135.26
+margin_bottom = 592.907
+custom_styles/panel = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DebugMenuHeader" type="Label" parent="UILayer/OptionsMenu/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -126.5
+margin_top = 13.0
+margin_right = 126.5
+margin_bottom = 37.0
+custom_fonts/font = SubResource( 93 )
+text = "Game Options"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseButton" type="Button" parent="UILayer/OptionsMenu/Panel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -39.0
+margin_top = 7.0
+margin_right = -6.0
+margin_bottom = 39.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 94 )
+custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
+text = "X"
+
+[node name="VolumeSliderLabel" type="Button" parent="UILayer/OptionsMenu/Panel"]
+margin_left = 46.0
+margin_top = 77.0
+margin_right = 316.0
+margin_bottom = 109.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "Game Master Volume - 75"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResetVolumeButton" type="Button" parent="UILayer/OptionsMenu/Panel"]
+margin_left = 323.0
+margin_top = 77.0
+margin_right = 411.0
+margin_bottom = 109.0
+hint_tooltip = "Reset to default"
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "Reset"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlider" type="HSlider" parent="UILayer/OptionsMenu/Panel"]
+modulate = Color( 0.309804, 0.772549, 1, 1 )
+margin_left = 46.0
+margin_top = 113.0
+margin_right = 415.0
+margin_bottom = 129.0
+max_value = 1.0
+step = 0.01
+value = 0.75
+
+[node name="OpenTechTree" type="Button" parent="UILayer/OptionsMenu/Panel"]
+margin_left = 46.0
+margin_top = 133.0
+margin_right = 415.0
+margin_bottom = 165.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "Tech Tree"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResumeGame" type="Button" parent="UILayer/OptionsMenu/Panel"]
+margin_left = 46.0
+margin_top = 174.0
+margin_right = 415.0
+margin_bottom = 206.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "Resume Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitGame" type="Button" parent="UILayer/OptionsMenu/Panel"]
+margin_left = 46.0
+margin_top = 216.0
+margin_right = 415.0
+margin_bottom = 248.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 85 )
+custom_colors/font_color = Color( 0.00392157, 0.898039, 0.819608, 1 )
+text = "Quit Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TechTree" type="Control" parent="UILayer"]
+pause_mode = 2
+visible = false
+margin_right = 1915.0
+margin_bottom = 1080.0
+script = ExtResource( 34 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/TechTree"]
+margin_left = 1.10803
+margin_top = 0.739197
+margin_right = 1922.11
+margin_bottom = 1081.74
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tech1" type="ColorRect" parent="UILayer/TechTree/Panel"]
+margin_right = 1921.0
+margin_bottom = 297.0
+mouse_filter = 2
+color = Color( 0.137255, 0.180392, 0.282353, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tech2" type="ColorRect" parent="UILayer/TechTree/Panel"]
+anchor_left = 0.000576799
+anchor_right = 0.0005768
+margin_left = -2.21606
+margin_top = 297.0
+margin_right = 1918.78
+margin_bottom = 569.0
+mouse_filter = 2
+color = Color( 0.0705882, 0.160784, 0.376471, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tech3" type="ColorRect" parent="UILayer/TechTree/Panel"]
+margin_left = -1.10803
+margin_top = 560.761
+margin_right = 1919.89
+margin_bottom = 828.761
+mouse_filter = 2
+color = Color( 0.286275, 0.0588235, 0.533333, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tech4" type="ColorRect" parent="UILayer/TechTree/Panel"]
+margin_top = 828.0
+margin_right = 1921.0
+margin_bottom = 1080.0
+mouse_filter = 2
+color = Color( 0.356863, 0.141176, 0.290196, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CloseButton" type="Button" parent="UILayer/TechTree/Panel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -44.8021
+margin_top = 6.0
+margin_right = -11.8021
+margin_bottom = 38.0
+custom_styles/hover = ExtResource( 16 )
+custom_styles/pressed = ExtResource( 15 )
+custom_styles/normal = ExtResource( 14 )
+custom_fonts/font = SubResource( 94 )
+custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Command Post" parent="UILayer/TechTree/Panel" instance=ExtResource( 31 )]
+position = Vector2( 972, 52 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Command Post"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="WorkerTech1" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 33 )]
+position = Vector2( -160, 0 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Worker Speed Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 1
+incoming_connector_edge = 2
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="EnergyConduit" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 31 )]
+position = Vector2( 816.892, 0 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Energy Conduit"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="DummyConnection" parent="UILayer/TechTree/Panel/Command Post/EnergyConduit" instance=ExtResource( 31 )]
+position = Vector2( -87.2438, 130.261 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="WarpstoneRefinery" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 31 )]
+position = Vector2( 669.892, 0 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Warpstone Refinery"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="AlloyFoundry" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 31 )]
+position = Vector2( 513.635, 0 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Alloy Foundry"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="BiomassCompacter" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 31 )]
+position = Vector2( 366.153, 0 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Biomass Compacter"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="BiomassReactor" parent="UILayer/TechTree/Panel/Command Post/BiomassCompacter" instance=ExtResource( 31 )]
+position = Vector2( 363.495, 130.261 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Biomass Power Reactor"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="WarpstoneReactor" parent="UILayer/TechTree/Panel/Command Post/BiomassCompacter/BiomassReactor" instance=ExtResource( 31 )]
+position = Vector2( 64.293, 469.059 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Warpstone Reactor"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 24
+incoming_connector_offset = -40
+
+[node name="Worker" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 32 )]
+position = Vector2( 141.699, 0 )
+alloy_cost = 0
+biomass_cost = 25
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Worker"
+armor = 0
+max_health = 50
+max_shields = 0
+attack = 1
+attack_range = 0
+outgoing_connector_edge = 2
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="Barracks" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 31 )]
+position = Vector2( -599.682, 0 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Barracks"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="Light" parent="UILayer/TechTree/Panel/Command Post/Barracks" instance=ExtResource( 32 )]
+position = Vector2( -343.426, 0 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Light Trooper"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 1
+incoming_connector_edge = 2
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = -12
+incoming_connector_offset = -12
+
+[node name="VeteranTech" parent="UILayer/TechTree/Panel/Command Post/Barracks/Light" instance=ExtResource( 33 )]
+position = Vector2( 0, 525.761 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Vet Light Trooper Upgrade"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="VeteranLight" parent="UILayer/TechTree/Panel/Command Post/Barracks/Light/VeteranTech" instance=ExtResource( 32 )]
+position = Vector2( 0, 122 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Veteran Light Trooper"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="Heavy" parent="UILayer/TechTree/Panel/Command Post/Barracks" instance=ExtResource( 32 )]
+position = Vector2( -158.815, 263.659 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Heavy Trooper"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 1
+incoming_connector_edge = 0
+outgoing_connector_size = 104
+incoming_connector_size = 10
+outgoing_connector_offset = 32
+incoming_connector_offset = 0
+
+[node name="MechFactory" parent="UILayer/TechTree/Panel/Command Post/Barracks" instance=ExtResource( 31 )]
+position = Vector2( 0, 262.335 )
+alloy_cost = 0
+biomass_cost = 250
+warpstone_cost = 0
+energy_cost = 50
+command_cost = 0
+display_name = "Mech Factory"
+armor = 5
+max_health = 250
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="ScoutMech" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory" instance=ExtResource( 32 )]
+position = Vector2( 64.9528, 122 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Scout Mech"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="MediumMech" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory" instance=ExtResource( 32 )]
+position = Vector2( 66.4944, 266.66 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Medium Mech"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="TransportMech" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory" instance=ExtResource( 32 )]
+position = Vector2( 66.4944, 386.66 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Transport Mech"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="HeavyMech" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory" instance=ExtResource( 32 )]
+position = Vector2( 65.4944, 526.66 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Heavy Mech"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="MechArmor" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory" instance=ExtResource( 33 )]
+position = Vector2( -96.8145, 263.102 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Mech Armor Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 128
+incoming_connector_size = 25
+outgoing_connector_offset = -20
+incoming_connector_offset = 14
+
+[node name="MechArmor2" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory/MechArmor" instance=ExtResource( 33 )]
+position = Vector2( 0, 264 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Mech Armor Tech #2"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="MechSpeed" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory" instance=ExtResource( 33 )]
+position = Vector2( -216.815, 262.66 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Mech Speed Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 110
+incoming_connector_size = 43
+outgoing_connector_offset = -36
+incoming_connector_offset = 20
+
+[node name="MechSpeed2" parent="UILayer/TechTree/Panel/Command Post/Barracks/MechFactory/MechSpeed" instance=ExtResource( 33 )]
+position = Vector2( 0, 264 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Mech Speed Tech #2"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="SpecialWeapons" parent="UILayer/TechTree/Panel/Command Post/Barracks" instance=ExtResource( 31 )]
+position = Vector2( 193, 263.659 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Special Weapons Factory"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 128
+incoming_connector_size = 26
+outgoing_connector_offset = 30
+incoming_connector_offset = 0
+
+[node name="AntiArmor" parent="UILayer/TechTree/Panel/Command Post/Barracks/SpecialWeapons" instance=ExtResource( 32 )]
+position = Vector2( 0, 122 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Anti Armor Trooper"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="CrowdControl" parent="UILayer/TechTree/Panel/Command Post/Barracks/SpecialWeapons" instance=ExtResource( 32 )]
+position = Vector2( 130, 122 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Crowd Control Trooper"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 2
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="TrooperTech1" parent="UILayer/TechTree/Panel/Command Post/Barracks" instance=ExtResource( 33 )]
+position = Vector2( -271.941, 123.261 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Trooper Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 1
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 50
+outgoing_connector_offset = 18
+incoming_connector_offset = 0
+
+[node name="TrooperTech2" parent="UILayer/TechTree/Panel/Command Post/Barracks/TrooperTech1" instance=ExtResource( 33 )]
+position = Vector2( 0, 264 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Trooper Tech #2"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="LogisticsCenter" parent="UILayer/TechTree/Panel/Command Post" instance=ExtResource( 31 )]
+position = Vector2( -0.301025, 263.659 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Logistics Center"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="Officer" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter" instance=ExtResource( 32 )]
+position = Vector2( 133.807, 121.559 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Officer"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 2
+incoming_connector_edge = 0
+outgoing_connector_size = 60
+incoming_connector_size = 10
+outgoing_connector_offset = 30
+incoming_connector_offset = -19
+
+[node name="OfficerUpgrade1" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/Officer" instance=ExtResource( 33 )]
+position = Vector2( 134, 130.509 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Officer Upgrade Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="OfficerUpgrade2" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/Officer/OfficerUpgrade1" instance=ExtResource( 33 )]
+position = Vector2( 0, 267.152 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Officer Upgrade Tech #2"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="Bastion" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter" instance=ExtResource( 31 )]
+position = Vector2( 0, 261.66 )
+alloy_cost = 1000
+biomass_cost = 0
+warpstone_cost = 200
+energy_cost = 0
+command_cost = 0
+display_name = "Bastion"
+armor = 10
+max_health = 1000
+max_shields = 1000
+attack = 10
+attack_range = 10
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="UnitBox" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/Bastion" instance=ExtResource( 32 )]
+position = Vector2( 123.453, 133.117 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Unique Unit"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 2
+incoming_connector_edge = 0
+outgoing_connector_size = 69
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="LoS1" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter" instance=ExtResource( 33 )]
+position = Vector2( -204.739, -0.441406 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "LoS Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 1
+incoming_connector_edge = 2
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="LoS2" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/LoS1" instance=ExtResource( 33 )]
+position = Vector2( 0, 262.66 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "LoS Tech #2"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="Sanctum" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter" instance=ExtResource( 31 )]
+position = Vector2( 505.756, -0.882813 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Sanctum"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 2
+incoming_connector_edge = 1
+outgoing_connector_size = 15
+incoming_connector_size = 20
+outgoing_connector_offset = -45
+incoming_connector_offset = -44
+
+[node name="PsykerTech1" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/Sanctum" instance=ExtResource( 33 )]
+position = Vector2( 139.811, 129.559 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Psyker Buff Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 32
+incoming_connector_offset = 0
+
+[node name="PsykerTech2" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/Sanctum/PsykerTech1" instance=ExtResource( 33 )]
+position = Vector2( 0.694092, 262.102 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Psyker Buff Tech #2"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="PsykerTech3" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/Sanctum" instance=ExtResource( 33 )]
+position = Vector2( 139.987, -0.441406 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Psyker Speed Tech #1"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 2
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 34
+incoming_connector_offset = 34
+
+[node name="Psyker1" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter/Sanctum" instance=ExtResource( 32 )]
+position = Vector2( 0, 128.559 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Psyker"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 3
+incoming_connector_edge = 0
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = 0
+incoming_connector_offset = 0
+
+[node name="Scout" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter" instance=ExtResource( 32 )]
+position = Vector2( -117.739, 123 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Infantry Scout"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 1
+incoming_connector_edge = 0
+outgoing_connector_size = 63
+incoming_connector_size = 10
+outgoing_connector_offset = 28
+incoming_connector_offset = 0
+
+[node name="Tower" parent="UILayer/TechTree/Panel/Command Post/LogisticsCenter" instance=ExtResource( 31 )]
+position = Vector2( 261, 22 )
+alloy_cost = 0
+biomass_cost = 0
+warpstone_cost = 0
+energy_cost = 0
+command_cost = 0
+display_name = "Tower / Bunker"
+max_health = 10
+max_shields = 0
+attack = 0
+attack_range = 0
+outgoing_connector_edge = 2
+incoming_connector_edge = 1
+outgoing_connector_size = 10
+incoming_connector_size = 10
+outgoing_connector_offset = -1
+incoming_connector_offset = -23
+
+[node name="InfoPanel" parent="UILayer/TechTree" instance=ExtResource( 66 )]
+visible = false
+mouse_filter = 1
+
+[node name="MainMenu" type="Control" parent="UILayer"]
+pause_mode = 2
+visible = false
+margin_right = 1922.0
+margin_bottom = 1081.0
+mouse_filter = 2
+script = ExtResource( 69 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MainMenu"]
+margin_right = 1921.0
+margin_bottom = 1080.0
+custom_styles/panel = ExtResource( 84 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BGOverlay" type="Sprite" parent="UILayer/MainMenu/Panel"]
+modulate = Color( 0.352941, 0.737255, 0.67451, 0.329412 )
+position = Vector2( -177, 4 )
+scale = Vector2( 0.617889, 0.617889 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Label" type="Label" parent="UILayer/MainMenu/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -613.0
+margin_top = -521.0
+margin_right = 613.0
+margin_bottom = -247.0
+custom_fonts/font = SubResource( 115 )
+custom_colors/font_color = Color( 0.109804, 0.109804, 0.109804, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = -2
+custom_constants/shadow_offset_y = 2
+text = "IronWardeN"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButtons" type="VBoxContainer" parent="UILayer/MainMenu/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -244.5
+margin_top = -242.0
+margin_right = 244.5
+margin_bottom = -78.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewGame" type="Button" parent="UILayer/MainMenu/Panel/MenuButtons"]
+margin_right = 489.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 103 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "NEW SKIRMISH GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MainMenu/Panel/MenuButtons/NewGame"]
+margin_left = 494.0
+margin_right = 674.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewGameBlurb" type="Label" parent="UILayer/MainMenu/Panel/MenuButtons/NewGame/Panel"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -177.0
+margin_top = -20.0
+margin_right = -2.99997
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 104 )
+custom_colors/font_color = Color( 0.741176, 0.741176, 0.741176, 1 )
+text = "Start a new game with the default rules and map generation settings"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CustomGame" type="Button" parent="UILayer/MainMenu/Panel/MenuButtons"]
+margin_top = 48.0
+margin_right = 489.0
+margin_bottom = 92.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "CUSTOM SINGLEPLAYER GAME"
+
+[node name="Panel" type="Panel" parent="UILayer/MainMenu/Panel/MenuButtons/CustomGame"]
+margin_left = 494.0
+margin_right = 674.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CustomGameBlurb" type="Label" parent="UILayer/MainMenu/Panel/MenuButtons/CustomGame/Panel"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = -24.5
+margin_right = -0.999969
+margin_bottom = 18.5
+custom_fonts/font = SubResource( 104 )
+custom_colors/font_color = Color( 0.741176, 0.741176, 0.741176, 1 )
+text = "Create a new game with custom rules and / or custom map generation"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Multiplayer" type="Button" parent="UILayer/MainMenu/Panel/MenuButtons"]
+margin_top = 96.0
+margin_right = 489.0
+margin_bottom = 140.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "MULTIPLAYER"
+
+[node name="Panel" type="Panel" parent="UILayer/MainMenu/Panel/MenuButtons/Multiplayer"]
+margin_left = 494.0
+margin_right = 674.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MultiplayerBlurb" type="Label" parent="UILayer/MainMenu/Panel/MenuButtons/Multiplayer/Panel"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = -24.5
+margin_right = -0.999969
+margin_bottom = 18.5
+custom_fonts/font = SubResource( 104 )
+custom_colors/font_color = Color( 0.741176, 0.741176, 0.741176, 1 )
+text = "Take the fight online and battle your friends"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="UILayer/MainMenu/Panel/MenuButtons"]
+margin_top = 144.0
+margin_right = 489.0
+margin_bottom = 188.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 106 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "QUIT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MainMenu/Panel/MenuButtons/Quit"]
+margin_left = 494.0
+margin_right = 674.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitBlurb" type="Label" parent="UILayer/MainMenu/Panel/MenuButtons/Quit/Panel"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -175.0
+margin_top = -24.5
+margin_right = -0.999969
+margin_bottom = 18.5
+custom_fonts/font = SubResource( 104 )
+custom_colors/font_color = Color( 0.741176, 0.741176, 0.741176, 1 )
+text = "Quit to desktop"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="color_palette_index" type="Sprite" parent="UILayer/MainMenu/Panel"]
+position = Vector2( 2139.57, 172.065 )
+texture = ExtResource( 85 )
+
+[node name="MultiplayerMenu" type="Control" parent="UILayer"]
+pause_mode = 2
+visible = false
+margin_right = 1922.0
+margin_bottom = 1081.0
+mouse_filter = 2
+script = ExtResource( 93 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MultiplayerMenu"]
+margin_right = 1921.0
+margin_bottom = 1080.0
+custom_styles/panel = ExtResource( 84 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MultiplayerHeader" type="Label" parent="UILayer/MultiplayerMenu/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -226.5
+margin_top = 37.0
+margin_right = 226.5
+margin_bottom = 153.0
+custom_fonts/font = SubResource( 107 )
+text = "MULTIPLAYER"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NickNameLabel" type="Label" parent="UILayer/MultiplayerMenu/Panel"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 32.0
+margin_top = -490.0
+margin_right = 641.0
+margin_bottom = -374.0
+custom_fonts/font = SubResource( 108 )
+text = "TEST PLAYER NAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButtons" type="VBoxContainer" parent="UILayer/MultiplayerMenu/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -154.0
+margin_top = -383.0
+margin_right = 154.0
+margin_bottom = -219.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HostGame" type="Button" parent="UILayer/MultiplayerMenu/Panel/MenuButtons"]
+margin_right = 308.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 103 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Host Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinGame" type="Button" parent="UILayer/MultiplayerMenu/Panel/MenuButtons"]
+margin_top = 48.0
+margin_right = 308.0
+margin_bottom = 92.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Join Game"
+
+[node name="QuitToMain" type="Button" parent="UILayer/MultiplayerMenu/Panel/MenuButtons"]
+margin_top = 96.0
+margin_right = 308.0
+margin_bottom = 140.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Quit to Main Menu"
+
+[node name="NicknamePopup" type="Panel" parent="UILayer/MultiplayerMenu"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -316.0
+margin_top = -266.5
+margin_right = 316.0
+margin_bottom = 110.5
+custom_styles/panel = ExtResource( 84 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NickNameLabel" type="Label" parent="UILayer/MultiplayerMenu/NicknamePopup"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -259.0
+margin_top = 27.0
+margin_right = 259.0
+margin_bottom = 71.0
+custom_fonts/font = SubResource( 109 )
+text = "Please Select an In-game Nickname"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="UILayer/MultiplayerMenu/NicknamePopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -147.5
+margin_top = -105.0
+margin_right = 144.5
+margin_bottom = -49.0
+custom_fonts/font = SubResource( 110 )
+placeholder_text = "Enter Name Here"
+placeholder_alpha = 0.4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButtons" type="VBoxContainer" parent="UILayer/MultiplayerMenu/NicknamePopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -154.5
+margin_top = -28.0
+margin_right = 154.5
+margin_bottom = 160.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SetName" type="Button" parent="UILayer/MultiplayerMenu/NicknamePopup/MenuButtons"]
+margin_right = 309.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 103 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Set Nickname"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancel" type="Button" parent="UILayer/MultiplayerMenu/NicknamePopup/MenuButtons"]
+margin_top = 48.0
+margin_right = 309.0
+margin_bottom = 92.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Cancel"
+
+[node name="HostGamePopup" type="Control" parent="UILayer/MultiplayerMenu"]
+pause_mode = 2
+visible = false
+margin_right = 1922.0
+margin_bottom = 1081.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MultiplayerMenu/HostGamePopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -458.5
+margin_top = -326.0
+margin_right = 458.5
+margin_bottom = 186.0
+custom_styles/panel = ExtResource( 84 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HostPopupHeader" type="Label" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -144.0
+margin_top = 11.0
+margin_right = 144.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 109 )
+text = "Lobby Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LobbyNameField" type="LineEdit" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel"]
+margin_left = 219.0
+margin_top = 64.0
+margin_right = 700.0
+margin_bottom = 98.0
+custom_fonts/font = SubResource( 111 )
+placeholder_text = "A Zac Table"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LobbyIPHeader" type="Label" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -337.574
+margin_top = 98.0
+margin_right = -49.574
+margin_bottom = 142.0
+custom_fonts/font = SubResource( 109 )
+text = "IP Address"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DirectIPField" type="LineEdit" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel"]
+margin_left = 113.0
+margin_top = 144.0
+margin_right = 426.0
+margin_bottom = 182.0
+custom_fonts/font = SubResource( 112 )
+placeholder_text = "127.0.0.1 (default localhost)"
+
+[node name="PasswordHeader" type="Label" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -8.0
+margin_top = 99.0
+margin_right = 280.0
+margin_bottom = 143.0
+custom_fonts/font = SubResource( 109 )
+text = "Password"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PasswordField" type="LineEdit" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel"]
+visible = false
+margin_left = 454.5
+margin_top = 143.0
+margin_right = 767.5
+margin_bottom = 181.0
+custom_fonts/font = SubResource( 112 )
+placeholder_text = "goats (default)"
+
+[node name="MenuButtons" type="VBoxContainer" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -169.0
+margin_top = -36.0
+margin_right = 169.0
+margin_bottom = 152.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateGame" type="Button" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel/MenuButtons"]
+margin_right = 338.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 103 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Create Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancel" type="Button" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel/MenuButtons"]
+margin_top = 48.0
+margin_right = 338.0
+margin_bottom = 92.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Cancel"
+
+[node name="QuitToMain" type="Button" parent="UILayer/MultiplayerMenu/HostGamePopup/Panel/MenuButtons"]
+margin_top = 96.0
+margin_right = 338.0
+margin_bottom = 140.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Quit to Main Menu"
+
+[node name="JoinGamePopup" type="Control" parent="UILayer/MultiplayerMenu"]
+pause_mode = 2
+visible = false
+margin_right = 1922.0
+margin_bottom = 1081.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MultiplayerMenu/JoinGamePopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -458.5
+margin_top = -326.0
+margin_right = 458.5
+margin_bottom = 186.0
+custom_styles/panel = ExtResource( 84 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JoinPopupHeader" type="Label" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -154.5
+margin_top = 39.0
+margin_right = 156.5
+margin_bottom = 83.0
+custom_fonts/font = SubResource( 109 )
+text = "Join Game - Direct IP"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LobbyIPHeader" type="Label" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -331.574
+margin_top = 98.0
+margin_right = -43.574
+margin_bottom = 142.0
+custom_fonts/font = SubResource( 109 )
+text = "IP Address"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DirectIPField" type="LineEdit" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel"]
+margin_left = 124.0
+margin_top = 144.0
+margin_right = 437.0
+margin_bottom = 182.0
+custom_fonts/font = SubResource( 112 )
+placeholder_text = "127.0.0.1 (default localhost)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PasswordHeader" type="Label" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -8.0
+margin_top = 99.0
+margin_right = 280.0
+margin_bottom = 143.0
+custom_fonts/font = SubResource( 109 )
+text = "Password"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PasswordField" type="LineEdit" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel"]
+visible = false
+margin_left = 454.5
+margin_top = 143.0
+margin_right = 767.5
+margin_bottom = 181.0
+custom_fonts/font = SubResource( 112 )
+placeholder_text = "goats (default)"
+
+[node name="MenuButtons" type="VBoxContainer" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -169.0
+margin_top = -36.0
+margin_right = 169.0
+margin_bottom = 152.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConnectToGame" type="Button" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel/MenuButtons"]
+margin_right = 338.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 103 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Connect to Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancel" type="Button" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel/MenuButtons"]
+margin_top = 48.0
+margin_right = 338.0
+margin_bottom = 92.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Cancel"
+
+[node name="QuitToMain" type="Button" parent="UILayer/MultiplayerMenu/JoinGamePopup/Panel/MenuButtons"]
+margin_top = 96.0
+margin_right = 338.0
+margin_bottom = 140.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 105 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "Cancel"
+
+[node name="MultiplayerLobby" type="Control" parent="UILayer"]
+pause_mode = 2
+visible = false
+margin_right = 1922.0
+margin_bottom = 1081.0
+mouse_filter = 2
+script = ExtResource( 94 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MultiplayerLobby"]
+margin_right = 1921.0
+margin_bottom = 1080.0
+custom_styles/panel = ExtResource( 84 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MultiplayerLobbyHeader" type="Label" parent="UILayer/MultiplayerLobby/Panel"]
+margin_left = 32.0
+margin_top = 24.0
+margin_right = 530.0
+margin_bottom = 118.0
+custom_fonts/font = SubResource( 113 )
+text = "Multiplayer Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LobbyIPLabel" type="Label" parent="UILayer/MultiplayerLobby/Panel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -540.0
+margin_top = 3.0
+margin_bottom = 97.0
+custom_fonts/font = SubResource( 114 )
+text = "IP: 127.0.0.1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UILayer/MultiplayerLobby/Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -385.5
+margin_right = 385.5
+margin_bottom = 112.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LobbyNameHeader" type="Label" parent="UILayer/MultiplayerLobby/Panel/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -269.5
+margin_top = -47.0
+margin_right = 269.5
+margin_bottom = 47.0
+custom_fonts/font = SubResource( 113 )
+text = "My Custom Lobby Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerRoster" type="Panel" parent="UILayer/MultiplayerLobby/Panel"]
+margin_left = 26.0
+margin_top = 227.0
+margin_right = 619.0
+margin_bottom = 727.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MultiplayerLobby/Panel/PlayerRoster"]
+margin_left = 8.0
+margin_top = 7.0
+margin_right = 583.0
+margin_bottom = 493.0
+custom_constants/separation = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerButtons" type="VBoxContainer" parent="UILayer/MultiplayerLobby/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -332.5
+margin_top = -307.0
+margin_right = -211.5
+margin_bottom = 183.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuButtons" type="VBoxContainer" parent="UILayer/MultiplayerLobby/Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -202.5
+margin_top = -307.093
+margin_right = 19.5
+margin_bottom = -143.093
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartGame" type="Button" parent="UILayer/MultiplayerLobby/Panel/MenuButtons"]
+visible = false
+margin_right = 222.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 103 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "START GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeaveLobby" type="Button" parent="UILayer/MultiplayerLobby/Panel/MenuButtons"]
+margin_right = 222.0
+margin_bottom = 44.0
+custom_styles/hover = ExtResource( 86 )
+custom_styles/pressed = ExtResource( 87 )
+custom_styles/normal = ExtResource( 88 )
+custom_fonts/font = SubResource( 106 )
+custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
+text = "LEAVE GAME"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="construction_mode_entered" from="Dispatcher" to="GameObjects/BuildPreview" method="_on_Dispatcher_construction_mode_entered"]
+[connection signal="construction_mode_exited" from="Dispatcher" to="GameObjects/BuildPreview" method="_on_Dispatcher_construction_mode_exited"]
 [connection signal="new_action_logged" from="Dispatcher" to="UILayer/MapWidget" method="_on_Dispatcher_new_action_logged"]
+[connection signal="new_action_logged" from="Dispatcher" to="UILayer/EventLog" method="_on_Dispatcher_add_new_event"]
+[connection signal="new_construction" from="Dispatcher" to="GameObjects/Structures" method="_on_Dispatcher_new_construction"]
 [connection signal="open_build_menu" from="Dispatcher" to="UILayer/BuildMenu" method="_on_Dispatcher_open_build_menu"]
+[connection signal="open_chat_box" from="Dispatcher" to="UILayer/ChatBox" method="_on_Dispatcher_open_chat_box"]
+[connection signal="open_construction_menu" from="Dispatcher" to="UILayer/ConstructionMenu" method="_on_Dispatcher_open_construction_menu"]
+[connection signal="open_tech_tree" from="Dispatcher" to="UILayer/TechTree" method="_on_Dispatcher_open_tech_tree"]
+[connection signal="player_name_changed" from="Dispatcher" to="." method="_on_Dispatcher_player_name_changed"]
 [connection signal="reset_cursor" from="Dispatcher" to="Cursor" method="_on_Dispatcher_reset_cursor"]
-[connection signal="resource_left_clicked" from="Dispatcher" to="Player" method="_on_Dispatcher_resource_left_clicked"]
-[connection signal="resource_right_clicked" from="Dispatcher" to="Player" method="_on_Dispatcher_resource_right_clicked"]
-[connection signal="resource_selected" from="Dispatcher" to="Sounds/UI" method="_on_Dispatcher_resource_selected"]
-[connection signal="resource_selected" from="Dispatcher" to="UILayer/CenterWidget" method="_on_Dispatcher_resource_selected"]
-[connection signal="selection_cleared" from="Dispatcher" to="RallyPointFlag" method="_on_Dispatcher_selection_cleared"]
 [connection signal="selection_cleared" from="Dispatcher" to="UILayer/CenterWidget" method="_on_Dispatcher_selection_cleared"]
 [connection signal="selection_cleared" from="Dispatcher" to="UILayer/ConstructionMenu" method="_on_Dispatcher_selection_cleared"]
 [connection signal="selection_cleared" from="Dispatcher" to="UILayer/BuildMenu" method="_on_Dispatcher_selection_cleared"]
+[connection signal="selection_cleared" from="Dispatcher" to="RallyPointFlag" method="_on_Dispatcher_selection_cleared"]
 [connection signal="set_rally_point" from="Dispatcher" to="Sounds/Units" method="_on_Dispatcher_set_rally_point"]
-[connection signal="set_resource_cursor" from="Dispatcher" to="Cursor" method="_on_Dispatcher_set_resource_cursor"]
 [connection signal="set_target_location" from="Dispatcher" to="RallyPointFlag" method="_on_Dispatcher_set_target_location"]
-[connection signal="unit_confirm" from="Dispatcher" to="Sounds/Units" method="_on_Dispatcher_unit_confirm"]
-[connection signal="unit_left_clicked" from="Dispatcher" to="Player" method="_on_Dispatcher_unit_left_clicked"]
-[connection signal="unit_selected" from="Dispatcher" to="Sounds/Units" method="_on_Dispatcher_unit_selected"]
-[connection signal="unit_selected" from="Dispatcher" to="RallyPointFlag" method="_on_Dispatcher_unit_selected"]
+[connection signal="start_multiplayer_game" from="Dispatcher" to="." method="_on_Dispatcher_start_multiplayer_game"]
 [connection signal="unit_selected" from="Dispatcher" to="UILayer/CenterWidget" method="_on_Unit_selected"]
-[connection signal="unit_spawned" from="Dispatcher" to="Sounds/Units" method="_on_Dispatcher_unit_spawned"]
+[connection signal="unit_selected" from="Dispatcher" to="RallyPointFlag" method="_on_Dispatcher_unit_selected"]
 [connection signal="unit_update" from="Dispatcher" to="UILayer/CenterWidget" method="_on_Dispatcher_unit_update"]
-[connection signal="resource_selected" from="Player" to="Dispatcher" method="_on_Player_resource_selected"]
-[connection signal="resources_changed" from="Player" to="UILayer/ResourcesWidget" method="_on_Player_resources_changed"]
-[connection signal="selection_cleared" from="Player" to="Dispatcher" method="_on_Player_selection_cleared"]
-[connection signal="toggle_debug_menu" from="Player" to="UILayer/DebugMenu" method="_on_Player_toggle_debug_menu"]
-[connection signal="unit_move_to" from="Player" to="Dispatcher" method="_on_Player_unit_move_to"]
-[connection signal="unit_move_to" from="Player" to="GroundArrows" method="_on_Player_unit_move_to"]
-[connection signal="unit_selected" from="Player" to="Dispatcher" method="_on_Player_unit_selected"]
+[connection signal="roster_changed" from="Network" to="UILayer/MultiplayerLobby" method="_on_Network_roster_changed"]
 [connection signal="animation_finished" from="GroundArrows" to="GroundArrows" method="_on_GroundArrows_animation_finished"]
+[connection signal="timeout" from="GameObjects/Fog/FogTimer" to="GameObjects/Fog" method="_on_FogTimer_timeout"]
+[connection signal="timeout" from="GameObjects/Fog/DrawFogTimer" to="GameObjects/Fog" method="_on_DrawFogTimer_timeout"]
+[connection signal="timeout" from="UILayer/ResourcesWidget/GameClockPanel/Timer" to="UILayer/ResourcesWidget" method="_on_Timer_timeout"]
+[connection signal="pressed" from="UILayer/ResourcesWidget/QuitButton" to="UILayer/ResourcesWidget" method="_on_QuitButton_pressed"]
+[connection signal="construction_button_pressed" from="UILayer/CenterWidget" to="Dispatcher" method="_on_ConstructionButton_pressed"]
+[connection signal="pressed" from="UILayer/CenterWidget/MainPanel/ConstructionButton" to="UILayer/CenterWidget" method="_on_ConstructionButton_pressed"]
+[connection signal="timeout" from="UILayer/MapWidget/MapTimer" to="UILayer/MapWidget" method="_on_MapTimer_timeout"]
 [connection signal="toggle_draw_attack_range" from="UILayer/DebugMenu" to="Dispatcher" method="_on_DebugMenu_toggle_draw_attack_range"]
 [connection signal="toggle_draw_nav_polys" from="UILayer/DebugMenu" to="Dispatcher" method="_on_DebugMenu_toggle_draw_nav_polys"]
 [connection signal="toggle_draw_paths" from="UILayer/DebugMenu" to="Dispatcher" method="_on_DebugMenu_toggle_draw_paths"]
@@ -2078,5 +4432,60 @@ shadow_filter = 1
 [connection signal="pressed" from="UILayer/DebugMenu/Panel/OptionsContainer/DrawNavPolys" to="UILayer/DebugMenu" method="_on_DrawNavPolys_pressed"]
 [connection signal="pressed" from="UILayer/DebugMenu/Panel/OptionsContainer/DrawSpawnRadius" to="UILayer/DebugMenu" method="_on_DrawSpawnRadius_pressed"]
 [connection signal="pressed" from="UILayer/DebugMenu/Panel/OptionsContainer/DrawAttackRange" to="UILayer/DebugMenu" method="_on_DrawAttackRange_pressed"]
-[connection signal="play_tick_1" from="UILayer/BuildMenu" to="Sounds/UI" method="_on_BuildMenu_play_tick_1"]
-[connection signal="play_tick_1" from="UILayer/ConstructionMenu" to="Sounds/UI" method="_on_ConstructionMenu_play_tick_1"]
+[connection signal="structure_button_clicked" from="UILayer/ConstructionMenu" to="Dispatcher" method="_on_ConstructionMenu_structure_button_clicked"]
+[connection signal="tick1" from="UILayer/ConstructionMenu" to="Sounds/UI" method="_on_tick1"]
+[connection signal="pressed" from="UILayer/ConstructionMenu/ExitButton" to="UILayer/ConstructionMenu" method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="UILayer/ConstructionMenu/CancelButton" to="UILayer/ConstructionMenu" method="_on_CancelButton_pressed"]
+[connection signal="deny1" from="UILayer/BuildMenu" to="Sounds/UI" method="_on_deny1"]
+[connection signal="tick1" from="UILayer/BuildMenu" to="Sounds/UI" method="_on_tick1"]
+[connection signal="clicked" from="UILayer/BuildMenu/QueuePanel/ActiveQueueButton" to="UILayer/BuildMenu" method="_on_QueueButton_clicked"]
+[connection signal="timeout" from="UILayer/EventLog/EventUpdateTimer" to="UILayer/EventLog" method="_on_EventUpdateTimer_timeout"]
+[connection signal="chat_message" from="UILayer/ChatBox" to="Dispatcher" method="_on_ChatBox_chat_message"]
+[connection signal="cheatcode" from="UILayer/ChatBox" to="UILayer/ChatBox/Cheats" method="_on_ChatBox_cheatcode"]
+[connection signal="zoinks" from="UILayer/ChatBox/Cheats" to="Sounds/UI" method="_on_zoinks"]
+[connection signal="text_entered" from="UILayer/ChatBox/Panel/LineEdit" to="UILayer/ChatBox" method="_on_LineEdit_text_entered"]
+[connection signal="pressed" from="UILayer/ChatBox/Panel/ChatButton" to="UILayer/ChatBox" method="_on_ChatButton_pressed"]
+[connection signal="pressed" from="UILayer/ChatBox/Panel/CancelButton" to="UILayer/ChatBox" method="_on_CancelButton_pressed"]
+[connection signal="open_tech_tree" from="UILayer/OptionsMenu" to="Dispatcher" method="_on_OptionsMenu_open_tech_tree"]
+[connection signal="pressed" from="UILayer/OptionsMenu/Panel/CloseButton" to="UILayer/OptionsMenu" method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="UILayer/OptionsMenu/Panel/ResetVolumeButton" to="UILayer/OptionsMenu" method="_on_VolumeSliderLabel_pressed"]
+[connection signal="changed" from="UILayer/OptionsMenu/Panel/HSlider" to="UILayer/OptionsMenu" method="_on_HSlider_changed"]
+[connection signal="value_changed" from="UILayer/OptionsMenu/Panel/HSlider" to="UILayer/OptionsMenu" method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="UILayer/OptionsMenu/Panel/OpenTechTree" to="UILayer/OptionsMenu" method="_on_OpenTechTree_pressed"]
+[connection signal="pressed" from="UILayer/OptionsMenu/Panel/ResumeGame" to="UILayer/OptionsMenu" method="_on_ResumeGame_pressed"]
+[connection signal="pressed" from="UILayer/OptionsMenu/Panel/QuitGame" to="UILayer/OptionsMenu" method="_on_QuitGame_pressed"]
+[connection signal="box_clicked" from="UILayer/TechTree" to="UILayer/TechTree/InfoPanel" method="_on_TechTree_box_clicked"]
+[connection signal="gui_input" from="UILayer/TechTree/Panel" to="UILayer/TechTree" method="_on_Panel_gui_input"]
+[connection signal="pressed" from="UILayer/TechTree/Panel/CloseButton" to="UILayer/TechTree" method="_on_CloseButton_pressed"]
+[connection signal="flick1" from="UILayer/MainMenu" to="Sounds/UI" method="_on_flick1"]
+[connection signal="tick1" from="UILayer/MainMenu" to="Sounds/UI" method="_on_tick1"]
+[connection signal="mouse_entered" from="UILayer/MainMenu/Panel/MenuButtons/NewGame" to="UILayer/MainMenu" method="_on_NewGame_mouse_entered"]
+[connection signal="mouse_exited" from="UILayer/MainMenu/Panel/MenuButtons/NewGame" to="UILayer/MainMenu" method="_on_NewGame_mouse_exited"]
+[connection signal="pressed" from="UILayer/MainMenu/Panel/MenuButtons/NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="pressed" from="UILayer/MainMenu/Panel/MenuButtons/NewGame" to="UILayer/MainMenu" method="_on_NewGame_pressed"]
+[connection signal="mouse_entered" from="UILayer/MainMenu/Panel/MenuButtons/CustomGame" to="UILayer/MainMenu" method="_on_CustomGame_mouse_entered"]
+[connection signal="mouse_exited" from="UILayer/MainMenu/Panel/MenuButtons/CustomGame" to="UILayer/MainMenu" method="_on_CustomGame_mouse_exited"]
+[connection signal="mouse_entered" from="UILayer/MainMenu/Panel/MenuButtons/Multiplayer" to="UILayer/MainMenu" method="_on_Multiplayer_mouse_entered"]
+[connection signal="mouse_exited" from="UILayer/MainMenu/Panel/MenuButtons/Multiplayer" to="UILayer/MainMenu" method="_on_Multiplayer_mouse_exited"]
+[connection signal="pressed" from="UILayer/MainMenu/Panel/MenuButtons/Multiplayer" to="UILayer/MultiplayerMenu" method="_on_Multiplayer_pressed"]
+[connection signal="mouse_entered" from="UILayer/MainMenu/Panel/MenuButtons/Quit" to="UILayer/MainMenu" method="_on_Quit_mouse_entered"]
+[connection signal="mouse_exited" from="UILayer/MainMenu/Panel/MenuButtons/Quit" to="UILayer/MainMenu" method="_on_Quit_mouse_exited"]
+[connection signal="pressed" from="UILayer/MainMenu/Panel/MenuButtons/Quit" to="UILayer/MainMenu" method="_on_Quit_pressed"]
+[connection signal="connect_to_lobby" from="UILayer/MultiplayerMenu" to="UILayer/MultiplayerLobby" method="_on_MultiplayerMenu_connect_to_lobby"]
+[connection signal="host_lobby" from="UILayer/MultiplayerMenu" to="UILayer/MultiplayerLobby" method="_on_MultiplayerMenu_host_lobby"]
+[connection signal="player_name_changed" from="UILayer/MultiplayerMenu" to="Dispatcher" method="_on_player_name_changed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/Panel/MenuButtons/HostGame" to="UILayer/MultiplayerMenu" method="_on_HostGame_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/Panel/MenuButtons/JoinGame" to="UILayer/MultiplayerMenu" method="_on_JoinGame_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/Panel/MenuButtons/QuitToMain" to="UILayer/MultiplayerMenu" method="_on_QuitToMain_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/NicknamePopup/MenuButtons/SetName" to="UILayer/MultiplayerMenu" method="_on_SetName_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/NicknamePopup/MenuButtons/Cancel" to="UILayer/MultiplayerMenu" method="_on_QuitToMain_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/HostGamePopup/Panel/MenuButtons/CreateGame" to="UILayer/MultiplayerMenu" method="_on_CreateGame_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/HostGamePopup/Panel/MenuButtons/Cancel" to="UILayer/MultiplayerMenu" method="_on_Cancel_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/HostGamePopup/Panel/MenuButtons/QuitToMain" to="UILayer/MultiplayerMenu" method="_on_QuitToMain_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/JoinGamePopup/Panel/MenuButtons/ConnectToGame" to="UILayer/MultiplayerMenu" method="_on_ConnectToGame_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/JoinGamePopup/Panel/MenuButtons/Cancel" to="UILayer/MultiplayerMenu" method="_on_Cancel_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerMenu/JoinGamePopup/Panel/MenuButtons/QuitToMain" to="UILayer/MultiplayerMenu" method="_on_QuitToMain_pressed"]
+[connection signal="start_multiplayer_game" from="UILayer/MultiplayerLobby" to="Dispatcher" method="_on_Lobby_start_multiplayer_game"]
+[connection signal="start_multiplayer_game" from="UILayer/MultiplayerLobby" to="UILayer/MainMenu" method="_on_MultiplayerLobby_start_multiplayer_game"]
+[connection signal="pressed" from="UILayer/MultiplayerLobby/Panel/MenuButtons/StartGame" to="UILayer/MultiplayerLobby" method="_on_StartGame_pressed"]
+[connection signal="pressed" from="UILayer/MultiplayerLobby/Panel/MenuButtons/LeaveLobby" to="UILayer/MultiplayerLobby" method="_on_LeaveLobby_pressed"]

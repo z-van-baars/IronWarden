@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/deny1.ogg-a5a7e56e117d70c4d6e100058bbd1b7a.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/UI/deny1.ogg"
+dest_files=[ "res://.import/deny1.ogg-a5a7e56e117d70c4d6e100058bbd1b7a.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

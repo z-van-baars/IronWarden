@@ -10,7 +10,7 @@ onready var height = 50
 
 
 onready var n_ore = int(sqrt(width * height) / 3)
-onready var n_gem = int(sqrt(width * height) / 5)
+onready var n_crystal = int(sqrt(width * height) / 5)
 # onready var n_forests = int(sqrt(width * height) / 10)
 onready var n_forests = 1
 # onready var forest_size = int(sqrt(width * height) * 3)
@@ -20,7 +20,6 @@ onready var forest_radius = 6.5
 onready var n_small_forests = 1
 onready var small_forest_size = 12
 onready var small_forest_radius = 3
-onready var n_chicken = int(sqrt(width * height) / 5)
 
 
 func set_module_refs():
@@ -48,7 +47,6 @@ func map_gen():
 func paint_map_terrain():
 	for y in range(height):
 		for x in range(width):
-			var tile_in_question = grid.get_cell(Vector2(x, y))
 			$TileMap.set_cellv(
 				Vector2(x, y),
 				grid.get_cell(Vector2(x, y)).get_base())
@@ -57,7 +55,7 @@ func blank_forest():
 	for _y in range(grid.tiles.size()):
 		print(_y)
 		for _x in range(grid.tiles[0].size()):
-			res.add_deposit(res.DepositTypes.TREE, Vector2(_x, _y))
+			res.add_deposit(DepositTypes.DEPOSIT.TREE, Vector2(_x, _y))
 
 func random_resources():
 	generate_forests(n_forests, forest_size, forest_radius)
@@ -67,7 +65,7 @@ func random_resources():
 	var ore_count = 0
 	for ore_deposit in ore_deposit_locs:
 		if grid.get_cell(ore_deposit).is_buildable():
-			res.add_deposit(res.DepositTypes.ORE, ore_deposit)
+			res.add_deposit(DepositTypes.DEPOSIT.ORE, ore_deposit)
 			ore_count += 1
 
 		# ore clustering
@@ -80,55 +78,46 @@ func random_resources():
 			if valid_ore_neighbors.empty(): break
 			var r_neighbor = tools.r_choice(valid_ore_neighbors)
 			valid_ore_neighbors.erase(r_neighbor)
-			res.add_deposit(res.DepositTypes.ORE, r_neighbor)
+			res.add_deposit(DepositTypes.DEPOSIT.ORE, r_neighbor)
 			ore_count += 1
 
-	var gem_count = 0
-	var gem_deposit_locs = tools.get_random_coordinates(grid.tiles, n_gem)
-	for gem_deposit in gem_deposit_locs:
-		if grid.get_cell(gem_deposit).is_buildable():
-			res.add_deposit(res.DepositTypes.GEM, gem_deposit)
-			gem_count += 1
+	var crystal_count = 0
+	var crystal_deposit_locs = tools.get_random_coordinates(grid.tiles, n_crystal)
+	for crystal_deposit in crystal_deposit_locs:
+		if grid.get_cell(crystal_deposit).is_buildable():
+			res.add_deposit(DepositTypes.DEPOSIT.CRYSTAL, crystal_deposit)
+			crystal_count += 1
 
 		# clustering
-		var gem_neighbors = tools.get_nearby_tiles(gem_deposit, 2)
-		var valid_gem_neighbors = []
-		for g_n in gem_neighbors:
-			if grid.get_cell(g_n).is_buildable():
-				valid_gem_neighbors.append(g_n)
+		var crystal_neighbors = tools.get_nearby_tiles(crystal_deposit, 2)
+		var valid_crystal_neighbors = []
+		for c_n in crystal_neighbors:
+			if grid.get_cell(c_n).is_buildable():
+				valid_crystal_neighbors.append(c_n)
 		for _x in range(randi()%3+0):
-			if valid_gem_neighbors.empty(): break
-			var r_neighbor = tools.r_choice(valid_gem_neighbors)
-			valid_gem_neighbors.erase(r_neighbor)
-			res.add_deposit(res.DepositTypes.GEM, r_neighbor)
-			gem_count += 1
-
-
-	var space_chicken_locs = tools.get_random_coordinates(grid.tiles, n_chicken)
-	var chicken_count = 0
-	for space_chicken in space_chicken_locs:
-		if grid.get_cell(space_chicken).is_buildable():
-			res.add_deposit(res.DepositTypes.SPACE_CHICKEN, space_chicken)
-			chicken_count += 1
+			if valid_crystal_neighbors.empty(): break
+			var r_neighbor = tools.r_choice(valid_crystal_neighbors)
+			valid_crystal_neighbors.erase(r_neighbor)
+			res.add_deposit(DepositTypes.DEPOSIT.CRYSTAL, r_neighbor)
+			crystal_count += 1
 	
 	
 	print("Ore Deposits: " + str(ore_count) + " / " + str(n_ore))
-	print("Gem Deposits: " + str(gem_count) + " / " + str(n_gem))
-	print("Chicken Deposits: " + str(chicken_count) + " / " + str(n_chicken))
+	print("Crystal Deposits: " + str(crystal_count) + " / " + str(n_crystal))
 
 
-func generate_forests(n_forests, forest_size, forest_radius):
-	for _f in range(n_forests):
+func generate_forests(n, _fsize, f_radius):
+	for _f in range(n):
 		var forest_start
 		while true:
 			forest_start = tools.get_random_coordinates(grid.tiles, 1)[0]
-			if grid.get_cell(forest_start).get_resource() != 1:
+			if grid.get_cell(forest_start).get_resource_id() != 1:
 				break
-		res.add_deposit(res.DepositTypes.TREE, forest_start)
+		res.add_deposit(DepositTypes.DEPOSIT.TREE, forest_start)
 		var evaluated = [forest_start]
 		
-		var forest_tiles_in_radius = tools.get_nearby_tiles(forest_start, forest_radius)
+		var forest_tiles_in_radius = tools.get_nearby_tiles(forest_start, f_radius)
 		for f_tile in forest_tiles_in_radius:
-			res.add_deposit(res.DepositTypes.TREE, f_tile)
+			res.add_deposit(DepositTypes.DEPOSIT.TREE, f_tile)
 			evaluated.append(f_tile)
 

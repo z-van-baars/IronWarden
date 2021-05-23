@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/death_1.ogg-5b8028c010ed22be2872add05d213163.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/lascannon/death/death_1.ogg"
+dest_files=[ "res://.import/death_1.ogg-5b8028c010ed22be2872add05d213163.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

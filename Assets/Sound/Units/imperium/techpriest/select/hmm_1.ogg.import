@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/hmm_1.ogg-43a9b840a847971919078f0c73ad948f.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/select/hmm_1.ogg"
+dest_files=[ "res://.import/hmm_1.ogg-43a9b840a847971919078f0c73ad948f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

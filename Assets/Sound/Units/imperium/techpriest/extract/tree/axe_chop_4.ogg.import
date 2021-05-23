@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/axe_chop_4.ogg-fc2a682ba9bea019173bad0b70e15836.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/extract/tree/axe_chop_4.ogg"
+dest_files=[ "res://.import/axe_chop_4.ogg-fc2a682ba9bea019173bad0b70e15836.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

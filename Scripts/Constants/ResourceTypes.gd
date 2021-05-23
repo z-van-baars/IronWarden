@@ -1,0 +1,8 @@
+extends Node
+enum RES {
+	BIOMASS,
+	ALLOY,
+	WARPSTONE,
+	ENERGY,
+	COMMAND
+}

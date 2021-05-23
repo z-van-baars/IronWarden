@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/LocalPlayer.gd" type="Script" id=3]
+
+[node name="LocalPlayer" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="Camera2D" type="Camera2D" parent="." index="0"]
+current = true
+script = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="Camera2D" index="0"]
+
+[node name="ShakeTimer" type="Timer" parent="Camera2D" index="1"]
+one_shot = true
+
+[node name="DoubleClickTimer" type="Timer" parent="." index="1"]

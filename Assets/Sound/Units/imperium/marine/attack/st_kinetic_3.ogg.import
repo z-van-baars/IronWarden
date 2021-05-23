@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/st_kinetic_3.ogg-bf46bd49c25077f0c92ffe84f41ef714.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/marine/attack/st_kinetic_3.ogg"
+dest_files=[ "res://.import/st_kinetic_3.ogg-bf46bd49c25077f0c92ffe84f41ef714.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

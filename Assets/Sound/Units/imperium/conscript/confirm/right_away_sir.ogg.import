@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/right_away_sir.ogg-9912d3772a165ee019e5c00577f7d445.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/conscript/confirm/right_away_sir.ogg"
+dest_files=[ "res://.import/right_away_sir.ogg-9912d3772a165ee019e5c00577f7d445.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/neutralizing.ogg-82461762fde3399c22544d8423a1d255.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/lascannon/confirm/attack_confirm/neutralizing.ogg"
+dest_files=[ "res://.import/neutralizing.ogg-82461762fde3399c22544d8423a1d255.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

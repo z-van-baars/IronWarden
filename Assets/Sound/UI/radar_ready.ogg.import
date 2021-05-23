@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/radar_ready.ogg-5016f66dae8e8dbedfd358337444a3aa.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/UI/radar_ready.ogg"
+dest_files=[ "res://.import/radar_ready.ogg-5016f66dae8e8dbedfd358337444a3aa.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/st_energy_torpedo_fire_01.ogg-dad1bf83c19b3d11b6d74e7dc1edab38.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/predator/attack/st_energy_torpedo_fire_01.ogg"
+dest_files=[ "res://.import/st_energy_torpedo_fire_01.ogg-dad1bf83c19b3d11b6d74e7dc1edab38.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

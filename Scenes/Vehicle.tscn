@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Vehicle.gd" type="Script" id=2]
+[ext_resource path="res://Assets/SpriteFrames/Units/imperium/predator/SpriteFrame.tres" type="SpriteFrames" id=3]
+
+[node name="Unit" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="VehicleSelectionBox" parent="." index="7"]
+scale = Vector2( 2.70619, 2.70619 )
+
+[node name="AnimatedSprite" parent="." index="8"]
+position = Vector2( 0, -79 )
+frames = ExtResource( 3 )

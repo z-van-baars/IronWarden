@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/copy_2.ogg-8319c9f5618b061371ba93943ced3661.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/confirm/gather_confirm/biomass/copy_2.ogg"
+dest_files=[ "res://.import/copy_2.ogg-8319c9f5618b061371ba93943ced3661.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

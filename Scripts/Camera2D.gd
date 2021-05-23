@@ -14,7 +14,7 @@ var _zoom_level := 1.0 setget _set_zoom_level
 
 # We store a reference to the scene's tween node.
 onready var tween: Tween = $Tween
-
+var main
 var scroll_x = 0
 var scroll_y = 0
 var scroll_speed = 500
@@ -50,25 +50,28 @@ func _set_zoom_level(value: float) -> void:
 	tween.start()
 
 func _input(event):
-	if event.is_action_pressed("ui_w"):
+	if event.is_action_pressed("K_w"):
 		scroll_y -= scroll_speed
-	elif event.is_action_pressed("ui_a"):
+	elif event.is_action_pressed("K_a"):
 		scroll_x -= scroll_speed
-	elif event.is_action_pressed("ui_d"):
+	elif event.is_action_pressed("K_d"):
 		scroll_x += scroll_speed
-	elif event.is_action_pressed("ui_s"):
+	elif event.is_action_pressed("K_s"):
 		scroll_y += scroll_speed
-	elif event.is_action_released("ui_w"):
+	elif event.is_action_released("K_w"):
 		scroll_y += scroll_speed
-	elif event.is_action_released("ui_s"):
+	elif event.is_action_released("K_s"):
 		scroll_y -= scroll_speed
-	elif event.is_action_released("ui_a"):
+	elif event.is_action_released("K_a"):
 		scroll_x += scroll_speed
-	elif event.is_action_released("ui_d"):
+	elif event.is_action_released("K_d"):
 		scroll_x -= scroll_speed
+	
+	elif event.is_action_pressed("backspace"):
+		_set_zoom_level(1)
 
 
-	elif event.is_action_pressed("right_click") and get_parent().selected_units == []:
+	elif event.is_action_pressed("right_click") and get_parent().get_selected() == []:
 		scrolling = true
 		scroll_offset = get_viewport().get_mouse_position() + position
 		
@@ -79,6 +82,7 @@ func _input(event):
 		if scrolling == true:
 			var mouse_pos = get_viewport().get_mouse_position()
 			position = scroll_offset - mouse_pos
+			
 
 func _unhandled_input(event):
 	if event.is_action_pressed("zoom_in"):
@@ -89,8 +93,8 @@ func _unhandled_input(event):
 		_set_zoom_level(_zoom_level + zoom_factor)
 	
 
-func center_on_tile(tile_coords):
-	var screen_coords = get_tree().root.get_node("Main/GameMap/TileMap").map_to_world(tile_coords)
+func center_on_tile(tile_map, tile_coords):
+	var screen_coords = tile_map.map_to_world(tile_coords)
 	screen_coords -= Vector2(32, 16)
 	position = screen_coords - offset
 

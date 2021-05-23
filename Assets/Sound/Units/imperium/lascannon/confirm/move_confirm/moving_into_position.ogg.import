@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/moving_into_position.ogg-8253d11e742a19b0c47f6a7a967b6914.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/lascannon/confirm/move_confirm/moving_into_position.ogg"
+dest_files=[ "res://.import/moving_into_position.ogg-8253d11e742a19b0c47f6a7a967b6914.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

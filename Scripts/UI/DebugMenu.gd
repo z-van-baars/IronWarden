@@ -5,7 +5,7 @@ signal toggle_draw_spawn_radius
 signal toggle_draw_attack_range
 
 
-func _process(delta):
+func _process(_delta):
 	if !visible: return
 	update_buttons()
 
@@ -36,7 +36,6 @@ func _on_DrawNavPolys_pressed():
 
 func _on_DrawSpawnRadius_pressed():
 	emit_signal("toggle_draw_spawn_radius")
-
 
 func _on_DrawAttackRange_pressed():
 	emit_signal("toggle_draw_attack_range")

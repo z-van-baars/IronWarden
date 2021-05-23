@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/as_the_emperor_commands.ogg-8550e65b38b96e3c06b94916e7592da6.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/lascannon/confirm/attack_confirm/as_the_emperor_commands.ogg"
+dest_files=[ "res://.import/as_the_emperor_commands.ogg-8550e65b38b96e3c06b94916e7592da6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

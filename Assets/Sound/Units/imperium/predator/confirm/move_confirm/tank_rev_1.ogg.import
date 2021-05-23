@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/tank_rev_1.ogg-36baedf5d0985f50661577ea333c80b2.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/predator/confirm/move_confirm/tank_rev_1.ogg"
+dest_files=[ "res://.import/tank_rev_1.ogg-36baedf5d0985f50661577ea333c80b2.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

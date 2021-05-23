@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Styles/MenuButtonNormal.tres" type="StyleBox" id=1]
-[ext_resource path="res://Styles/MenuButtonPressed.tres" type="StyleBox" id=2]
-[ext_resource path="res://Styles/MenuButtonHoverl.tres" type="StyleBox" id=3]
+[ext_resource path="res://Styles/UI/PalettonTheme/ButtonHover.tres" type="StyleBox" id=1]
+[ext_resource path="res://Styles/UI/PalettonTheme/ButtonPressed.tres" type="StyleBox" id=2]
+[ext_resource path="res://Styles/UI/PalettonTheme/ButtonNormal.tres" type="StyleBox" id=3]
 [ext_resource path="res://Fonts/SourceHanSerifSC-Regular.otf" type="DynamicFontData" id=4]
 [ext_resource path="res://Scripts/UI/BuildButton.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Art/Units/imperium/techpriest/icon.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 4 )
@@ -12,6 +13,9 @@ font_data = ExtResource( 4 )
 [node name="BuildButton" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -1880.0
+margin_bottom = -1040.0
+rect_min_size = Vector2( 40, 40 )
 mouse_filter = 1
 script = ExtResource( 5 )
 __meta__ = {
@@ -19,16 +23,21 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="."]
-margin_right = 34.0
-margin_bottom = 33.0
+margin_right = 40.0
+margin_bottom = 40.0
 mouse_filter = 1
-custom_styles/hover = ExtResource( 3 )
+custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 2 )
-custom_styles/normal = ExtResource( 1 )
+custom_styles/normal = ExtResource( 3 )
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0.811765, 1, 1 )
 text = "A"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Thumbnail" type="Sprite" parent="Button"]
+texture = ExtResource( 6 )
+centered = false
+offset = Vector2( 4, 4 )
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

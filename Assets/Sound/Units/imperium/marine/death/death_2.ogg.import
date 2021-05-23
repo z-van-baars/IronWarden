@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/death_2.ogg-0b36c8eee77f85b606578f7b1738259e.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/marine/death/death_2.ogg"
+dest_files=[ "res://.import/death_2.ogg-0b36c8eee77f85b606578f7b1738259e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

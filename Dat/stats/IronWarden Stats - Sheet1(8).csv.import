@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://Dat/stats/IronWarden Stats - Sheet1(8).aa.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).aa_DJ.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).aa_ER.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).aa_ET.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).af.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).af_ZA.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).agr_PE.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ak_GH.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).am_ET.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).an_ES.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).anp_IN.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_AE.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_BH.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_DZ.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_EG.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_IQ.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_JO.translation" ]
+
+source_file="res://Dat/stats/IronWarden Stats - Sheet1(8).csv"
+dest_files=[ "res://Dat/stats/IronWarden Stats - Sheet1(8).aa.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).aa_DJ.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).aa_ER.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).aa_ET.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).af.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).af_ZA.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).agr_PE.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ak_GH.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).am_ET.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).an_ES.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).anp_IN.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_AE.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_BH.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_DZ.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_EG.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_IQ.translation", "res://Dat/stats/IronWarden Stats - Sheet1(8).ar_JO.translation" ]
+
+[params]
+
+compress=true
+delimiter=0

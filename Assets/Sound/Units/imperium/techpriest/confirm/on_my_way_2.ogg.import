@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/on_my_way_2.ogg-c0719c2ea0a9383d393f23975364c0f9.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/techpriest/confirm/on_my_way_2.ogg"
+dest_files=[ "res://.import/on_my_way_2.ogg-c0719c2ea0a9383d393f23975364c0f9.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/neutralizing.ogg-48bfd666f0eb5d9595f6f22ad400ae98.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/conscript/confirm/attack_confirm/neutralizing.ogg"
+dest_files=[ "res://.import/neutralizing.ogg-48bfd666f0eb5d9595f6f22ad400ae98.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

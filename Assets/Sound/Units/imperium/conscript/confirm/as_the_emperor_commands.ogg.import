@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/as_the_emperor_commands.ogg-fb4ff701c8c8c012b05089f7cc1f4fab.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/imperium/conscript/confirm/as_the_emperor_commands.ogg"
+dest_files=[ "res://.import/as_the_emperor_commands.ogg-fb4ff701c8c8c012b05089f7cc1f4fab.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
