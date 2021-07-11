@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bawk_death_01.ogg-ba46bbb73bb13491dabb5c9ba8f75b0c.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/gaia/space_chicken/death/bawk_death_01.ogg"
+dest_files=[ "res://.import/bawk_death_01.ogg-ba46bbb73bb13491dabb5c9ba8f75b0c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

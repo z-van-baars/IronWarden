@@ -1,6 +1,7 @@
 extends Node
 enum STAT {
 	STRUCTURE_ID,
+	DEPOSIT_ID,
 	UNIT_ID,
 	DISPLAY_NAME,
 	HEALTH,

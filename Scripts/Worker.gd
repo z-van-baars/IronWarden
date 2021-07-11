@@ -1,4 +1,4 @@
-extends "res://Scripts/Unit.gd"
+extends "res://Scripts/MotileUnit.gd"
 var gather_started = false
 var gather_radius = 50
 
@@ -16,8 +16,6 @@ func set_task_gather():
 func set_state_extract():
 	$AnimatedSprite.set_animation(animation_direction + "_idle")
 	$AnimatedSprite.play()
-	$Hammer.show()
-	$Hammer/AnimationPlayer.play("hammer_swing")
 	$GatherTimer.start(get_gather_time())
 	state = States.EXTRACT
 	state_changed()
@@ -26,13 +24,9 @@ func additional_idle_functions():
 	if target_resource != null:
 		clear_target_resource()
 
-	$Hammer.hide()
-	$Hammer/AnimationPlayer.stop()
-
 
 func additional_move_functions():
-	$Hammer.hide()
-	$Hammer/AnimationPlayer.stop()
+	pass
 
 func start_gather():
 	set_state_extract()
@@ -132,7 +126,7 @@ func gather_task_logic():
 
 func find_dropoff_target():
 	var structures_to_sort = []
-	for each_structure in structures.get_structures():
+	for each_structure in st.get_structures():
 		if each_structure.stype in res.dropoff_types[target_resource.r_type]:
 			structures_to_sort.append(each_structure)
 	return tools.r_choice(structures_to_sort)
@@ -169,8 +163,6 @@ func _on_GatherTimer_timeout():
 	play_sound(Sounds.EXTRACT, target_resource.d_type)
 	emit_signal("update", self)
 	$GatherTimer.start(get_gather_time())
-	$Hammer/AnimationPlayer.stop()
-	$Hammer/AnimationPlayer.play()
 
 func _on_ConstructionTimer_timeout():
 	target_construction.increment()

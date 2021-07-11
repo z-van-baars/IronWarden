@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/explosion_v3.wav-8e76bca0c804bb9718d467e773c92b8f.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/Structures/command_post/death/explosion_v3.wav"
+dest_files=[ "res://.import/explosion_v3.wav-8e76bca0c804bb9718d467e773c92b8f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

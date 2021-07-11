@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bukaww_02.ogg-0a60ae2a193aaeecd8a6c92aa813abbf.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/gaia/space_chicken/select/bukaww_02.ogg"
+dest_files=[ "res://.import/bukaww_02.ogg-0a60ae2a193aaeecd8a6c92aa813abbf.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,39 +1,21 @@
-extends Node2D
-signal left_clicked
-signal right_clicked
+extends "res://Scripts/GameUnit.gd"
 signal hovered
 signal unhovered
-signal kill
 
-onready var display_name
-onready var health
-onready var maxhealth
 onready var starting = {}
 onready var remaining = {}
-onready var r_type
-onready var d_type
+onready var _r_type
+onready var _d_type
+onready var border_flashes = 3
 
-onready var tools
-onready var dis
-onready var res
-onready var pos : Vector2 # tile coordinate pair
 var gatherers = []
 onready var partially_mined = false
-onready var selected = false
 
-func _ready():
-
-	tools = get_tree().root.get_node("Main/Tools")
-	dis = get_tree().root.get_node("Main/Dispatcher")
-	res = get_tree().root.get_node("Main/GameObjects/Resources")
-
-func connect_signals():
-	connect("left_clicked", dis, "_on_Deposit_left_clicked")
-	connect("right_clicked", dis, "_on_Deposit_right_clicked")
-	connect("hovered", dis, "_on_Deposit_hovered")
-	connect("unhovered", dis, "_on_Deposit_unhovered")
-
-func setup(deposit_type, tile_coordinates, location):
+func sub_connect():
+	self.connect("hovered", dis, "_on_Deposit_hovered")
+	self.connect("unhovered", dis, "_on_Deposit_unhovered")
+	
+func setup(deposit_type, location, player_number):
 	connect_signals()
 	starting = {
 		ResourceTypes.RES.BIOMASS: 0,
@@ -46,35 +28,72 @@ func setup(deposit_type, tile_coordinates, location):
 		ResourceTypes.RES.ALLOY: 0,
 		ResourceTypes.RES.WARPSTONE: 0,
 		ResourceTypes.RES.ENERGY: 0}
-	load_type(deposit_type)
-	pos = tile_coordinates
+	load_stats(deposit_type)
+	set_spriteframes("-", deposit_type)
+	set_detection_polygon()
+	set_footprint_polygon()
+	set_selection_border()
 	position = location
+	pos = map_grid.get_tile(position)
+
+	assert(res.deposits[deposit_type][_r_type] != 0)
 
 
-	assert(res.deposits[deposit_type][r_type] != 0)
-
-
-func load_type(deposit_type):
-	r_type = res.get_r_type(deposit_type)
-	d_type = deposit_type
-	display_name = res.get_display_name(deposit_type)
-	health = 100
-	maxhealth = 100
-	starting[r_type] = res.deposits[deposit_type][r_type]
-	remaining[r_type] = res.deposits[deposit_type][r_type]
-	
-	$Sprite.texture = tools.r_choice(res.deposit_icons[deposit_type])
+func load_stats(deposit_type):
+	_r_type = res.get_r_type(deposit_type)
+	_d_type = deposit_type
+	_stats[Stats.STAT.DISPLAY_NAME] = res.get_display_name(deposit_type)
+	_stats[Stats.STAT.MAXHEALTH] = 100
+	_stats[Stats.STAT.HEALTH] = 100
+	starting[_r_type] = res.deposits[deposit_type][_r_type]
+	remaining[_r_type] = res.deposits[deposit_type][_r_type]
 	$ProgressBar.min_value = 0
-	$ProgressBar.max_value = starting[r_type]
-	
+	$ProgressBar.max_value = starting[_r_type]
+
+func set_spriteframes(_faction_name, deposit_type):
+	var name_string = get_display_name().to_lower().replace(" ", "_")
+	var anim_path = "res://Assets/SpriteFrames/Deposits/" + name_string
+	# $AnimatedSprite.frames = load(anim_path + "/SpriteFrame.tres")
+	#$AnimatedSprite.frames = res.spriteframe_ref[deposit_type]
+	$Sprite.texture = tools.r_choice(res.deposit_icons[deposit_type])
+	# $Sprite.position.y -= max(0, $Sprite.texture.get_height() - 128) / 2
+
+func set_detection_polygon():
+	$BBox/Border.polygon = $DetectionArea.polygon
+
+func set_footprint_polygon():
+	$Footprint.disabled = true
+
+func set_selection_border():
+	$SelectionBorder.texture = load("res://Assets/Art/UI/selection_border_1x1.png")
+	$SelectionBorder.position = Vector2(0, -42)
+
+func build_sounds():
+	var sound_dir = (
+		"res://Assets/Sound/Deposits/" +
+		get_display_name().to_lower().replace(" ", "_") + "/"
+		)
+	for sound_category in [
+		["select/", Sounds.SELECT],
+		["death/", Sounds.DEATH]
+	]:
+		import_sound_subdir(
+			sound_dir,
+			sound_category[0],
+			sound_category[1])
+
 func _process(_delta):
-	if partially_mined:
-		$ProgressBar.show()
-	$ProgressBar.value = remaining[r_type]
 	check_expire()
 
 func is_boxable():
 	return false
+
+func get_id(): return _d_type
+
+func update_bars():
+	if partially_mined:
+		$ProgressBar.show()
+	$ProgressBar.value = remaining[_r_type]
 
 func increment(resource_type, quantity):
 	partially_mined = true
@@ -88,17 +107,11 @@ func check_expire():
 		if count > 0: return
 	kill()
 
-func get_display_name(): return display_name
-
-func get_health(): return health
-
-func get_maxhealth(): return maxhealth
-
 func get_center():
-	return Vector2(position.x, position.y + 16)
+	return position
 
 func get_thumbnail():
-	return res.thumbnail[d_type]
+	return res.thumbnail[_d_type]
 
 func kill():
 	emit_signal("kill")
@@ -106,52 +119,48 @@ func kill():
 
 func select():
 	selected = true
-	$SelectionBox.show()
+	$SelectionBorder.show()
 	$ProgressBar.show()
 
 func deselect():
 	selected = false
-	$SelectionBox.hide()
+	$SelectionBorder.hide()
 	$ProgressBar.hide()
 
-func confirm():
-	return
-
 func gather_target_set(gatherer):
-	$SelectionBox.modulate = Color(255, 0, 0)
-	$SelectionBox.show()
+	$SelectionBorder.modulate = Color(255, 0, 0)
+	$SelectionBorder.show()
 	$FlashTimer.start()
 	gatherers.append(gatherer)
 	connect("kill", gatherer, "_on_Target_Resource_kill")
 
 func gather_target_unset(gatherer):
-	$SelectionBox.modulate = Color(255, 255, 255)
+	$SelectionBorder.modulate = Color(255, 255, 255)
 	if not selected:
-		$SelectionBox.hide()
+		$SelectionBorder.hide()
 	if not partially_mined: $ProgressBar.hide()
 	connect("kill", gatherer, "_on_Target_Resource_kill")
 	gatherers.erase(gatherer)
 
-
-func _on_BBox_input_event(_viewport, event, _shape_idx):
-	if event.is_action_released("left_clicked"):
-		emit_signal("left_clicked", self)
-	elif event.is_action_pressed("right_clicked"):
-		emit_signal("right_clicked", self)
-
-func _on_BBox_mouse_entered():
+func hover():
 	$ProgressBar.show()
-	$SelectionBox.show()
+	$SelectionBorder.show()
 	emit_signal("hovered", self)
 
-func _on_BBox_mouse_exited():
+func unhover():
 	if not selected:
 		$ProgressBar.hide()
-		$SelectionBox.hide()
+		$SelectionBorder.hide()
 	emit_signal("unhovered")
 
 
 func _on_FlashTimer_timeout():
-	$SelectionBox.modulate = Color(255, 255, 255)
-	if not selected:
-		$SelectionBox.hide()
+	border_flashes -= 1
+	if border_flashes == 0:
+		$SelectionBorder.modulate = Color(255, 255, 255)
+		if not selected:
+			$SelectionBorder.hide()
+		border_flashes = 3
+	else:
+		$SelectionBorder.modulate = Color(0, 255, 0)
+		$FlashTimer.start()

@@ -31,29 +31,29 @@ func _unhandled_input(_event):
 func clear():
 	hide()
 
-func set_selection_box(structure_size):
-	var box_textures = {
-		Vector2(1, 1): preload("res://Assets/Art/UI/selection_box_1x1.png"),
-		Vector2(2, 2): preload("res://Assets/Art/UI/selection_box_2x2.png"),
-		Vector2(3, 3): preload("res://Assets/Art/UI/selection_box_3x3.png"),
-		Vector2(4, 4): preload("res://Assets/Art/UI/selection_box_4x4.png")
+func set_selection_border(structure_size):
+	var border_textures = {
+		Vector2(1, 1): preload("res://Assets/Art/UI/selection_border_1x1.png"),
+		Vector2(2, 2): preload("res://Assets/Art/UI/selection_border_2x2.png"),
+		Vector2(3, 3): preload("res://Assets/Art/UI/selection_border_3x3.png"),
+		Vector2(4, 4): preload("res://Assets/Art/UI/selection_border_4x4.png")
 	}
-	$SelectionBox.texture = box_textures[structure_size]
+	$SelectionBorder.texture = border_textures[structure_size]
 
 
 func set_valid():
-	$SelectionBox.modulate = Color(1, 1, 1, 1)
+	$SelectionBorder.modulate = Color(1, 1, 1, 1)
 	$Sprite.modulate = Color(0.5, 0.9, 0.5, 1)
 
 func set_invalid():
-	$SelectionBox.modulate = Color(0.9, 0.5, 0.5, 1)
+	$SelectionBorder.modulate = Color(0.9, 0.5, 0.5, 1)
 	$Sprite.modulate = Color(0.9, 0.5, 0.5, 1)
 
 func setup(structure_type):
 	construction_id = structure_type
 	$Sprite.texture = st.icons[structure_type]
 	building_offset = st.get_footprint_offset(structure_type)
-	set_selection_box(Vector2(
+	set_selection_border(Vector2(
 		st.get_width(structure_type),
 		st.get_height(structure_type)))
 

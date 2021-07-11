@@ -17,6 +17,7 @@ var draw_targets = true
 var draw_nav_polys = true
 var draw_spawn_radius = true
 var draw_attack_range = true
+var reveal_all = false
 var spawn_mode = false
 
 var player_profiles = []
@@ -91,7 +92,8 @@ func new_networked_player(player_data):
 		new_player = local_player_scn.instance()
 	else:
 		new_player = hum_player_scn.instance()
-	new_player.set_network_master(player_data.net_id)
+	if player_data.net_id:
+		new_player.set_network_master(player_data.net_id)
 	new_player.set_name(player_data.name)
 	new_player.set_color(player_data.color)
 	new_player.set_player_number(player_data.number)
@@ -100,7 +102,7 @@ func new_networked_player(player_data):
 	return new_player
 
 func start_local_game():
-	units.spriteframe_warmup()
+	# units.spriteframe_warmup()
 	$GameMap.map_gen()
 	$Nav2D.import_map_data($GameMap)
 	var _player_1_data = {
@@ -108,7 +110,7 @@ func start_local_game():
 		number = 0,
 		color = Color.blue,
 		faction = null,
-		net_id = get_tree().get_network_unique_id(),
+		net_id = null,
 		host = false,
 		local = true
 	}
@@ -122,11 +124,28 @@ func start_local_game():
 		host = false,
 		local = false
 	}
+	var _player_3_data = {
+		name = "Yvraine",
+		number = 2,
+		color = Color.yellow,
+		faction = "imperium",
+		net_id = null,
+		host = false,
+		local = false
+	}
+	var _player_4_data = {
+		name = "Gazghull Mag Uruk Thraka",
+		number = 3,
+		color = Color.green,
+		faction = "imperium",
+		net_id = null,
+		host = false,
+		local = false
+	}
 	var player_pool = {
 		0: _player_1_data
 	}
 	var ai_player_pool = {
-		0: _player_2_data
 	}
 	for player in player_pool.values():
 		var new_player = new_networked_player(player)
@@ -134,6 +153,7 @@ func start_local_game():
 			local_player = new_player
 			new_player.set_local(true)
 		players[player.number] = new_player
+
 		$Players.add_child(new_player)
 		build_player_start(new_player)
 
@@ -144,33 +164,45 @@ func start_local_game():
 		build_player_start(new_ai_player)
 
 	$GameObjects/Fog.set_module_refs()
+	$GameMap/Grid.initialize_tiles()
+	$GameMap/Grid.set_player_ref()
 	$SelectionBox.connect_local_player()
 	$Dispatcher.new_game()
 	$Dispatcher.connect_signals()
+	$GameObjects/Fog._on_FogTimer_timeout()
 	initialize_menus()
 
+
 func _on_Dispatcher_start_multiplayer_game(lobby_name, player_pool, game_settings):
-	units.spriteframe_warmup()
+	# units.spriteframe_warmup()
 	$GameMap.map_gen()
 	$Nav2D.import_map_data($GameMap)
+	var ai_player_pool = {}
+
 
 	for player in player_pool.values():
-
 		var new_player = new_networked_player(player)
 		if player.local:
 			local_player = new_player
 			new_player.set_local(true)
 		players[player.number] = new_player
-		new_player.set_player_number(player.number)
-		new_player.set_color(player.color)
+
 		$Players.add_child(new_player)
 		build_player_start(new_player)
 
+	for ai_player in ai_player_pool.values():
+		var new_ai_player = new_ai_player(ai_player)
+		players[ai_player.number] = new_ai_player
+		$Players.add_child(new_ai_player)
+		build_player_start(new_ai_player)
+
 	$GameObjects/Fog.set_module_refs()
+	$GameMap/Grid.initialize_tiles()
+	$GameMap/Grid.set_player_ref()
 	$SelectionBox.connect_local_player()
 	$Dispatcher.new_game()
 	$Dispatcher.connect_signals()
-	
+	$GameObjects/Fog._on_FogTimer_timeout()
 	initialize_menus()
 
 func build_player_start(player):
@@ -193,9 +225,9 @@ func build_player_start(player):
 				break
 
 	var player_cp = st.add_structure(
-		player.get_player_number(),
 		StructureTypes.STRUCT.COMMAND_POST,
 		random_start,
+		player.get_player_number(),
 		true)
 	player.add_base(player_cp)
 
@@ -207,9 +239,9 @@ func build_player_start(player):
 				tools.rng.randi_range(10, $GameMap.width - 11),
 				tools.rng.randi_range(10, $GameMap.height - 11))
 		units.add_unit(
-			-1,
 			UnitTypes.UTYPE.CHICKEN,
-			$GameMap/TileMap.map_to_world(random_chicken_loc))
+			$GameMap/TileMap.map_to_world(random_chicken_loc),
+			-1)
 	player.on_start($GameMap/TileMap)
 
 func initialize_menus():

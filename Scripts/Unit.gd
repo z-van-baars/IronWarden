@@ -193,7 +193,7 @@ func connect_signals():
 	self.connect("credit_resources", dis, "_on_Unit_credit_resources")
 	self.connect("debit_resources", dis, "_on_Unit_debit_resources")
 
-func setup(player_owner, unit_type, location):
+func setup(unit_type, location, player_owner):
 	set_module_refs()
 	connect_signals()
 	load_stats(unit_type)
@@ -217,7 +217,6 @@ func load_stats(unit_type):
 	if unit_type == UnitTypes.UTYPE.TECHPRIEST:
 		empty_lading()
 	
-	bounding_boxes[units.box_size[unit_type]].input_pickable = true
 	$SelectionBox.texture = selection_border_size[units.box_size[unit_type]]
 	$Range/CollisionShape2D.shape = CircleShape2D.new()
 	$Range/CollisionShape2D.shape.radius = get_range() * 39
@@ -406,12 +405,6 @@ func update_bars():
 	if get_maxshields() != 0:
 		shield_bar.max_value = get_maxshields()
 		shield_bar.value = get_shields()
-	$BumpBar.hide()
-	$BumpLabel.hide()
-	if not bump_timer.is_stopped():
-		$BumpBar.show()
-		$BumpBar.value = bump_timer.time_left
-		$BumpLabel.show()
 	health_bar.max_value = get_maxhealth()
 	health_bar.value = get_health()
 

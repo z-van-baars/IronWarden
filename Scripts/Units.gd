@@ -1,6 +1,6 @@
 extends YSort
 
-onready var unit_scn = preload("res://Scenes/Unit.tscn")
+onready var unit_scn = preload("res://Scenes/MotileUnit.tscn")
 onready var creature_scn = preload("res://Scenes/Creature.tscn")
 onready var worker_scn = preload("res://Scenes/Worker.tscn")
 onready var soldier_scn = preload("res://Scenes/Soldier.tscn")
@@ -164,7 +164,7 @@ func load_unit_sprites(faction_dir, unit_type, unit_dir):
 		var file_str = _dir + faction_dir + unit_dir + direction_str + ".png"
 		icons[unit_type].append(load(file_str))
 
-func add_unit(player_owner, unit_type, location, target_location=null):
+func add_unit(unit_type, location, player_owner, target_location=null):
 	var new_unit
 	if unit_type == UnitTypes.UTYPE.CHICKEN:
 		new_unit = creature_scn.instance()
@@ -177,7 +177,7 @@ func add_unit(player_owner, unit_type, location, target_location=null):
 	else:
 		new_unit = unit_scn.instance()
 	add_child(new_unit)
-	new_unit.setup(player_owner, unit_type, location)
+	new_unit.setup(unit_type, location, player_owner)
 	if target_location:
 		new_unit.move_to(target_location)
 

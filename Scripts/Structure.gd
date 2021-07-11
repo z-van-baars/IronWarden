@@ -233,9 +233,9 @@ func spawn_unit(unit_type):
 			)
 	else:
 		units.add_unit(
-			get_player_number(),
 			unit_type,
-			position + get_spawn_location()
+			position + get_spawn_location(),
+			get_player_number()
 			)
 	emit_signal("unit_spawned", unit_type)
 	emit_signal("spawn_sound")
@@ -251,7 +251,6 @@ func add_to_queue(unit_type):
 		$BuildTimer.wait_time = 0.1
 		$BuildTimer.start()
 	build_queue.append(unit_type)
-
 
 func select():
 	selected = true

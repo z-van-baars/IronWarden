@@ -1,1 +1,1 @@
-extends "res://Scripts/Unit.gd"
+extends "res://Scripts/MotileUnit.gd"

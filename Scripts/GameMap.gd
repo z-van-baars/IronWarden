@@ -36,6 +36,7 @@ func map_gen():
 
 	grid.set_map_parameters(width, height)
 	$TileMap.clear()
+	$GridMap.clear()
 	grid.wipe_map()
 
 	grid.blank_grassland()
@@ -48,8 +49,9 @@ func paint_map_terrain():
 	for y in range(height):
 		for x in range(width):
 			$TileMap.set_cellv(
-				Vector2(x, y),
-				grid.get_cell(Vector2(x, y)).get_base())
+				Vector2(x, y), grid.get_cell(Vector2(x, y)).get_base())
+			$GridMap.set_cellv(
+				Vector2(x, y), 0)
 
 func blank_forest():
 	for _y in range(grid.tiles.size()):

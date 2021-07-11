@@ -23,6 +23,7 @@ func connect_local_player():
 
 func reset():
 	$Panel.rect_position = Vector2.ZERO
+	$Area2D/CollisionShape2D.position = Vector2.ZERO
 	$Timer.stop()
 	selected_units = []
 	hide()
@@ -61,6 +62,8 @@ func _process(_delta):
 		$Panel.rect_position = start
 	top_left = $Panel.rect_position
 	bottom_right = $Panel.rect_size + $Panel.rect_position
+	$Area2D/CollisionShape2D.position = $Panel.rect_position + $Panel.rect_size / 2
+	$Area2D/CollisionShape2D.shape.extents = $Panel.rect_size.abs() / 2
 	
 	set_area()
 
@@ -70,7 +73,7 @@ func set_area():
 	# $Area2D/Borders.shape.extents = $Panel.rect_size / 2
 	selection_rect.extents = (start - stop) / 2
 
-func close_box():
+func close_box_old():
 	if not check_timer():
 		reset()
 		return
@@ -84,3 +87,40 @@ func close_box():
 	emit_signal("selection_box_end", selected_units)
 	hide()
 	reset()
+
+func close_box():
+	if not check_timer():
+		reset()
+		return
+	$Area2D/CollisionShape2D.disabled = false
+	$CloseTimer.start()
+	$Panel.hide()
+
+
+
+
+func _on_CloseTimer_timeout():
+	if not selected_units.empty():
+		emit_signal("selection_box_end", selected_units)
+	print(selected_units)
+	selected_units = []
+	$Area2D/CollisionShape2D.disabled = true
+	hide()
+	reset()
+
+func _on_Area2D_body_entered(body):
+	# Hits for Deposits
+	# Hits for Selection Box
+	selected_units.append(body)
+
+
+func _on_Area2D_area_entered(area):
+	#This one
+	selected_units.append(area)
+
+func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
+	selected_units.append(area)
+
+
+func _on_Area2D_body_shape_entered(body_id, body, body_shape, area_shape):
+	selected_units.append(body)

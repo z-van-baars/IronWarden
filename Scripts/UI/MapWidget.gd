@@ -9,7 +9,7 @@ var st
 var fog
 var camera
 var scaling_factor
-var _name_to_number = {}
+var player_score_labels = {}
 
 func _on_Dispatcher_new_action_logged(action_string):
 	$Panel/MapHeader.text = action_string
@@ -25,8 +25,6 @@ func set_module_refs():
 	camera = main.local_player.get_node("Camera2D")
 	scaling_factor = Vector2(map_width, map_height)
 	$MapTimer.start()
-	for player in main.players.values():
-		_name_to_number[player.get_name()] = player.get_player_number()
 	create_score_labels()
 
 func create_map_texture():
@@ -55,24 +53,22 @@ func clear_score_labels():
 
 func create_score_labels():
 	clear_score_labels()
-	for player in main.players.keys():
+	for player in main.players.values():
 		var score_label = Label.new()
+		score_label.align = Label.ALIGN_RIGHT
 		score_label.text = (
-			main.players[player].get_name()
+			player.get_name()
 			)
-		score_label.modulate = main.players[player].get_color()
+		score_label.modulate = player.get_color() * 1.5
+		player_score_labels[player.get_player_number()] = score_label
+		$PlayerScorePanel/VBoxContainer.add_child(score_label)
 
 func update_player_scores():
-	clear_score_labels()
-	var player_score_labels = {}
-	for each in $PlayerScorePanel/VBoxContainer.get_children():
-		var info = each.split(" ")
-		player_score_labels[info[0]] = each
-	for player_number in player_score_labels.keys():
-		update_score_label(player_score_labels[player_number], player_number)
+	for player in main.players.values():
+		update_score_label(player.get_player_number())
 		
-func update_score_label(score_label, player_number):
-	score_label.text = (
+func update_score_label(player_number):
+	player_score_labels[player_number].text = (
 			main.players[player_number].get_name()
 		)
 
@@ -99,17 +95,15 @@ func draw_map():
 	#$Panel/MapLayers/Tiles.rotation_degrees = 45
 	var unit_marker = Vector2(2, 2)
 	for unit in units.get_children():
-		for row in range(unit_marker.y):
-			for column in range(unit_marker.x):
-				var marker_color
-				if unit.get_player_number() != -1:
-					marker_color = main.players[unit.get_player_number()].get_color()
-				else:
-					marker_color = Color.white
-				unit_img.set_pixel(
-					unit.get_tile_coords().x + column,
-					unit.get_tile_coords().y + row,
-					marker_color)
+		var marker_color
+		if unit.get_player_number() != -1:
+			marker_color = main.players[unit.get_player_number()].get_color()
+		else:
+			marker_color = Color.white
+		unit_img.set_pixel(
+			unit.get_tile_coords().x,
+			unit.get_tile_coords().y,
+			marker_color)
 	for stru in st.get_node("All").get_children():
 		unit_img.set_pixel(
 			stru.get_tile_coords().x,

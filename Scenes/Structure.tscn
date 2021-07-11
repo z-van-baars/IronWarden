@@ -56,7 +56,6 @@ disabled = true
 one_shot = true
 
 [node name="SelectionBox" type="Sprite" parent="."]
-visible = false
 position = Vector2( 0, -42 )
 texture = ExtResource( 2 )
 

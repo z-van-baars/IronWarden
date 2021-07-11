@@ -1,21 +1,26 @@
 extends Node2D
-var x
-var y
-var base
-var resource
-var resource_id
-var structure
-var structure_id
+signal exploration_changed
 
-var explored = false setget set_explored
-
+onready var main = get_tree().root.get_node("Main")
+onready var grid = main.get_node("GameMap/Grid")
+onready var x
+onready var y
+onready var base
+onready var resource
+onready var resource_id
+onready var structure
+onready var structure_id
+onready var _explored = {}
 
 func initialize():
-	x = null
-	y = null
 	set_base(-1)
 	set_resource_id(-1)
 	set_structure_id(-1)
+	self.connect("exploration_changed", grid, "_on_Cell_exploration_changed")
+
+func initialize_exploration():
+	for each_player in main.players.keys():
+		_explored[each_player] = false
 
 func set_pos(coordinates):
 	x = coordinates.x
@@ -66,5 +71,8 @@ func is_buildable():
 		and resource_id == -1
 		and structure_id == -1)
 
-func set_explored(is_explored): explored = is_explored
-func get_explored(): return explored
+func set_explored(player_number, is_explored):
+	_explored[player_number] = is_explored
+	emit_signal("exploration_changed", player_number)
+
+func get_explored(player_number): return _explored[player_number]

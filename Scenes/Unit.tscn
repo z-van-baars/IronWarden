@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Unit.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Art/Tiles/98x52/grass_1.png" type="Texture" id=2]
 [ext_resource path="res://Assets/SpriteFrames/SpriteFrame.tres" type="SpriteFrames" id=3]
-[ext_resource path="res://Assets/Art/UI/selection_border_large.png" type="Texture" id=4]
 [ext_resource path="res://Styles/shieldbarbackground.tres" type="StyleBox" id=5]
 [ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=6]
 [ext_resource path="res://Styles/healthbarvalue.tres" type="StyleBox" id=7]
@@ -41,7 +40,6 @@ visible = false
 texture = ExtResource( 2 )
 
 [node name="Target" type="Sprite" parent="."]
-visible = false
 modulate = Color( 1, 0.113725, 0.113725, 1 )
 texture = ExtResource( 9 )
 region_rect = Rect2( 196, 132, 56, 56 )
@@ -66,15 +64,11 @@ disabled = true
 visible = false
 scale = Vector2( 1.75, 1 )
 shape = SubResource( 3 )
+disabled = true
 
 [node name="SelectionBox" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 9 )
-
-[node name="VehicleSelectionBox" type="Sprite" parent="."]
-visible = false
-scale = Vector2( 0.744752, 0.744752 )
-texture = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -59 )
@@ -111,7 +105,6 @@ __meta__ = {
 }
 
 [node name="BumpBar" type="ProgressBar" parent="."]
-visible = false
 margin_left = -19.0
 margin_top = 1.0
 margin_right = 25.0
@@ -127,7 +120,6 @@ __meta__ = {
 }
 
 [node name="BumpLabel" type="Label" parent="."]
-visible = false
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -142,20 +134,6 @@ align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="BBoxHuman" type="Area2D" parent="."]
-input_pickable = false
-
-[node name="Borders" type="CollisionPolygon2D" parent="BBoxHuman"]
-visible = false
-polygon = PoolVector2Array( 6.43853, -41.2661, -0.0250816, -45.1442, -5.78638, -41.1362, -10.2264, -31.7838, -10.8205, 1.42302, 0.40509, 4.73547, 11.6307, 0.686913, 11.5957, -31.406 )
-
-[node name="BBoxVehicle" type="Area2D" parent="."]
-input_pickable = false
-
-[node name="Borders" type="CollisionPolygon2D" parent="BBoxVehicle"]
-visible = false
-polygon = PoolVector2Array( 24.8958, -36.1723, -0.216873, -41.8601, -22.6854, -36.8671, -47.772, -16.283, -47.0585, 19.6288, -24.6271, 41.0792, 0.0776443, 44.4079, 26.9673, 41.634, 50.84, 22.2023, 49.9134, -19.9571 )
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource( 6 )
@@ -180,12 +158,6 @@ wait_time = 5.0
 [node name="AnimationTimer" type="Timer" parent="."]
 one_shot = true
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
-[connection signal="input_event" from="BBoxHuman" to="." method="_on_BBox_input_event"]
-[connection signal="mouse_entered" from="BBoxHuman" to="." method="_on_BBox_mouse_entered"]
-[connection signal="mouse_exited" from="BBoxHuman" to="." method="_on_BBox_mouse_exited"]
-[connection signal="input_event" from="BBoxVehicle" to="." method="_on_BBox_input_event"]
-[connection signal="mouse_entered" from="BBoxVehicle" to="." method="_on_BBox_mouse_entered"]
-[connection signal="mouse_exited" from="BBoxVehicle" to="." method="_on_BBox_mouse_exited"]
 [connection signal="timeout" from="GatherTimer" to="." method="_on_GatherTimer_timeout"]
 [connection signal="timeout" from="ConstructionTimer" to="." method="_on_ConstructionTimer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

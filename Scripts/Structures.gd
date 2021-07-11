@@ -1,5 +1,5 @@
 extends Node2D
-onready var structure_scn = preload("res://Scenes/Structure.tscn")
+onready var structure_scn = preload("res://Scenes/Struct.tscn")
 
 onready var grid
 onready var nav_map
@@ -52,6 +52,17 @@ onready var footprint = {
 	StructureTypes.STRUCT.ENERGY_CONDUIT: Vector2(2, 2),
 	StructureTypes.STRUCT.BARRACKS: Vector2(3, 3),
 	StructureTypes.STRUCT.TOWER: Vector2(1, 1)
+}
+onready var spriteframe_ref = {}
+
+onready var faction = {
+	StructureTypes.STRUCT.COMMAND_POST: "imperium",
+	StructureTypes.STRUCT.BIOMASS_REACTOR: "imperium",
+	StructureTypes.STRUCT.ALLOY_FOUNDRY: "imperium",
+	StructureTypes.STRUCT.WARPSTONE_REFINERY: "imperium",
+	StructureTypes.STRUCT.ENERGY_CONDUIT: "imperium",
+	StructureTypes.STRUCT.BARRACKS: "imperium",
+	StructureTypes.STRUCT.TOWER: "imperium"
 }
 
 onready var build_options
@@ -205,22 +216,16 @@ func set_module_refs():
 		StructureTypes.STRUCT.TOWER: tower_stats
 	}
 
-func add_structure(player_own : int, structure_type : int, coordinates: Vector2, constructed=false) -> Object:
+func add_structure(structure_type : int, coordinates: Vector2, player_own : int, constructed=false) -> Object:
 	var new_structure = structure_scn.instance()
 	$All.add_child(new_structure)
 	new_structure.setup(
-		player_own,
 		structure_type,
-		coordinates,
 		$StructureMap.map_to_world(coordinates),
-		constructed)
-	# nav_map.update_nav_tile(coordinates, -1)
-	# print(new_structure.get_footprint())
-	# for each_tile in new_structure.get_footprint():
-		# nav_map.add_tile_outline(each_tile)
-	# var tile_coord = Vector2(new_structure.get_footprint()[0])
+		player_own)
 	grid.set_tiles_to_dirt(new_structure.get_footprint())
 	grid.set_structure(new_structure.get_footprint(), new_structure)
+	new_structure.set_constructed(constructed)
 	return new_structure
 
 func get_structures():
@@ -238,6 +243,8 @@ func get_cost(structure_type):
 func get_display_name(structure_type):
 	return statlines[structure_type][Stats.STAT.DISPLAY_NAME]
 
+func get_faction(structure_type):
+	return faction[structure_type]
 
 func get_footprint_tiles(structure_type, coordinates):
 	var footprint_tiles = []

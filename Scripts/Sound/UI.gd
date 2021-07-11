@@ -18,8 +18,6 @@ func _ready():
 func _on_Dispatcher_unit_spawned(_unit):
 	$MarineSpawn.play()
 
-func _on_Dispatcher_set_rally_point():
-	$SetRallyPoint.play()
 
 func _on_zoinks():
 	$Zoinks.play()

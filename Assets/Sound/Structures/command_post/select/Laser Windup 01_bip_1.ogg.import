@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Laser Windup 01_bip_1.ogg-a50a1dfaf88a46746778f86a3f1fa579.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Structures/command_post/select/Laser Windup 01_bip_1.ogg"
+dest_files=[ "res://.import/Laser Windup 01_bip_1.ogg-a50a1dfaf88a46746778f86a3f1fa579.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

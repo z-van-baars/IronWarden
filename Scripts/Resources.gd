@@ -17,6 +17,12 @@ onready var icons
 onready var deposit_icons
 onready var thumbnail
 
+var spriteframe_ref = {
+	DepositTypes.DEPOSIT.CRYSTAL: [],
+	DepositTypes.DEPOSIT.ORE: [],
+	DepositTypes.DEPOSIT.TREE: [],
+	DepositTypes.DEPOSIT.VENT: []
+}
 
 func string_from_id(resource_id):
 	var resource_strings = {
@@ -27,7 +33,6 @@ func string_from_id(resource_id):
 		4: "Command"
 	}
 	return resource_strings[resource_id]
-
 
 func set_module_refs():
 	crystal_deposit = {ResourceTypes.RES.WARPSTONE: 50}
@@ -119,7 +124,7 @@ func add_deposit(deposit_type, coordinates):
 	# Coordinates are MAP coordinates: Vector2(int, int)
 	var new_deposit = deposit_scn.instance()
 	$Deposits.add_child(new_deposit)
-	new_deposit.setup(deposit_type, coordinates, $ResourceMap.map_to_world(coordinates))
+	new_deposit.setup(deposit_type, $ResourceMap.map_to_world(coordinates), -1)
 	grid.set_resource(coordinates, deposit_type)
 
 	grid.set_tiles_to_dirt([coordinates])

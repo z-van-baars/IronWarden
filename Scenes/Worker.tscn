@@ -1,19 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scenes/Unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/MotileUnit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Worker.gd" type="Script" id=2]
-[ext_resource path="res://Assets/Art/UI/Icons/gun.png" type="Texture" id=3]
-
-[sub_resource type="Animation" id=1]
-resource_name = "hammer_swing"
 
 [node name="Worker" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-
-[node name="Hammer" type="Sprite" parent="." index="21"]
-position = Vector2( 0, -42.6892 )
-scale = Vector2( 0.267265, 0.267265 )
-texture = ExtResource( 3 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Hammer" index="0"]
-anims/hammer_swing = SubResource( 1 )

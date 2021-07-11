@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Error 02_bip_1.ogg-2e3a961b18c0eaa826d417ca988ddaec.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Structures/command_post/set_rally_point/Error 02_bip_1.ogg"
+dest_files=[ "res://.import/Error 02_bip_1.ogg-2e3a961b18c0eaa826d417ca988ddaec.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

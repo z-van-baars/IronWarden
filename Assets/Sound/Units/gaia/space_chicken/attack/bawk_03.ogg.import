@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bawk_03.ogg-eb8d01e416975fcd10d649c6a00d8bf5.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/gaia/space_chicken/attack/bawk_03.ogg"
+dest_files=[ "res://.import/bawk_03.ogg-eb8d01e416975fcd10d649c6a00d8bf5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

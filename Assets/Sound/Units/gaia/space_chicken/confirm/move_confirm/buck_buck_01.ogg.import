@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/buck_buck_01.ogg-8cdaed55c3326c1aac1645270a4f93f7.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Units/gaia/space_chicken/confirm/move_confirm/buck_buck_01.ogg"
+dest_files=[ "res://.import/buck_buck_01.ogg-8cdaed55c3326c1aac1645270a4f93f7.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

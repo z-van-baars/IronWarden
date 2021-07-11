@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Pause 08_bip_1.ogg-70f40051a11975443b247e3bcea10091.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Deposits/ore_deposit/select/Pause 08_bip_1.ogg"
+dest_files=[ "res://.import/Pause 08_bip_1.ogg-70f40051a11975443b247e3bcea10091.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

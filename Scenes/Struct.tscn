@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scripts/Struct.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/GameUnit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Art/Structures/3x3.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Art/Structures/imperium/barracks.png" type="Texture" id=4]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[node name="Structure" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+
+[node name="TilePreview" type="Sprite" parent="." index="6"]
+texture = ExtResource( 3 )
+offset = Vector2( 0, -42 )
+
+[node name="Sprite" type="Sprite" parent="." index="7"]
+position = Vector2( 0, -42 )
+texture = ExtResource( 4 )
+
+[node name="Boxes" type="Node2D" parent="." index="19"]
+visible = false
+
+[node name="X1" type="CollisionPolygon2D" parent="Boxes" index="0"]
+visible = false
+polygon = PoolVector2Array( 0.0197906, 53.7784, 52.193, 26.6275, 51.866, 0.267464, -0.455872, -27.3204, -51.5974, 0.127792, -52.3335, 26.0754 )
+disabled = true
+
+[node name="X2" type="CollisionPolygon2D" parent="Boxes" index="1"]
+visible = false
+polygon = PoolVector2Array( -0.186386, 106.467, 101.301, 52.3175, 101.301, 19.2831, -0.455872, -27.3204, -100.992, 20.6453, -101.674, 52.6581 )
+disabled = true
+
+[node name="X3" type="CollisionPolygon2D" parent="Boxes" index="2"]
+visible = false
+polygon = PoolVector2Array( -0.439133, 156.586, 151.395, 78.8253, 151.144, 50.7461, -0.455872, -27.3204, -151.351, 44.4014, -151.351, 78.2105 )
+disabled = true
+
+[node name="X4" type="CollisionPolygon2D" parent="Boxes" index="3"]
+visible = false
+polygon = PoolVector2Array( -0.194458, 209.234, 200.001, 103.973, 200.001, 74.9761, -0.455872, -27.3204, -199.999, 72.319, -200.39, 104.767 )
+disabled = true
+
+[node name="Footprints" type="Area2D" parent="." index="20"]
+visible = false
+
+[node name="X1" type="CollisionPolygon2D" parent="Footprints" index="0"]
+visible = false
+polygon = PoolVector2Array( 0.155716, -0.498287, 51.4181, 25.9873, -0.0780945, 52.5188, -51.3914, 25.9873 )
+disabled = true
+
+[node name="X2" type="CollisionPolygon2D" parent="Footprints" index="1"]
+visible = false
+polygon = PoolVector2Array( 0.0254097, -0.713526, 101.789, 51.9363, 0.010746, 104.838, -102.03, 51.9447 )
+disabled = true
+
+[node name="X3" type="CollisionPolygon2D" parent="Footprints" index="2"]
+visible = false
+polygon = PoolVector2Array( 0.0199089, -0.75968, 151.759, 78.1428, 0.0408173, 157.301, -151.96, 78.0458 )
+disabled = true
+
+[node name="X4" type="CollisionPolygon2D" parent="Footprints" index="3"]
+visible = false
+polygon = PoolVector2Array( 0.0825806, -0.508993, 202.206, 104.049, -0.114365, 209.426, -202.247, 104.034 )
+disabled = true
+
+[node name="SpawnArea" type="Path2D" parent="." index="21"]
+curve = SubResource( 1 )
+
+[node name="BuildTimer" type="Timer" parent="." index="22"]
+one_shot = true
+[connection signal="timeout" from="BuildTimer" to="." method="_on_BuildTimer_timeout"]

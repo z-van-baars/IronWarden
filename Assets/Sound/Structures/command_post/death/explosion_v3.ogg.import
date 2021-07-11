@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/explosion_v3.ogg-b77d79bb70f1a3ae4c4c222f77a228d9.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Structures/command_post/death/explosion_v3.ogg"
+dest_files=[ "res://.import/explosion_v3.ogg-b77d79bb70f1a3ae4c4c222f77a228d9.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

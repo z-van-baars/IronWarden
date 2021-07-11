@@ -249,6 +249,18 @@ func _on_Dispatcher_construction_mode_exited() -> void:
 func _on_Dispatcher_name_changed(new_name : String) -> void:
 	set_name(new_name)
 
+func _on_Dispatcher_unit_left_clicked(unit):
+	pass
+
+func _on_Dispatcher_unit_right_clicked(unit):
+	pass
+
+func _on_Dispatcher_deposit_left_clicked(deposit):
+	pass
+
+func _on_Dispatcher_deposit_right_clicked(deposit):
+	pass
+
 
 
 

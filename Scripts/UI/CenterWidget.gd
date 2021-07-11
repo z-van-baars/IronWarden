@@ -17,6 +17,7 @@ func _process(_delta):
 
 func clear_all():
 	$MainPanel/UnitHeader.hide()
+	$MainPanel/SelectedUnitsLabel.hide()
 	$HealthBarPanel.hide()
 	$ShieldBarPanel.hide()
 	$MainPanel/StatBGPanel.hide()
@@ -38,15 +39,17 @@ func _unhandled_input(event):
 
 func update_display():
 	if not su: return
-
-	$MainPanel/SelectedUnitsLabel.text = str(player.get_selected().size())
+	# For some reason this is flagging as true and also giving the Label a string of `1`
+	if player.get_selected().size() > 0:
+		$MainPanel/SelectedUnitsLabel.show()
+		$MainPanel/SelectedUnitsLabel.text = str(player.get_selected().size())
 	$MainPanel/UnitHeader.show()
 	$MainPanel/UnitHeader.text = su.get_display_name()
 
 	$UnitPortrait/Thumbnail.texture = su.get_thumbnail()
 	$UnitPortrait.show()
-	
-	if su.has_method("get_maxshields()"):
+
+	if su.has_method("get_maxshields()") and su.get_maxshields() != null:
 		$ShieldBarPanel.show()
 		$ShieldBarPanel/ShieldBar.max_value = su.get_maxshields()
 		$ShieldBarPanel/ShieldBar.value = su.get_shields()
@@ -59,7 +62,7 @@ func update_display():
 	$HealthBarPanel/HealthLabel.text = str(su.get_health()) + " / " + str(su.get_maxhealth())
 	$HealthBarPanel/HealthLabelShadow.text = $HealthBarPanel/HealthLabel.text
 	
-	if su.has_method("get_armor"):
+	if su.has_method("get_armor") and su.get_armor() != null:
 		$MainPanel/StatBGPanel.show()
 		$MainPanel/StatBGPanel/ArmorLabel.text = str(su.get_armor())
 		$MainPanel/StatBGPanel/AttackLabel.text = str(su.get_attack())
@@ -107,13 +110,6 @@ func _on_Dispatcher_unit_update():
 	if not su == null: update_display()
 
 
-func _on_Dispatcher_deposit_selected(deposit):
-	clear_all()
-	su = deposit
-	update_display()
-
-
 func _on_ConstructionButton_pressed():
 	$MainPanel/ConstructionButton.hide()
 	emit_signal("construction_button_pressed")
-

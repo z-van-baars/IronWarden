@@ -75,9 +75,12 @@ func _unhandled_input(event):
 			emit_signal("construction_mode_right_clicked")
 			return
 		var click_loc = get_viewport().get_canvas_transform().xform_inv(event.position * $Camera2D._zoom_level)
-		_selected_units[0].play_move_confirm()
+		
 		emit_signal("unit_move_to", click_loc)
 		if _selected_units.size() == 1:
+			if not _selected_units[0].get_player_number() == get_player_number():
+				return
+			_selected_units[0].play_move_confirm()
 			_selected_units[0].player_right_clicked(get_player_number(), click_loc, _shift)
 			return
 
@@ -137,7 +140,7 @@ func select_all_onscreen(unit):
 	_selected_units[0].play_greeting()
 
 
-func _on_Dispatcher_deposit_right_click(deposit):
+func _on_Dispatcher_deposit_right_clicked(deposit):
 	if _selected_units.empty(): return
 	if !gatherers_selected(): return
 	var gatherer_units = []
@@ -150,12 +153,12 @@ func _on_Dispatcher_deposit_right_click(deposit):
 		deposit.gather_target_set(gatherer)
 
 
-func _on_Dispatcher_resource_left_click(deposit):
+func _on_Dispatcher_deposit_left_clicked(deposit):
 	clear_selected()
 	last_clicked = deposit
 	_selected_units = [deposit]
 	deposit.select()
-	emit_signal("deposit_selected", deposit)
+	emit_signal("unit_selected", _selected_units[0])
 
 
 func _on_Dispatcher_unit_left_clicked(unit):
@@ -168,7 +171,9 @@ func _on_Dispatcher_unit_left_clicked(unit):
 	$DoubleClickTimer.start()
 	_selected_units = [unit]
 	unit.select()
-	if unit.get_player_number() == get_player_number():
+
+	if (unit.get_player_number() == get_player_number() or
+		unit.get_player_number() == -1):
 		unit.play_greeting()
 	emit_signal("unit_selected", unit)
 
