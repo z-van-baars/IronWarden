@@ -127,7 +127,7 @@ func gather_task_logic():
 func find_dropoff_target():
 	var structures_to_sort = []
 	for each_structure in st.get_structures():
-		if each_structure.stype in res.dropoff_types[target_resource.r_type]:
+		if each_structure.get_stype() in res.dropoff_types[target_resource.get_r_type()]:
 			structures_to_sort.append(each_structure)
 	return tools.r_choice(structures_to_sort)
 
@@ -160,7 +160,7 @@ func debit_resources(debit_amount):
 func _on_GatherTimer_timeout():
 	target_resource.increment(gather_type, 1)
 	pickup_resource(gather_type, 1)
-	play_sound(Sounds.EXTRACT, target_resource.d_type)
+	play_sound(Sounds.EXTRACT, target_resource.get_id())
 	emit_signal("update", self)
 	$GatherTimer.start(get_gather_time())
 

@@ -35,6 +35,8 @@ _data = {
 }
 
 [node name="GameUnit" type="KinematicBody2D"]
+input_pickable = true
+collision_mask = 0
 script = ExtResource( 1 )
 
 [node name="Sounds" type="Node2D" parent="."]
@@ -74,6 +76,8 @@ offset = Vector2( 0, -59 )
 [node name="Range" type="Area2D" parent="."]
 visible = false
 scale = Vector2( 1.75, 1 )
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
 modulate = Color( 0.737255, 0.117647, 0.823529, 0.258824 )
@@ -164,6 +168,8 @@ one_shot = true
 one_shot = true
 
 [node name="BBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
 
 [node name="Border" type="CollisionPolygon2D" parent="BBox"]
 polygon = PoolVector2Array( 7.43597, 4.60872, 14.335, 0.144623, 13.9292, -29.0749, 10.5473, -39.4912, 0.266365, -45.5786, -10.691, -39.897, -13.5318, -28.9397, -14.0729, -0.125927, -7.30907, 4.60872, 0.131088, 5.96148 )

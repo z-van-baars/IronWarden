@@ -89,6 +89,7 @@ func is_boxable():
 	return false
 
 func get_id(): return _d_type
+func get_r_type(): return _r_type
 
 func update_bars():
 	if partially_mined:
@@ -130,7 +131,6 @@ func deselect():
 func gather_target_set(gatherer):
 	$SelectionBorder.modulate = Color(255, 0, 0)
 	$SelectionBorder.show()
-	$FlashTimer.start()
 	gatherers.append(gatherer)
 	connect("kill", gatherer, "_on_Target_Resource_kill")
 

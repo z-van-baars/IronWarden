@@ -110,6 +110,8 @@ func set_constructed(construction_complete):
 func get_thumbnail():
 	return st.thumbnail[_stype]
 
+func get_stype(): return _stype
+
 func set_spawn_area(structure_size):
 	var new_polygon = PoolVector2Array()
 	var footprint_polygons = {

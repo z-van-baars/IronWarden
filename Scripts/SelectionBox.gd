@@ -22,15 +22,14 @@ func connect_local_player():
 	)
 
 func reset():
-	$Panel.rect_position = Vector2.ZERO
-	$Area2D/CollisionShape2D.position = Vector2.ZERO
+	# $Area2D/CollisionShape2D.disabled = true
 	$Timer.stop()
-	selected_units = []
-	hide()
+	$CloseTimer.stop()
 
 func start_box(mouse_pos):
 	start = mouse_pos
 	$Timer.start()
+	#$Area2D/CollisionShape2D.disabled = false
 	show()
 
 func check_timer():
@@ -62,55 +61,56 @@ func _process(_delta):
 		$Panel.rect_position = start
 	top_left = $Panel.rect_position
 	bottom_right = $Panel.rect_size + $Panel.rect_position
-	$Area2D/CollisionShape2D.position = $Panel.rect_position + $Panel.rect_size / 2
-	$Area2D/CollisionShape2D.shape.extents = $Panel.rect_size.abs() / 2
+	$Area2D/CollisionShape2D.position = $Panel.rect_position + $Panel.rect_size / 2 + Vector2(0, 1)
+	$Area2D/CollisionShape2D.shape.extents = $Panel.rect_size.abs() / 2 + Vector2(0, 1)
 	
 	set_area()
 
 
 func set_area():
-	# $Area2D/Borders.position = $Panel.rect_position + $Panel.rect_size / 2
-	# $Area2D/Borders.shape.extents = $Panel.rect_size / 2
 	selection_rect.extents = (start - stop) / 2
 
-func close_box_old():
+func close_box():
+	selected_units = []
 	if not check_timer():
+		hide()
 		reset()
 		return
 	var space = get_world_2d().direct_space_state
 	var query = Physics2DShapeQueryParameters.new()
-	query.set_shape(selection_rect)
+	query.set_shape($Area2D/CollisionShape2D.shape)
 	query.transform = Transform2D(0, (stop + start) / 2)
 	var covered_units = space.intersect_shape(query)
 	for entry in covered_units:
-		if entry.collider.is_boxable(): selected_units.append(entry.collider)
+		if entry.collider.is_boxable():
+			selected_units.append(entry.collider)
 	emit_signal("selection_box_end", selected_units)
 	hide()
 	reset()
 
-func close_box():
+func close_box_new():
 	if not check_timer():
+		hide()
 		reset()
 		return
+	selected_units = []
 	$Area2D/CollisionShape2D.disabled = false
 	$CloseTimer.start()
-	$Panel.hide()
-
-
-
 
 func _on_CloseTimer_timeout():
+	print($Area2D.get_overlapping_areas())
+	print($Area2D.get_overlapping_bodies())
+	print(selected_units)
 	if not selected_units.empty():
 		emit_signal("selection_box_end", selected_units)
-	print(selected_units)
-	selected_units = []
 	$Area2D/CollisionShape2D.disabled = true
 	hide()
 	reset()
 
+
 func _on_Area2D_body_entered(body):
 	# Hits for Deposits
-	# Hits for Selection Box
+	# Hits for Selection Border
 	selected_units.append(body)
 
 

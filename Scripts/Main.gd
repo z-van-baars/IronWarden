@@ -146,6 +146,7 @@ func start_local_game():
 		0: _player_1_data
 	}
 	var ai_player_pool = {
+		0: _player_2_data
 	}
 	for player in player_pool.values():
 		var new_player = new_networked_player(player)

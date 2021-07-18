@@ -31,6 +31,7 @@ func setup(unit_type, location, player_owner):
 		tools.rng.randf_range(0.0, 1.0)).normalized()
 	set_faction(units.get_faction(unit_type))
 	set_spriteframes(units.get_faction(unit_type), unit_type)
+	set_detection_polygon()
 	build_sounds()
 	zero_target()
 	set_task_idle()
@@ -59,6 +60,9 @@ func set_spriteframes(faction_name, _unit_type):
 	#$AnimatedSprite.frames = units.spriteframe_ref[_unit_type]
 	$AnimatedSprite.modulate = player_colors[get_player_number()] * 0.5 + Color.white * 0.5
 
+
+func set_detection_polygon():
+	$BBox/Border.polygon = $DetectionArea.polygon
 
 func build_sounds():
 	"Assets/Sound/Units/imperium"
@@ -401,9 +405,9 @@ func zero_target():
 	step_target = position
 
 func set_target_resource(resource):
-	if target_resource: target_resource.get_node("SelectionBox").hide()
+	if target_resource: target_resource.get_node("SelectionBorder").hide()
 	target_resource = resource
-	gather_type = resource.r_type
+	gather_type = resource.get_r_type()
 	path_to(resource.get_center())
 
 func set_target_unit(new_target_unit):

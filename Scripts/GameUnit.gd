@@ -309,6 +309,7 @@ func _process(_delta):
 
 func _physics_process(delta):
 	pass
+
 func zero_target():
 	final_target = position
 	path = []

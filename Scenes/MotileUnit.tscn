@@ -5,3 +5,10 @@
 
 [node name="MotileUnit" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="BBox" parent="." index="18"]
+collision_layer = 2
+
+[node name="DetectionArea" type="CollisionPolygon2D" parent="." index="20"]
+visible = false
+polygon = PoolVector2Array( 0.180878, -45.4826, 10.6703, -39.5386, 13.992, -29.5736, 14.5164, 0.321327, 6.82419, 4.69193, -0.168762, 5.9157, -7.6862, 4.86675, -13.9799, -0.0283203, -13.6302, -29.2239, -10.6582, -39.8882 )
