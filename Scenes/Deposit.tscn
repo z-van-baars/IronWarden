@@ -14,10 +14,8 @@ position = Vector2( 0, 26 )
 position = Vector2( 0, -26 )
 texture = ExtResource( 3 )
 
-[node name="BBox" parent="." index="19"]
-visible = false
-
 [node name="DetectionArea" type="CollisionPolygon2D" parent="." index="21"]
+visible = false
 polygon = PoolVector2Array( -0.280312, -47.4827, 30.1983, -24.7311, 51.2329, 26.3529, 0.578239, 52.5387, -51.7935, 25.4943, -30.1898, -26.2251 )
 
 [node name="TileFootprint" type="CollisionPolygon2D" parent="." index="22"]

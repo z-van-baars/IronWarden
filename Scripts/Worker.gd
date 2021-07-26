@@ -2,7 +2,6 @@ extends "res://Scripts/MotileUnit.gd"
 var gather_started = false
 var gather_radius = 50
 
-
 func can_construct(): return true
 
 func can_gather(): return true
@@ -21,8 +20,8 @@ func set_state_extract():
 	state_changed()
 
 func additional_idle_functions():
-	if target_resource != null:
-		clear_target_resource()
+	if target_deposit != null:
+		clear_target_deposit()
 
 
 func additional_move_functions():
@@ -39,7 +38,7 @@ func start_construct():
 	$ConstructionTimer.start(get_construction_time())
 
 func gather(target_deposit):
-	set_target_resource(target_deposit)
+	set_target_deposit(target_deposit)
 	set_task_gather()
 	play_sound(Sounds.GATHER_CONFIRM)
 
@@ -58,11 +57,12 @@ func _draw():
 		# $Target.show()
 		$Target.position = final_target - position
 
-	if target_resource != null and selected == true:
-		target_resource.get_node("SelectionBox").show()
+	if target_deposit != null and selected == true:
+		target_deposit.get_node("SelectionBox").show()
+		target_deposit.get_node("SelectionBox").modulate = Color.green
 
-func _on_Target_Resource_kill():
-	target_resource = null
+func _on_Target_Deposit_exhausted():
+	target_deposit = null
 	if state == States.EXTRACT:
 		set_state_move()
 		path_to(target_dropoff.get_center())
@@ -82,52 +82,47 @@ func empty_lading():
 func get_carried(g_type):
 	return carrying[g_type]
 
+func find_nearby_deposit_target():
+	return map_grid.find_nearby_deposits(position, 10, extraction_type)
+
 func gather_task_logic():
+	if target_deposit == null:
+		target_deposit = map_grid.get_deposit(find_nearby_deposit_target())
+	if target_dropoff == null:
+		target_dropoff = find_dropoff_target()
+	if target_deposit == null and target_dropoff == null:
+		set_state_idle()
+		set_task_idle()
+		zero_target()
+		return
+
 	# is cargo full
 	if get_carried(gather_type) >= get_carry_cap():
 		$GatherTimer.stop()
-		# do we have a drop-off point?
-		if target_dropoff == null: target_dropoff = find_dropoff_target()
-		assert(target_dropoff != null)
-		# are we at drop-off point?
+		# are we at the drop-off point?
 		if check_contact(target_dropoff):
-			# drop-off resources
 			credit_resources()
 			empty_lading()
-			# switch state - return to resource
-			path_to(target_resource.get_center())
+			path_to(target_deposit.get_center())
 			set_state_move()
-		# are we far from drop-off point?
 		else:
-		
-			# do we have a path?
-			if path.size() <= 0:
+			if path.size() <= 0: # do we have a path?
 				path_to(target_dropoff.get_center())
-				set_state_move()
-			# are we colliding with the base area?
-			if check_contact(target_dropoff):
-				# drop-off resources
-				credit_resources()
-				empty_lading()
-				# switch state - return to resource
-				path_to(target_resource.get_center())
 				set_state_move()
 			return
 
-	# is cargo less-than full
-	# are we at the resource target?
-	if not check_contact(target_resource): return
+	# is cargo less-than full?
+	if not check_contact(target_deposit): return
 
 	# have we started gathering already?
 	if state == States.EXTRACT: return
 
-	# if not, start
-	start_gather()
+	start_gather() # if not, start
 
 func find_dropoff_target():
 	var structures_to_sort = []
 	for each_structure in st.get_structures():
-		if each_structure.get_stype() in res.dropoff_types[target_resource.get_r_type()]:
+		if each_structure.get_stype() in res.dropoff_types[target_deposit.get_r_type()]:
 			structures_to_sort.append(each_structure)
 	return tools.r_choice(structures_to_sort)
 
@@ -158,9 +153,12 @@ func debit_resources(debit_amount):
 	emit_signal("debit_resources", debit_amount, get_player_number())
 
 func _on_GatherTimer_timeout():
-	target_resource.increment(gather_type, 1)
-	pickup_resource(gather_type, 1)
-	play_sound(Sounds.EXTRACT, target_resource.get_id())
+	pickup_resource(gather_type, target_deposit.increment(gather_type, 1))
+	play_sound(Sounds.EXTRACT, target_deposit.get_id())
+	$ResourceCollectionLabel.show()
+	$ResourceCollectionLabel/Icon/ResourceIcon.texture = res.icons[gather_type]
+	$ResourceCollectionLabel/QuantityLabel.text = "+ 1 "
+	$ResourceCollectionLabel/AnimationPlayer.play("Extract")
 	emit_signal("update", self)
 	$GatherTimer.start(get_gather_time())
 
@@ -170,3 +168,7 @@ func _on_ConstructionTimer_timeout():
 	$ConstructionTimer.start(get_gather_time())
 
 
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	$ResourceCollectionLabel.hide()

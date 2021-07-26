@@ -125,8 +125,7 @@ func add_deposit(deposit_type, coordinates):
 	var new_deposit = deposit_scn.instance()
 	$Deposits.add_child(new_deposit)
 	new_deposit.setup(deposit_type, $ResourceMap.map_to_world(coordinates), -1)
-	grid.set_resource(coordinates, deposit_type)
-
+	grid.set_deposit(coordinates, new_deposit)
 	grid.set_tiles_to_dirt([coordinates])
 	# nav_map.add_tile_outline(coordinates)
 	# nav_map.add_collision_outline(new_deposit)

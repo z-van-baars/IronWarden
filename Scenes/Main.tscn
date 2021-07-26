@@ -983,7 +983,7 @@ modulate = Color( 0.219608, 0.670588, 1, 1 )
 position = Vector2( 11, -28 )
 frames = SubResource( 79 )
 animation = "wave"
-frame = 10
+frame = 47
 playing = true
 
 [node name="SelectionBox" parent="." instance=ExtResource( 18 )]
@@ -994,7 +994,9 @@ script = ExtResource( 51 )
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
-[node name="ResourcesWidget" type="Control" parent="UILayer"]
+[node name="ResourcesWidget" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 margin_right = 1920.0
 margin_bottom = 36.0
 rect_pivot_offset = Vector2( -148.667, 1047.7 )
@@ -1240,18 +1242,19 @@ __meta__ = {
 }
 
 [node name="Command" type="Control" parent="UILayer/ResourcesWidget"]
-visible = false
-margin_right = 225.0
-margin_bottom = 119.0
+margin_left = 577.0
+margin_right = 650.0
+margin_bottom = 36.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="IconPanel" type="Panel" parent="UILayer/ResourcesWidget/Command"]
-margin_left = 115.0
-margin_top = 91.0
-margin_right = 136.0
-margin_bottom = 111.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -10.0
+margin_right = 21.0
+margin_bottom = 10.0
 custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1265,10 +1268,13 @@ region_enabled = true
 region_rect = Rect2( 102, 125, 16, 16 )
 
 [node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Command"]
-margin_left = 136.0
-margin_top = 91.0
-margin_right = 186.0
-margin_bottom = 111.0
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -10.0
+margin_bottom = 10.0
 custom_styles/panel = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1291,19 +1297,59 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CommandTitle" type="Label" parent="UILayer/ResourcesWidget/Command"]
-visible = false
+[node name="Population" type="Control" parent="UILayer/ResourcesWidget"]
+margin_left = 681.0
+margin_right = 754.0
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="IconPanel" type="Panel" parent="UILayer/ResourcesWidget/Population"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -10.0
+margin_right = 21.0
+margin_bottom = 10.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="UILayer/ResourcesWidget/Population/IconPanel"]
+modulate = Color( 0.745098, 0.862745, 1, 1 )
+position = Vector2( 10.385, 10.0949 )
+scale = Vector2( 0.887571, 0.887571 )
+texture = ExtResource( 50 )
+region_enabled = true
+region_rect = Rect2( 85, 91, 16, 16 )
+
+[node name="BGPanel" type="Panel" parent="UILayer/ResourcesWidget/Population"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -10.0
+margin_bottom = 10.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopCount" type="Label" parent="UILayer/ResourcesWidget/Population/BGPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 89.453
-margin_top = 67.0
-margin_right = 172.453
-margin_bottom = 91.0
+margin_left = -22.5
+margin_top = -13.0
+margin_right = 22.5
+margin_bottom = 11.0
 custom_fonts/font = SubResource( 81 )
 custom_colors/font_color = Color( 0.890196, 0.494118, 0.0705882, 1 )
-text = "Command"
+text = "0"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1359,7 +1405,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterWidget" type="Control" parent="UILayer"]
+[node name="FPSLabel" type="Label" parent="UILayer/ResourcesWidget"]
+margin_left = 8.0
+margin_top = 40.0
+margin_right = 132.0
+margin_bottom = 54.0
+text = "FPS [0]"
+
+[node name="CenterWidget" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -130.0
@@ -1553,9 +1608,9 @@ region_rect = Rect2( 34, 40, 16, 16 )
 
 [node name="ArmorLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
 margin_left = 26.0
-margin_top = 21.1321
+margin_top = 20.1321
 margin_right = 57.0
-margin_bottom = 42.1321
+margin_bottom = 41.1321
 custom_fonts/font = SubResource( 89 )
 text = "5"
 align = 1
@@ -1564,16 +1619,34 @@ __meta__ = {
 }
 
 [node name="Range" type="Sprite" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
-position = Vector2( 11.9208, 50.1321 )
+position = Vector2( 11.9208, 51.1321 )
 texture = ExtResource( 50 )
 region_enabled = true
 region_rect = Rect2( 51, 24, 16, 16 )
 
 [node name="RangeLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
 margin_left = 26.0
-margin_top = 38.0
+margin_top = 39.0
 margin_right = 57.0
-margin_bottom = 59.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 90 )
+text = "5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Speed" type="Sprite" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
+position = Vector2( 11.9208, 70.1321 )
+texture = ExtResource( 50 )
+region_enabled = true
+region_rect = Rect2( 17, 23, 16, 16 )
+
+[node name="SpeedLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatBGPanel"]
+margin_left = 26.0
+margin_top = 58.0
+margin_right = 57.0
+margin_bottom = 79.0
 custom_fonts/font = SubResource( 90 )
 text = "5"
 align = 1
@@ -1631,7 +1704,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MapWidget" type="Control" parent="UILayer"]
+[node name="StatusPanel" type="Panel" parent="UILayer/CenterWidget/MainPanel"]
+anchor_left = -0.000894454
+anchor_right = -0.000894454
+margin_left = 182.5
+margin_top = 8.0
+margin_right = 552.5
+margin_bottom = 122.0
+custom_styles/panel = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StateLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatusPanel"]
+margin_left = 13.0
+margin_top = 8.0
+margin_right = 366.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 81 )
+text = "State - "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TaskLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatusPanel"]
+margin_left = 13.0
+margin_top = 40.0
+margin_right = 366.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 81 )
+text = "Task - "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TargetLabel" type="Label" parent="UILayer/CenterWidget/MainPanel/StatusPanel"]
+margin_left = 13.0
+margin_top = 72.0
+margin_right = 366.0
+margin_bottom = 108.0
+custom_fonts/font = SubResource( 81 )
+text = "Target - "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MapWidget" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -1742,14 +1862,16 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="UILayer/MapWidget/PlayerScorePanel/VBoxContainer"]
 modulate = Color( 1, 0, 0, 1 )
-margin_top = 147.0
+margin_top = 143.0
 margin_right = 194.0
 margin_bottom = 167.0
 custom_fonts/font = ExtResource( 5 )
 text = "gma4567"
 align = 2
 
-[node name="DebugMenu" type="Control" parent="UILayer"]
+[node name="DebugMenu" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 pause_mode = 2
 visible = false
 margin_right = 1920.0
@@ -1849,7 +1971,9 @@ custom_fonts/font = SubResource( 96 )
 custom_colors/font_color = Color( 0, 1, 0.901961, 1 )
 text = "Draw Attack Range: False"
 
-[node name="ConstructionMenu" type="Control" parent="UILayer"]
+[node name="ConstructionMenu" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -2100,7 +2224,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BuildMenu" type="Control" parent="UILayer"]
+[node name="BuildMenu" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 visible = false
 anchor_left = 0.5
 anchor_top = 1.0
@@ -2430,7 +2556,9 @@ margin_top = 80.0
 margin_right = 200.0
 margin_bottom = 120.0
 
-[node name="EventLog" type="Control" parent="UILayer"]
+[node name="EventLog" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 margin_top = 165.0
 margin_right = 385.0
 margin_bottom = 617.0
@@ -2486,7 +2614,9 @@ __meta__ = {
 [node name="EventUpdateTimer" type="Timer" parent="UILayer/EventLog"]
 wait_time = 0.1
 
-[node name="ChatBox" type="Control" parent="UILayer"]
+[node name="ChatBox" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 pause_mode = 2
 visible = false
 margin_top = -1.10803
@@ -2574,7 +2704,9 @@ __meta__ = {
 wait_time = 0.15
 one_shot = true
 
-[node name="OptionsMenu" type="Control" parent="UILayer"]
+[node name="OptionsMenu" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 pause_mode = 2
 visible = false
 margin_right = 1922.0
@@ -2709,7 +2841,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TechTree" type="Control" parent="UILayer"]
+[node name="TechTree" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 pause_mode = 2
 visible = false
 margin_right = 1915.0
@@ -2793,7 +2927,9 @@ __meta__ = {
 visible = false
 mouse_filter = 1
 
-[node name="MainMenu" type="Control" parent="UILayer"]
+[node name="MainMenu" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 pause_mode = 2
 visible = false
 margin_right = 1922.0
@@ -3328,7 +3464,9 @@ custom_fonts/font = SubResource( 107 )
 custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
 text = "Quit to Main Menu"
 
-[node name="JoinGamePopup" type="Control" parent="UILayer/MultiplayerMenu"]
+[node name="JoinGamePopup" type="Control" parent="UILayer/MultiplayerMenu" groups=[
+"UI",
+]]
 pause_mode = 2
 visible = false
 margin_right = 1922.0
@@ -3463,7 +3601,9 @@ custom_fonts/font = SubResource( 107 )
 custom_colors/font_color = Color( 0.639216, 0.984314, 1, 1 )
 text = "Cancel"
 
-[node name="MultiplayerLobby" type="Control" parent="UILayer"]
+[node name="MultiplayerLobby" type="Control" parent="UILayer" groups=[
+"UI",
+]]
 pause_mode = 2
 visible = false
 margin_right = 1922.0
@@ -3604,8 +3744,11 @@ text = "LEAVE GAME"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="all_explored" from="Dispatcher" to="GameObjects/Fog" method="_on_Dispatcher_all_explored"]
+[connection signal="all_visible" from="Dispatcher" to="GameObjects/Fog" method="_on_Dispatcher_all_visible"]
 [connection signal="construction_mode_entered" from="Dispatcher" to="GameObjects/BuildPreview" method="_on_Dispatcher_construction_mode_entered"]
 [connection signal="construction_mode_exited" from="Dispatcher" to="GameObjects/BuildPreview" method="_on_Dispatcher_construction_mode_exited"]
+[connection signal="deposit_exhausted" from="Dispatcher" to="GameMap/Grid" method="_on_Dispatcher_deposit_exhausted"]
 [connection signal="new_action_logged" from="Dispatcher" to="UILayer/MapWidget" method="_on_Dispatcher_new_action_logged"]
 [connection signal="new_action_logged" from="Dispatcher" to="UILayer/EventLog" method="_on_Dispatcher_add_new_event"]
 [connection signal="new_construction" from="Dispatcher" to="GameObjects/Structures" method="_on_Dispatcher_new_construction"]
@@ -3614,10 +3757,11 @@ __meta__ = {
 [connection signal="open_construction_menu" from="Dispatcher" to="UILayer/ConstructionMenu" method="_on_Dispatcher_open_construction_menu"]
 [connection signal="open_tech_tree" from="Dispatcher" to="UILayer/TechTree" method="_on_Dispatcher_open_tech_tree"]
 [connection signal="player_name_changed" from="Dispatcher" to="." method="_on_Dispatcher_player_name_changed"]
+[connection signal="player_resources_changed" from="Dispatcher" to="UILayer/ResourcesWidget" method="_on_Dispatcher_player_resources_changed"]
 [connection signal="reset_cursor" from="Dispatcher" to="Cursor" method="_on_Dispatcher_reset_cursor"]
-[connection signal="selection_cleared" from="Dispatcher" to="UILayer/CenterWidget" method="_on_Dispatcher_selection_cleared"]
 [connection signal="selection_cleared" from="Dispatcher" to="UILayer/ConstructionMenu" method="_on_Dispatcher_selection_cleared"]
 [connection signal="selection_cleared" from="Dispatcher" to="UILayer/BuildMenu" method="_on_Dispatcher_selection_cleared"]
+[connection signal="selection_cleared" from="Dispatcher" to="UILayer/CenterWidget" method="_on_Dispatcher_selection_cleared"]
 [connection signal="selection_cleared" from="Dispatcher" to="RallyPointFlag" method="_on_Dispatcher_selection_cleared"]
 [connection signal="set_target_location" from="Dispatcher" to="RallyPointFlag" method="_on_Dispatcher_set_target_location"]
 [connection signal="start_multiplayer_game" from="Dispatcher" to="." method="_on_Dispatcher_start_multiplayer_game"]
@@ -3627,6 +3771,8 @@ __meta__ = {
 [connection signal="roster_changed" from="Network" to="UILayer/MultiplayerLobby" method="_on_Network_roster_changed"]
 [connection signal="exploration_updated" from="GameMap/Grid" to="GameObjects/Fog" method="_on_Grid_exploration_updated"]
 [connection signal="animation_finished" from="GroundArrows" to="GroundArrows" method="_on_GroundArrows_animation_finished"]
+[connection signal="unit_added" from="GameObjects/Units" to="Dispatcher" method="_on_Units_unit_added"]
+[connection signal="unit_removed" from="GameObjects/Units" to="Dispatcher" method="_on_Units_unit_removed"]
 [connection signal="timeout" from="GameObjects/Fog/FogTimer" to="GameObjects/Fog" method="_on_FogTimer_timeout"]
 [connection signal="timeout" from="UILayer/ResourcesWidget/GameClockPanel/Timer" to="UILayer/ResourcesWidget" method="_on_Timer_timeout"]
 [connection signal="pressed" from="UILayer/ResourcesWidget/QuitButton" to="UILayer/ResourcesWidget" method="_on_QuitButton_pressed"]
@@ -3652,6 +3798,8 @@ __meta__ = {
 [connection signal="timeout" from="UILayer/EventLog/EventUpdateTimer" to="UILayer/EventLog" method="_on_EventUpdateTimer_timeout"]
 [connection signal="chat_message" from="UILayer/ChatBox" to="Dispatcher" method="_on_ChatBox_chat_message"]
 [connection signal="cheatcode" from="UILayer/ChatBox" to="UILayer/ChatBox/Cheats" method="_on_ChatBox_cheatcode"]
+[connection signal="all_explored" from="UILayer/ChatBox/Cheats" to="Dispatcher" method="_on_Cheats_all_explored"]
+[connection signal="all_visible" from="UILayer/ChatBox/Cheats" to="Dispatcher" method="_on_Cheats_all_visible"]
 [connection signal="zoinks" from="UILayer/ChatBox/Cheats" to="Sounds/UI" method="_on_zoinks"]
 [connection signal="text_entered" from="UILayer/ChatBox/Panel/LineEdit" to="UILayer/ChatBox" method="_on_LineEdit_text_entered"]
 [connection signal="pressed" from="UILayer/ChatBox/Panel/ChatButton" to="UILayer/ChatBox" method="_on_ChatButton_pressed"]

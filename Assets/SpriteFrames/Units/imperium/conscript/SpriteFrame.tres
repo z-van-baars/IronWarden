@@ -1600,29 +1600,74 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 733 ), ExtResource( 735 ), ExtResource( 803 ), ExtResource( 931 ), ExtResource( 738 ), ExtResource( 936 ), ExtResource( 863 ), ExtResource( 1308 ), ExtResource( 1330 ), ExtResource( 1316 ), ExtResource( 1324 ), ExtResource( 1314 ), ExtResource( 1319 ), ExtResource( 1305 ), ExtResource( 1329 ), ExtResource( 1317 ), ExtResource( 1299 ), ExtResource( 1320 ), ExtResource( 1301 ), ExtResource( 1321 ), ExtResource( 1332 ), ExtResource( 1302 ), ExtResource( 1310 ), ExtResource( 1322 ), ExtResource( 1323 ), ExtResource( 1311 ), ExtResource( 1325 ), ExtResource( 1326 ) ],
-"loop": true,
-"name": "right_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1371 ), ExtResource( 1369 ), ExtResource( 1378 ), ExtResource( 1370 ), ExtResource( 1394 ), ExtResource( 1373 ), ExtResource( 1372 ), ExtResource( 1389 ), ExtResource( 1362 ), ExtResource( 1398 ), ExtResource( 1380 ), ExtResource( 1374 ), ExtResource( 1376 ), ExtResource( 1363 ), ExtResource( 1365 ), ExtResource( 1377 ), ExtResource( 1387 ), ExtResource( 1388 ), ExtResource( 1381 ), ExtResource( 1383 ), ExtResource( 1399 ), ExtResource( 1364 ), ExtResource( 1384 ), ExtResource( 1400 ), ExtResource( 1401 ), ExtResource( 1402 ), ExtResource( 1367 ), ExtResource( 1403 ) ],
-"loop": true,
-"name": "up_left_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1432 ), ExtResource( 1434 ), ExtResource( 1443 ), ExtResource( 1440 ), ExtResource( 1441 ), ExtResource( 1450 ), ExtResource( 1436 ), ExtResource( 1433 ), ExtResource( 1447 ), ExtResource( 1448 ), ExtResource( 1451 ), ExtResource( 1437 ), ExtResource( 1444 ), ExtResource( 1428 ), ExtResource( 1445 ), ExtResource( 1427 ), ExtResource( 1429 ), ExtResource( 1435 ), ExtResource( 1179 ), ExtResource( 1204 ), ExtResource( 1198 ), ExtResource( 1180 ), ExtResource( 1181 ), ExtResource( 1192 ), ExtResource( 1188 ), ExtResource( 1189 ), ExtResource( 1202 ), ExtResource( 1183 ) ],
-"loop": true,
-"name": "down_left_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 578 ), ExtResource( 583 ), ExtResource( 579 ), ExtResource( 581 ), ExtResource( 580 ), ExtResource( 582 ), ExtResource( 584 ), ExtResource( 593 ), ExtResource( 602 ), ExtResource( 604 ), ExtResource( 603 ), ExtResource( 605 ), ExtResource( 599 ), ExtResource( 616 ), ExtResource( 607 ), ExtResource( 586 ), ExtResource( 600 ), ExtResource( 614 ), ExtResource( 594 ), ExtResource( 609 ) ],
-"loop": true,
-"name": "down_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1256 ), ExtResource( 1247 ), ExtResource( 1237 ), ExtResource( 1246 ), ExtResource( 1257 ), ExtResource( 1259 ), ExtResource( 1248 ), ExtResource( 1260 ), ExtResource( 1264 ), ExtResource( 1235 ), ExtResource( 1236 ), ExtResource( 1261 ), ExtResource( 1251 ), ExtResource( 1238 ), ExtResource( 1268 ), ExtResource( 1262 ), ExtResource( 1249 ), ExtResource( 1245 ), ExtResource( 1253 ), ExtResource( 1250 ), ExtResource( 1242 ), ExtResource( 1263 ), ExtResource( 1252 ), ExtResource( 1239 ), ExtResource( 1265 ), ExtResource( 1266 ), ExtResource( 1269 ), ExtResource( 1234 ), ExtResource( 1270 ), ExtResource( 1271 ) ],
+"frames": [ ExtResource( 261 ), ExtResource( 253 ), ExtResource( 277 ), ExtResource( 278 ), ExtResource( 262 ), ExtResource( 243 ), ExtResource( 279 ), ExtResource( 293 ), ExtResource( 284 ), ExtResource( 280 ), ExtResource( 281 ), ExtResource( 287 ), ExtResource( 282 ), ExtResource( 267 ), ExtResource( 283 ), ExtResource( 285 ), ExtResource( 291 ), ExtResource( 286 ), ExtResource( 288 ), ExtResource( 289 ) ],
 "loop": false,
-"name": "right_windup",
+"name": "right_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 290 ), ExtResource( 292 ), ExtResource( 294 ), ExtResource( 295 ), ExtResource( 296 ), ExtResource( 297 ), ExtResource( 298 ), ExtResource( 263 ), ExtResource( 299 ), ExtResource( 300 ), ExtResource( 301 ), ExtResource( 302 ), ExtResource( 313 ), ExtResource( 326 ), ExtResource( 317 ), ExtResource( 334 ), ExtResource( 306 ), ExtResource( 307 ), ExtResource( 323 ), ExtResource( 310 ) ],
+"loop": false,
+"name": "up_right_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 322 ), ExtResource( 308 ), ExtResource( 325 ), ExtResource( 314 ), ExtResource( 318 ), ExtResource( 332 ), ExtResource( 311 ), ExtResource( 335 ), ExtResource( 304 ), ExtResource( 315 ), ExtResource( 312 ), ExtResource( 316 ), ExtResource( 319 ), ExtResource( 329 ), ExtResource( 320 ), ExtResource( 327 ), ExtResource( 330 ), ExtResource( 321 ), ExtResource( 328 ), ExtResource( 331 ) ],
+"loop": false,
+"name": "up_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 385 ), ExtResource( 374 ), ExtResource( 384 ), ExtResource( 375 ), ExtResource( 383 ), ExtResource( 389 ), ExtResource( 378 ), ExtResource( 382 ), ExtResource( 368 ), ExtResource( 393 ), ExtResource( 370 ), ExtResource( 381 ), ExtResource( 386 ), ExtResource( 392 ), ExtResource( 388 ), ExtResource( 390 ), ExtResource( 369 ), ExtResource( 371 ), ExtResource( 372 ), ExtResource( 373 ) ],
+"loop": false,
+"name": "down_left_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 338 ), ExtResource( 324 ), ExtResource( 333 ), ExtResource( 336 ), ExtResource( 337 ), ExtResource( 339 ), ExtResource( 305 ), ExtResource( 340 ), ExtResource( 341 ), ExtResource( 342 ), ExtResource( 343 ), ExtResource( 344 ), ExtResource( 309 ), ExtResource( 345 ), ExtResource( 367 ), ExtResource( 346 ), ExtResource( 362 ), ExtResource( 347 ), ExtResource( 348 ), ExtResource( 352 ) ],
+"loop": false,
+"name": "up_left_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 349 ), ExtResource( 357 ), ExtResource( 350 ), ExtResource( 351 ), ExtResource( 353 ), ExtResource( 354 ), ExtResource( 355 ), ExtResource( 356 ), ExtResource( 358 ), ExtResource( 359 ), ExtResource( 363 ), ExtResource( 360 ), ExtResource( 361 ), ExtResource( 364 ), ExtResource( 365 ), ExtResource( 391 ), ExtResource( 380 ), ExtResource( 387 ), ExtResource( 377 ), ExtResource( 379 ) ],
+"loop": false,
+"name": "left_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 172 ), ExtResource( 303 ), ExtResource( 376 ), ExtResource( 366 ), ExtResource( 239 ), ExtResource( 988 ), ExtResource( 997 ), ExtResource( 971 ), ExtResource( 981 ), ExtResource( 972 ), ExtResource( 976 ), ExtResource( 986 ), ExtResource( 992 ), ExtResource( 968 ), ExtResource( 989 ), ExtResource( 969 ), ExtResource( 990 ), ExtResource( 985 ), ExtResource( 973 ), ExtResource( 991 ), ExtResource( 993 ), ExtResource( 994 ), ExtResource( 995 ), ExtResource( 977 ), ExtResource( 970 ), ExtResource( 974 ) ],
+"loop": false,
+"name": "down_rot",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 996 ), ExtResource( 998 ), ExtResource( 987 ), ExtResource( 999 ), ExtResource( 1000 ), ExtResource( 982 ), ExtResource( 978 ), ExtResource( 1001 ), ExtResource( 1002 ), ExtResource( 967 ), ExtResource( 984 ), ExtResource( 1003 ), ExtResource( 1009 ), ExtResource( 1004 ), ExtResource( 1005 ), ExtResource( 980 ), ExtResource( 979 ), ExtResource( 983 ), ExtResource( 1006 ), ExtResource( 1007 ), ExtResource( 975 ), ExtResource( 1008 ), ExtResource( 1019 ), ExtResource( 1015 ), ExtResource( 1027 ), ExtResource( 1010 ) ],
+"loop": false,
+"name": "down_right_rot",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1011 ), ExtResource( 1014 ), ExtResource( 1018 ), ExtResource( 1020 ), ExtResource( 1012 ), ExtResource( 1013 ), ExtResource( 1025 ), ExtResource( 1021 ), ExtResource( 1016 ), ExtResource( 1017 ), ExtResource( 1028 ), ExtResource( 1022 ), ExtResource( 1024 ), ExtResource( 1023 ), ExtResource( 1026 ), ExtResource( 1029 ), ExtResource( 1059 ), ExtResource( 1049 ), ExtResource( 1060 ), ExtResource( 1048 ), ExtResource( 1061 ), ExtResource( 1062 ), ExtResource( 1044 ), ExtResource( 1041 ), ExtResource( 1063 ), ExtResource( 1053 ) ],
+"loop": false,
+"name": "right_rot",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1064 ), ExtResource( 1050 ), ExtResource( 1065 ), ExtResource( 1051 ), ExtResource( 1030 ), ExtResource( 1066 ), ExtResource( 1052 ), ExtResource( 1031 ), ExtResource( 1042 ), ExtResource( 1033 ), ExtResource( 1067 ), ExtResource( 1054 ), ExtResource( 1032 ), ExtResource( 1045 ), ExtResource( 1068 ), ExtResource( 1069 ), ExtResource( 1043 ), ExtResource( 1055 ), ExtResource( 1040 ), ExtResource( 1046 ), ExtResource( 1047 ), ExtResource( 1056 ), ExtResource( 1034 ), ExtResource( 1070 ), ExtResource( 1035 ), ExtResource( 1057 ) ],
+"loop": false,
+"name": "up_right_rot",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1058 ), ExtResource( 1071 ), ExtResource( 1036 ), ExtResource( 1072 ), ExtResource( 1037 ), ExtResource( 1073 ), ExtResource( 1038 ), ExtResource( 1074 ), ExtResource( 1039 ), ExtResource( 1091 ), ExtResource( 1075 ), ExtResource( 1085 ), ExtResource( 1076 ), ExtResource( 1090 ), ExtResource( 1077 ), ExtResource( 1078 ), ExtResource( 1082 ), ExtResource( 1080 ), ExtResource( 1086 ), ExtResource( 1079 ), ExtResource( 1081 ), ExtResource( 1083 ), ExtResource( 1089 ), ExtResource( 1084 ), ExtResource( 1088 ), ExtResource( 1087 ) ],
+"loop": false,
+"name": "up_rot",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1092 ), ExtResource( 1116 ), ExtResource( 1102 ), ExtResource( 1098 ), ExtResource( 1110 ), ExtResource( 1117 ), ExtResource( 1099 ), ExtResource( 1113 ), ExtResource( 1094 ), ExtResource( 1108 ), ExtResource( 1103 ), ExtResource( 1114 ), ExtResource( 1122 ), ExtResource( 1112 ), ExtResource( 1123 ), ExtResource( 1111 ), ExtResource( 1124 ), ExtResource( 1125 ), ExtResource( 1107 ), ExtResource( 1104 ), ExtResource( 1126 ), ExtResource( 1118 ), ExtResource( 1115 ), ExtResource( 1105 ), ExtResource( 1119 ), ExtResource( 1127 ) ],
+"loop": false,
+"name": "up_left_rot",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1128 ), ExtResource( 1093 ), ExtResource( 1109 ), ExtResource( 1106 ), ExtResource( 1129 ), ExtResource( 1120 ), ExtResource( 1121 ), ExtResource( 1130 ), ExtResource( 1095 ), ExtResource( 1131 ), ExtResource( 1096 ), ExtResource( 1132 ), ExtResource( 1097 ), ExtResource( 1133 ), ExtResource( 1134 ), ExtResource( 1135 ), ExtResource( 1100 ), ExtResource( 1136 ), ExtResource( 1101 ), ExtResource( 1137 ), ExtResource( 1138 ), ExtResource( 1139 ), ExtResource( 1154 ), ExtResource( 1145 ), ExtResource( 1149 ), ExtResource( 1140 ) ],
+"loop": false,
+"name": "left_rot",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1155 ), ExtResource( 1141 ), ExtResource( 1142 ), ExtResource( 1143 ), ExtResource( 1144 ), ExtResource( 1146 ), ExtResource( 1147 ), ExtResource( 1153 ), ExtResource( 1148 ), ExtResource( 1150 ), ExtResource( 1151 ), ExtResource( 1152 ), ExtResource( 1164 ), ExtResource( 1158 ), ExtResource( 1161 ), ExtResource( 1162 ), ExtResource( 1159 ), ExtResource( 1165 ), ExtResource( 1169 ), ExtResource( 1166 ), ExtResource( 1160 ), ExtResource( 1167 ), ExtResource( 1157 ), ExtResource( 1168 ), ExtResource( 1163 ), ExtResource( 1156 ) ],
+"loop": false,
+"name": "down_left_rot",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 1418 ), ExtResource( 490 ), ExtResource( 488 ), ExtResource( 483 ), ExtResource( 463 ), ExtResource( 491 ), ExtResource( 464 ), ExtResource( 462 ), ExtResource( 467 ), ExtResource( 459 ), ExtResource( 487 ), ExtResource( 465 ), ExtResource( 484 ), ExtResource( 468 ), ExtResource( 485 ), ExtResource( 466 ), ExtResource( 470 ), ExtResource( 479 ), ExtResource( 480 ), ExtResource( 469 ), ExtResource( 471 ), ExtResource( 486 ), ExtResource( 489 ), ExtResource( 477 ), ExtResource( 478 ), ExtResource( 460 ), ExtResource( 461 ), ExtResource( 492 ), ExtResource( 481 ), ExtResource( 493 ) ],
@@ -1635,224 +1680,9 @@ animations = [ {
 "name": "up_left_windup",
 "speed": 30.0
 }, {
-"frames": [ ExtResource( 1404 ), ExtResource( 1405 ), ExtResource( 1420 ), ExtResource( 1411 ), ExtResource( 1421 ), ExtResource( 1422 ), ExtResource( 1406 ), ExtResource( 1409 ), ExtResource( 1407 ), ExtResource( 1408 ), ExtResource( 1419 ), ExtResource( 1410 ), ExtResource( 1412 ), ExtResource( 1413 ), ExtResource( 1414 ), ExtResource( 1415 ), ExtResource( 1424 ), ExtResource( 1423 ), ExtResource( 1416 ), ExtResource( 1425 ), ExtResource( 1417 ), ExtResource( 1442 ), ExtResource( 1438 ), ExtResource( 1430 ), ExtResource( 1449 ), ExtResource( 1439 ), ExtResource( 1431 ), ExtResource( 1426 ) ],
-"loop": true,
-"name": "left_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 290 ), ExtResource( 292 ), ExtResource( 294 ), ExtResource( 295 ), ExtResource( 296 ), ExtResource( 297 ), ExtResource( 298 ), ExtResource( 263 ), ExtResource( 299 ), ExtResource( 300 ), ExtResource( 301 ), ExtResource( 302 ), ExtResource( 313 ), ExtResource( 326 ), ExtResource( 317 ), ExtResource( 334 ), ExtResource( 306 ), ExtResource( 307 ), ExtResource( 323 ), ExtResource( 310 ) ],
-"loop": false,
-"name": "up_right_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 421 ), ExtResource( 412 ), ExtResource( 428 ), ExtResource( 405 ), ExtResource( 426 ), ExtResource( 394 ), ExtResource( 411 ), ExtResource( 413 ), ExtResource( 414 ), ExtResource( 404 ), ExtResource( 399 ), ExtResource( 429 ), ExtResource( 417 ), ExtResource( 415 ), ExtResource( 408 ), ExtResource( 425 ), ExtResource( 402 ), ExtResource( 418 ), ExtResource( 400 ), ExtResource( 395 ) ],
-"loop": true,
-"name": "up_left_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 172 ), ExtResource( 303 ), ExtResource( 376 ), ExtResource( 366 ), ExtResource( 239 ), ExtResource( 988 ), ExtResource( 997 ), ExtResource( 971 ), ExtResource( 981 ), ExtResource( 972 ), ExtResource( 976 ), ExtResource( 986 ), ExtResource( 992 ), ExtResource( 968 ), ExtResource( 989 ), ExtResource( 969 ), ExtResource( 990 ), ExtResource( 985 ), ExtResource( 973 ), ExtResource( 991 ), ExtResource( 993 ), ExtResource( 994 ), ExtResource( 995 ), ExtResource( 977 ), ExtResource( 970 ), ExtResource( 974 ) ],
-"loop": false,
-"name": "down_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1058 ), ExtResource( 1071 ), ExtResource( 1036 ), ExtResource( 1072 ), ExtResource( 1037 ), ExtResource( 1073 ), ExtResource( 1038 ), ExtResource( 1074 ), ExtResource( 1039 ), ExtResource( 1091 ), ExtResource( 1075 ), ExtResource( 1085 ), ExtResource( 1076 ), ExtResource( 1090 ), ExtResource( 1077 ), ExtResource( 1078 ), ExtResource( 1082 ), ExtResource( 1080 ), ExtResource( 1086 ), ExtResource( 1079 ), ExtResource( 1081 ), ExtResource( 1083 ), ExtResource( 1089 ), ExtResource( 1084 ), ExtResource( 1088 ), ExtResource( 1087 ) ],
-"loop": false,
-"name": "up_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1064 ), ExtResource( 1050 ), ExtResource( 1065 ), ExtResource( 1051 ), ExtResource( 1030 ), ExtResource( 1066 ), ExtResource( 1052 ), ExtResource( 1031 ), ExtResource( 1042 ), ExtResource( 1033 ), ExtResource( 1067 ), ExtResource( 1054 ), ExtResource( 1032 ), ExtResource( 1045 ), ExtResource( 1068 ), ExtResource( 1069 ), ExtResource( 1043 ), ExtResource( 1055 ), ExtResource( 1040 ), ExtResource( 1046 ), ExtResource( 1047 ), ExtResource( 1056 ), ExtResource( 1034 ), ExtResource( 1070 ), ExtResource( 1035 ), ExtResource( 1057 ) ],
-"loop": false,
-"name": "up_right_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 865 ), ExtResource( 850 ), ExtResource( 853 ), ExtResource( 860 ), ExtResource( 848 ), ExtResource( 846 ), ExtResource( 858 ), ExtResource( 866 ), ExtResource( 847 ), ExtResource( 849 ), ExtResource( 851 ), ExtResource( 867 ), ExtResource( 852 ), ExtResource( 857 ), ExtResource( 861 ), ExtResource( 854 ), ExtResource( 859 ), ExtResource( 862 ), ExtResource( 901 ), ExtResource( 876 ), ExtResource( 894 ), ExtResource( 878 ), ExtResource( 868 ), ExtResource( 896 ), ExtResource( 899 ), ExtResource( 871 ), ExtResource( 883 ), ExtResource( 880 ), ExtResource( 888 ), ExtResource( 891 ), ExtResource( 897 ), ExtResource( 890 ), ExtResource( 881 ), ExtResource( 889 ), ExtResource( 892 ), ExtResource( 898 ), ExtResource( 872 ), ExtResource( 900 ), ExtResource( 902 ), ExtResource( 903 ), ExtResource( 877 ), ExtResource( 895 ), ExtResource( 879 ), ExtResource( 869 ), ExtResource( 904 ), ExtResource( 905 ), ExtResource( 870 ), ExtResource( 893 ), ExtResource( 906 ), ExtResource( 887 ), ExtResource( 907 ), ExtResource( 886 ), ExtResource( 908 ), ExtResource( 882 ), ExtResource( 873 ), ExtResource( 909 ), ExtResource( 874 ), ExtResource( 884 ), ExtResource( 910 ), ExtResource( 875 ) ],
-"loop": false,
-"name": "left_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1155 ), ExtResource( 1141 ), ExtResource( 1142 ), ExtResource( 1143 ), ExtResource( 1144 ), ExtResource( 1146 ), ExtResource( 1147 ), ExtResource( 1153 ), ExtResource( 1148 ), ExtResource( 1150 ), ExtResource( 1151 ), ExtResource( 1152 ), ExtResource( 1164 ), ExtResource( 1158 ), ExtResource( 1161 ), ExtResource( 1162 ), ExtResource( 1159 ), ExtResource( 1165 ), ExtResource( 1169 ), ExtResource( 1166 ), ExtResource( 1160 ), ExtResource( 1167 ), ExtResource( 1157 ), ExtResource( 1168 ), ExtResource( 1163 ), ExtResource( 1156 ) ],
-"loop": false,
-"name": "down_left_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 120 ), ExtResource( 156 ), ExtResource( 157 ), ExtResource( 158 ), ExtResource( 159 ), ExtResource( 124 ), ExtResource( 160 ), ExtResource( 167 ), ExtResource( 175 ), ExtResource( 161 ), ExtResource( 173 ), ExtResource( 162 ), ExtResource( 174 ), ExtResource( 163 ), ExtResource( 164 ) ],
-"loop": false,
-"name": "up_right_attack",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 792 ), ExtResource( 797 ), ExtResource( 787 ), ExtResource( 788 ), ExtResource( 801 ), ExtResource( 790 ), ExtResource( 791 ), ExtResource( 793 ), ExtResource( 794 ), ExtResource( 795 ), ExtResource( 802 ), ExtResource( 798 ), ExtResource( 796 ), ExtResource( 799 ), ExtResource( 800 ), ExtResource( 835 ), ExtResource( 825 ), ExtResource( 838 ), ExtResource( 823 ), ExtResource( 824 ), ExtResource( 837 ), ExtResource( 826 ), ExtResource( 830 ), ExtResource( 817 ), ExtResource( 819 ), ExtResource( 811 ), ExtResource( 820 ), ExtResource( 821 ), ExtResource( 836 ), ExtResource( 813 ), ExtResource( 822 ), ExtResource( 816 ), ExtResource( 815 ), ExtResource( 814 ), ExtResource( 818 ), ExtResource( 827 ), ExtResource( 831 ), ExtResource( 828 ), ExtResource( 807 ), ExtResource( 812 ), ExtResource( 839 ), ExtResource( 829 ), ExtResource( 833 ), ExtResource( 832 ), ExtResource( 834 ), ExtResource( 804 ), ExtResource( 840 ), ExtResource( 810 ), ExtResource( 805 ), ExtResource( 841 ), ExtResource( 806 ), ExtResource( 809 ), ExtResource( 842 ), ExtResource( 843 ), ExtResource( 808 ), ExtResource( 844 ), ExtResource( 855 ), ExtResource( 845 ), ExtResource( 864 ), ExtResource( 856 ) ],
-"loop": false,
-"name": "up_left_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1011 ), ExtResource( 1014 ), ExtResource( 1018 ), ExtResource( 1020 ), ExtResource( 1012 ), ExtResource( 1013 ), ExtResource( 1025 ), ExtResource( 1021 ), ExtResource( 1016 ), ExtResource( 1017 ), ExtResource( 1028 ), ExtResource( 1022 ), ExtResource( 1024 ), ExtResource( 1023 ), ExtResource( 1026 ), ExtResource( 1029 ), ExtResource( 1059 ), ExtResource( 1049 ), ExtResource( 1060 ), ExtResource( 1048 ), ExtResource( 1061 ), ExtResource( 1062 ), ExtResource( 1044 ), ExtResource( 1041 ), ExtResource( 1063 ), ExtResource( 1053 ) ],
-"loop": false,
-"name": "right_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 385 ), ExtResource( 374 ), ExtResource( 384 ), ExtResource( 375 ), ExtResource( 383 ), ExtResource( 389 ), ExtResource( 378 ), ExtResource( 382 ), ExtResource( 368 ), ExtResource( 393 ), ExtResource( 370 ), ExtResource( 381 ), ExtResource( 386 ), ExtResource( 392 ), ExtResource( 388 ), ExtResource( 390 ), ExtResource( 369 ), ExtResource( 371 ), ExtResource( 372 ), ExtResource( 373 ) ],
-"loop": false,
-"name": "down_left_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 211 ), ExtResource( 212 ), ExtResource( 177 ), ExtResource( 213 ), ExtResource( 181 ), ExtResource( 214 ), ExtResource( 215 ), ExtResource( 216 ), ExtResource( 217 ), ExtResource( 218 ), ExtResource( 219 ), ExtResource( 184 ), ExtResource( 220 ), ExtResource( 185 ), ExtResource( 221 ) ],
-"loop": false,
-"name": "left_attack",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1272 ), ExtResource( 1273 ), ExtResource( 1274 ), ExtResource( 1275 ), ExtResource( 1240 ), ExtResource( 1287 ), ExtResource( 1276 ), ExtResource( 1277 ), ExtResource( 1291 ), ExtResource( 1279 ), ExtResource( 1278 ), ExtResource( 1280 ), ExtResource( 1281 ), ExtResource( 1296 ), ExtResource( 1288 ), ExtResource( 1282 ), ExtResource( 1283 ), ExtResource( 1284 ), ExtResource( 1285 ), ExtResource( 1286 ), ExtResource( 1289 ), ExtResource( 1290 ), ExtResource( 1292 ), ExtResource( 1293 ), ExtResource( 1294 ), ExtResource( 1295 ), ExtResource( 1352 ), ExtResource( 1446 ), ExtResource( 1297 ), ExtResource( 1224 ) ],
-"loop": false,
-"name": "up_right_windup",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 117 ), ExtResource( 138 ), ExtResource( 123 ), ExtResource( 143 ), ExtResource( 118 ), ExtResource( 132 ), ExtResource( 129 ), ExtResource( 147 ), ExtResource( 134 ), ExtResource( 113 ), ExtResource( 144 ), ExtResource( 148 ), ExtResource( 136 ), ExtResource( 137 ), ExtResource( 149 ) ],
-"loop": false,
-"name": "down_right_attack",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 700 ), ExtResource( 701 ), ExtResource( 681 ), ExtResource( 717 ), ExtResource( 682 ), ExtResource( 718 ), ExtResource( 683 ), ExtResource( 719 ), ExtResource( 684 ), ExtResource( 720 ), ExtResource( 685 ), ExtResource( 721 ), ExtResource( 723 ), ExtResource( 722 ), ExtResource( 724 ), ExtResource( 689 ), ExtResource( 725 ), ExtResource( 726 ), ExtResource( 737 ), ExtResource( 739 ), ExtResource( 727 ), ExtResource( 728 ), ExtResource( 736 ), ExtResource( 729 ), ExtResource( 730 ), ExtResource( 731 ), ExtResource( 734 ), ExtResource( 732 ) ],
-"loop": true,
-"name": "down_right_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 456 ), ExtResource( 671 ), ExtResource( 585 ), ExtResource( 145 ), ExtResource( 121 ), ExtResource( 146 ), ExtResource( 112 ), ExtResource( 140 ), ExtResource( 127 ), ExtResource( 142 ), ExtResource( 128 ), ExtResource( 141 ), ExtResource( 125 ), ExtResource( 139 ), ExtResource( 135 ) ],
-"loop": false,
-"name": "down_attack",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1128 ), ExtResource( 1093 ), ExtResource( 1109 ), ExtResource( 1106 ), ExtResource( 1129 ), ExtResource( 1120 ), ExtResource( 1121 ), ExtResource( 1130 ), ExtResource( 1095 ), ExtResource( 1131 ), ExtResource( 1096 ), ExtResource( 1132 ), ExtResource( 1097 ), ExtResource( 1133 ), ExtResource( 1134 ), ExtResource( 1135 ), ExtResource( 1100 ), ExtResource( 1136 ), ExtResource( 1101 ), ExtResource( 1137 ), ExtResource( 1138 ), ExtResource( 1139 ), ExtResource( 1154 ), ExtResource( 1145 ), ExtResource( 1149 ), ExtResource( 1140 ) ],
-"loop": false,
-"name": "left_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 338 ), ExtResource( 324 ), ExtResource( 333 ), ExtResource( 336 ), ExtResource( 337 ), ExtResource( 339 ), ExtResource( 305 ), ExtResource( 340 ), ExtResource( 341 ), ExtResource( 342 ), ExtResource( 343 ), ExtResource( 344 ), ExtResource( 309 ), ExtResource( 345 ), ExtResource( 367 ), ExtResource( 346 ), ExtResource( 362 ), ExtResource( 347 ), ExtResource( 348 ), ExtResource( 352 ) ],
-"loop": false,
-"name": "up_left_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 641 ), ExtResource( 642 ), ExtResource( 637 ), ExtResource( 638 ), ExtResource( 639 ), ExtResource( 643 ), ExtResource( 644 ), ExtResource( 645 ), ExtResource( 646 ), ExtResource( 648 ), ExtResource( 658 ), ExtResource( 674 ), ExtResource( 659 ), ExtResource( 654 ), ExtResource( 661 ), ExtResource( 652 ), ExtResource( 653 ), ExtResource( 660 ), ExtResource( 655 ), ExtResource( 662 ) ],
-"loop": true,
-"name": "up_right_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 95 ), ExtResource( 96 ), ExtResource( 97 ), ExtResource( 108 ), ExtResource( 103 ), ExtResource( 101 ), ExtResource( 104 ), ExtResource( 109 ), ExtResource( 110 ), ExtResource( 102 ), ExtResource( 111 ), ExtResource( 105 ), ExtResource( 99 ), ExtResource( 100 ), ExtResource( 106 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 19 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 20 ), ExtResource( 15 ), ExtResource( 21 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 25 ), ExtResource( 32 ), ExtResource( 22 ), ExtResource( 26 ), ExtResource( 33 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 18 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 98 ), ExtResource( 34 ), ExtResource( 107 ), ExtResource( 1485 ), ExtResource( 1467 ), ExtResource( 1462 ), ExtResource( 1480 ), ExtResource( 1456 ), ExtResource( 1482 ), ExtResource( 1486 ), ExtResource( 1469 ), ExtResource( 1479 ) ],
-"loop": false,
-"name": "down_right_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 419 ), ExtResource( 427 ), ExtResource( 406 ), ExtResource( 397 ), ExtResource( 430 ), ExtResource( 401 ), ExtResource( 431 ), ExtResource( 407 ), ExtResource( 396 ), ExtResource( 432 ), ExtResource( 433 ), ExtResource( 398 ), ExtResource( 409 ), ExtResource( 434 ), ExtResource( 410 ), ExtResource( 403 ), ExtResource( 451 ), ExtResource( 441 ), ExtResource( 452 ), ExtResource( 435 ) ],
-"loop": true,
-"name": "left_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 261 ), ExtResource( 253 ), ExtResource( 277 ), ExtResource( 278 ), ExtResource( 262 ), ExtResource( 243 ), ExtResource( 279 ), ExtResource( 293 ), ExtResource( 284 ), ExtResource( 280 ), ExtResource( 281 ), ExtResource( 287 ), ExtResource( 282 ), ExtResource( 267 ), ExtResource( 283 ), ExtResource( 285 ), ExtResource( 291 ), ExtResource( 286 ), ExtResource( 288 ), ExtResource( 289 ) ],
-"loop": false,
-"name": "right_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 42 ), ExtResource( 70 ), ExtResource( 63 ), ExtResource( 69 ), ExtResource( 59 ), ExtResource( 66 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 67 ), ExtResource( 57 ), ExtResource( 35 ), ExtResource( 38 ), ExtResource( 37 ), ExtResource( 60 ), ExtResource( 64 ), ExtResource( 50 ), ExtResource( 43 ), ExtResource( 51 ), ExtResource( 46 ), ExtResource( 52 ), ExtResource( 61 ), ExtResource( 55 ), ExtResource( 71 ), ExtResource( 47 ), ExtResource( 62 ), ExtResource( 65 ), ExtResource( 68 ), ExtResource( 58 ), ExtResource( 53 ), ExtResource( 36 ), ExtResource( 72 ), ExtResource( 73 ), ExtResource( 74 ), ExtResource( 40 ), ExtResource( 39 ), ExtResource( 75 ), ExtResource( 76 ), ExtResource( 41 ), ExtResource( 77 ), ExtResource( 78 ), ExtResource( 79 ), ExtResource( 44 ), ExtResource( 80 ), ExtResource( 45 ), ExtResource( 81 ), ExtResource( 82 ), ExtResource( 83 ), ExtResource( 84 ), ExtResource( 85 ), ExtResource( 92 ), ExtResource( 86 ), ExtResource( 87 ), ExtResource( 88 ), ExtResource( 89 ), ExtResource( 90 ), ExtResource( 91 ), ExtResource( 93 ), ExtResource( 94 ) ],
-"loop": false,
-"name": "down_idle",
-"speed": 30.0
-}, {
 "frames": [ ExtResource( 518 ), ExtResource( 516 ), ExtResource( 517 ), ExtResource( 519 ), ExtResource( 531 ), ExtResource( 556 ), ExtResource( 523 ), ExtResource( 532 ), ExtResource( 543 ), ExtResource( 552 ), ExtResource( 534 ), ExtResource( 544 ), ExtResource( 553 ), ExtResource( 551 ), ExtResource( 554 ), ExtResource( 557 ), ExtResource( 548 ), ExtResource( 545 ), ExtResource( 529 ), ExtResource( 524 ), ExtResource( 536 ), ExtResource( 546 ), ExtResource( 547 ), ExtResource( 555 ), ExtResource( 522 ), ExtResource( 530 ), ExtResource( 558 ), ExtResource( 526 ), ExtResource( 537 ), ExtResource( 527 ) ],
 "loop": false,
 "name": "left_windup",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 322 ), ExtResource( 308 ), ExtResource( 325 ), ExtResource( 314 ), ExtResource( 318 ), ExtResource( 332 ), ExtResource( 311 ), ExtResource( 335 ), ExtResource( 304 ), ExtResource( 315 ), ExtResource( 312 ), ExtResource( 316 ), ExtResource( 319 ), ExtResource( 329 ), ExtResource( 320 ), ExtResource( 327 ), ExtResource( 330 ), ExtResource( 321 ), ExtResource( 328 ), ExtResource( 331 ) ],
-"loop": false,
-"name": "up_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1300 ), ExtResource( 1333 ), ExtResource( 1331 ), ExtResource( 1307 ), ExtResource( 1313 ), ExtResource( 1315 ), ExtResource( 1298 ), ExtResource( 1327 ), ExtResource( 1318 ), ExtResource( 1328 ), ExtResource( 1334 ), ExtResource( 1335 ), ExtResource( 1312 ), ExtResource( 1336 ), ExtResource( 1309 ), ExtResource( 1337 ), ExtResource( 1338 ), ExtResource( 1303 ), ExtResource( 1339 ), ExtResource( 1304 ), ExtResource( 1306 ), ExtResource( 1340 ), ExtResource( 1341 ), ExtResource( 1359 ), ExtResource( 1344 ), ExtResource( 1354 ), ExtResource( 1349 ), ExtResource( 1357 ) ],
-"loop": true,
-"name": "up_right_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 996 ), ExtResource( 998 ), ExtResource( 987 ), ExtResource( 999 ), ExtResource( 1000 ), ExtResource( 982 ), ExtResource( 978 ), ExtResource( 1001 ), ExtResource( 1002 ), ExtResource( 967 ), ExtResource( 984 ), ExtResource( 1003 ), ExtResource( 1009 ), ExtResource( 1004 ), ExtResource( 1005 ), ExtResource( 980 ), ExtResource( 979 ), ExtResource( 983 ), ExtResource( 1006 ), ExtResource( 1007 ), ExtResource( 975 ), ExtResource( 1008 ), ExtResource( 1019 ), ExtResource( 1015 ), ExtResource( 1027 ), ExtResource( 1010 ) ],
-"loop": false,
-"name": "down_right_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1591 ), ExtResource( 1587 ), ExtResource( 1588 ), ExtResource( 1592 ), ExtResource( 1581 ), ExtResource( 1582 ), ExtResource( 1583 ), ExtResource( 1584 ), ExtResource( 1585 ), ExtResource( 1515 ), ExtResource( 1586 ), ExtResource( 1579 ), ExtResource( 747 ), ExtResource( 763 ), ExtResource( 756 ), ExtResource( 773 ), ExtResource( 748 ), ExtResource( 757 ), ExtResource( 750 ), ExtResource( 774 ), ExtResource( 749 ), ExtResource( 740 ), ExtResource( 751 ), ExtResource( 742 ), ExtResource( 752 ), ExtResource( 766 ), ExtResource( 755 ), ExtResource( 761 ), ExtResource( 745 ), ExtResource( 767 ), ExtResource( 760 ), ExtResource( 775 ), ExtResource( 758 ), ExtResource( 744 ), ExtResource( 776 ), ExtResource( 753 ), ExtResource( 754 ), ExtResource( 765 ), ExtResource( 741 ), ExtResource( 759 ), ExtResource( 762 ), ExtResource( 777 ), ExtResource( 778 ), ExtResource( 743 ), ExtResource( 764 ), ExtResource( 768 ), ExtResource( 769 ), ExtResource( 771 ), ExtResource( 770 ), ExtResource( 772 ), ExtResource( 779 ), ExtResource( 780 ), ExtResource( 781 ), ExtResource( 746 ), ExtResource( 783 ), ExtResource( 782 ), ExtResource( 784 ), ExtResource( 789 ), ExtResource( 785 ), ExtResource( 786 ) ],
-"loop": false,
-"name": "up_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 695 ), ExtResource( 677 ), ExtResource( 691 ), ExtResource( 703 ), ExtResource( 704 ), ExtResource( 686 ), ExtResource( 688 ), ExtResource( 699 ), ExtResource( 678 ), ExtResource( 680 ), ExtResource( 710 ), ExtResource( 679 ), ExtResource( 676 ), ExtResource( 690 ), ExtResource( 715 ), ExtResource( 711 ), ExtResource( 692 ), ExtResource( 694 ), ExtResource( 705 ), ExtResource( 713 ), ExtResource( 696 ), ExtResource( 687 ), ExtResource( 697 ), ExtResource( 712 ), ExtResource( 714 ), ExtResource( 702 ), ExtResource( 698 ), ExtResource( 716 ) ],
-"loop": true,
-"name": "down_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 255 ), ExtResource( 258 ), ExtResource( 256 ), ExtResource( 269 ), ExtResource( 273 ), ExtResource( 249 ), ExtResource( 250 ), ExtResource( 266 ), ExtResource( 268 ), ExtResource( 247 ), ExtResource( 257 ), ExtResource( 248 ), ExtResource( 251 ), ExtResource( 272 ), ExtResource( 275 ), ExtResource( 252 ), ExtResource( 240 ), ExtResource( 276 ), ExtResource( 259 ), ExtResource( 241 ) ],
-"loop": false,
-"name": "down_right_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1211 ), ExtResource( 1176 ), ExtResource( 1212 ), ExtResource( 1213 ), ExtResource( 1229 ), ExtResource( 1230 ), ExtResource( 1214 ), ExtResource( 1233 ), ExtResource( 1225 ), ExtResource( 1227 ), ExtResource( 1215 ), ExtResource( 1216 ), ExtResource( 1226 ), ExtResource( 1217 ), ExtResource( 1228 ), ExtResource( 1218 ), ExtResource( 1219 ), ExtResource( 1220 ), ExtResource( 1231 ), ExtResource( 1232 ), ExtResource( 1222 ), ExtResource( 1223 ), ExtResource( 1221 ), ExtResource( 1267 ), ExtResource( 1243 ), ExtResource( 1258 ), ExtResource( 1255 ), ExtResource( 1244 ), ExtResource( 1241 ), ExtResource( 1254 ) ],
-"loop": false,
-"name": "down_right_windup",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1463 ), ExtResource( 1477 ), ExtResource( 1466 ), ExtResource( 1472 ), ExtResource( 1454 ), ExtResource( 1464 ), ExtResource( 1460 ), ExtResource( 1458 ), ExtResource( 1478 ), ExtResource( 1483 ), ExtResource( 1481 ), ExtResource( 1473 ), ExtResource( 1487 ), ExtResource( 1457 ), ExtResource( 1455 ), ExtResource( 1471 ), ExtResource( 1484 ), ExtResource( 1459 ), ExtResource( 1468 ), ExtResource( 1465 ), ExtResource( 1452 ), ExtResource( 1488 ), ExtResource( 1453 ), ExtResource( 1491 ), ExtResource( 1489 ), ExtResource( 1490 ), ExtResource( 1492 ), ExtResource( 1493 ), ExtResource( 1494 ), ExtResource( 1495 ), ExtResource( 1496 ), ExtResource( 1461 ), ExtResource( 1497 ), ExtResource( 1498 ), ExtResource( 1499 ), ExtResource( 1474 ), ExtResource( 1475 ), ExtResource( 1502 ), ExtResource( 1476 ), ExtResource( 1470 ), ExtResource( 1505 ), ExtResource( 1500 ), ExtResource( 1501 ), ExtResource( 1503 ), ExtResource( 1506 ), ExtResource( 1504 ), ExtResource( 1507 ), ExtResource( 1508 ), ExtResource( 1509 ), ExtResource( 1510 ), ExtResource( 1511 ), ExtResource( 1512 ), ExtResource( 1513 ), ExtResource( 1514 ), ExtResource( 1549 ), ExtResource( 1524 ), ExtResource( 1532 ), ExtResource( 1526 ), ExtResource( 1520 ), ExtResource( 1543 ) ],
-"loop": false,
-"name": "right_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 911 ), ExtResource( 912 ), ExtResource( 913 ), ExtResource( 914 ), ExtResource( 915 ), ExtResource( 916 ), ExtResource( 917 ), ExtResource( 918 ), ExtResource( 919 ), ExtResource( 920 ), ExtResource( 885 ), ExtResource( 921 ), ExtResource( 930 ), ExtResource( 922 ), ExtResource( 923 ), ExtResource( 927 ), ExtResource( 924 ), ExtResource( 925 ), ExtResource( 926 ), ExtResource( 928 ), ExtResource( 929 ), ExtResource( 959 ), ExtResource( 940 ), ExtResource( 966 ), ExtResource( 944 ), ExtResource( 943 ), ExtResource( 934 ), ExtResource( 945 ), ExtResource( 947 ), ExtResource( 958 ), ExtResource( 954 ), ExtResource( 960 ), ExtResource( 950 ), ExtResource( 946 ), ExtResource( 948 ), ExtResource( 937 ), ExtResource( 942 ), ExtResource( 955 ), ExtResource( 964 ), ExtResource( 949 ), ExtResource( 951 ), ExtResource( 965 ), ExtResource( 932 ), ExtResource( 963 ), ExtResource( 952 ), ExtResource( 938 ), ExtResource( 939 ), ExtResource( 953 ), ExtResource( 956 ), ExtResource( 935 ), ExtResource( 957 ), ExtResource( 941 ), ExtResource( 961 ), ExtResource( 933 ), ExtResource( 962 ), ExtResource( 706 ), ExtResource( 693 ), ExtResource( 708 ), ExtResource( 707 ), ExtResource( 709 ) ],
-"loop": false,
-"name": "down_left_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1092 ), ExtResource( 1116 ), ExtResource( 1102 ), ExtResource( 1098 ), ExtResource( 1110 ), ExtResource( 1117 ), ExtResource( 1099 ), ExtResource( 1113 ), ExtResource( 1094 ), ExtResource( 1108 ), ExtResource( 1103 ), ExtResource( 1114 ), ExtResource( 1122 ), ExtResource( 1112 ), ExtResource( 1123 ), ExtResource( 1111 ), ExtResource( 1124 ), ExtResource( 1125 ), ExtResource( 1107 ), ExtResource( 1104 ), ExtResource( 1126 ), ExtResource( 1118 ), ExtResource( 1115 ), ExtResource( 1105 ), ExtResource( 1119 ), ExtResource( 1127 ) ],
-"loop": false,
-"name": "up_left_rot",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1360 ), ExtResource( 1342 ), ExtResource( 1361 ), ExtResource( 1343 ), ExtResource( 1358 ), ExtResource( 1348 ), ExtResource( 1345 ), ExtResource( 1346 ), ExtResource( 1347 ), ExtResource( 1350 ), ExtResource( 1355 ), ExtResource( 1351 ), ExtResource( 1353 ), ExtResource( 1356 ), ExtResource( 1396 ), ExtResource( 1366 ), ExtResource( 1392 ), ExtResource( 1393 ), ExtResource( 1379 ), ExtResource( 1397 ), ExtResource( 1390 ), ExtResource( 1382 ), ExtResource( 1395 ), ExtResource( 1391 ), ExtResource( 1375 ), ExtResource( 1386 ), ExtResource( 1368 ), ExtResource( 1385 ) ],
-"loop": true,
-"name": "up_walk",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 230 ), ExtResource( 229 ), ExtResource( 231 ), ExtResource( 232 ), ExtResource( 233 ), ExtResource( 234 ), ExtResource( 235 ), ExtResource( 236 ), ExtResource( 238 ), ExtResource( 242 ), ExtResource( 264 ), ExtResource( 270 ), ExtResource( 274 ), ExtResource( 265 ), ExtResource( 246 ), ExtResource( 271 ), ExtResource( 244 ), ExtResource( 254 ), ExtResource( 245 ), ExtResource( 260 ) ],
-"loop": false,
-"name": "down_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 349 ), ExtResource( 357 ), ExtResource( 350 ), ExtResource( 351 ), ExtResource( 353 ), ExtResource( 354 ), ExtResource( 355 ), ExtResource( 356 ), ExtResource( 358 ), ExtResource( 359 ), ExtResource( 363 ), ExtResource( 360 ), ExtResource( 361 ), ExtResource( 364 ), ExtResource( 365 ), ExtResource( 391 ), ExtResource( 380 ), ExtResource( 387 ), ExtResource( 377 ), ExtResource( 379 ) ],
-"loop": false,
-"name": "left_dying",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 598 ), ExtResource( 588 ), ExtResource( 591 ), ExtResource( 624 ), ExtResource( 625 ), ExtResource( 590 ), ExtResource( 626 ), ExtResource( 627 ), ExtResource( 592 ), ExtResource( 635 ), ExtResource( 628 ), ExtResource( 631 ), ExtResource( 630 ), ExtResource( 640 ), ExtResource( 632 ), ExtResource( 647 ), ExtResource( 629 ), ExtResource( 633 ), ExtResource( 634 ), ExtResource( 636 ) ],
-"loop": true,
-"name": "right_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 606 ), ExtResource( 601 ), ExtResource( 608 ), ExtResource( 611 ), ExtResource( 596 ), ExtResource( 610 ), ExtResource( 615 ), ExtResource( 617 ), ExtResource( 618 ), ExtResource( 595 ), ExtResource( 612 ), ExtResource( 619 ), ExtResource( 613 ), ExtResource( 620 ), ExtResource( 621 ), ExtResource( 622 ), ExtResource( 589 ), ExtResource( 597 ), ExtResource( 587 ), ExtResource( 623 ) ],
-"loop": true,
-"name": "down_right_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 675 ), ExtResource( 663 ), ExtResource( 673 ), ExtResource( 668 ), ExtResource( 650 ), ExtResource( 669 ), ExtResource( 664 ), ExtResource( 656 ), ExtResource( 665 ), ExtResource( 651 ), ExtResource( 666 ), ExtResource( 667 ), ExtResource( 657 ), ExtResource( 672 ), ExtResource( 670 ), ExtResource( 423 ), ExtResource( 420 ), ExtResource( 416 ), ExtResource( 424 ), ExtResource( 422 ) ],
-"loop": true,
-"name": "up_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 436 ), ExtResource( 443 ), ExtResource( 437 ), ExtResource( 444 ), ExtResource( 457 ), ExtResource( 438 ), ExtResource( 439 ), ExtResource( 440 ), ExtResource( 442 ), ExtResource( 447 ), ExtResource( 445 ), ExtResource( 446 ), ExtResource( 448 ), ExtResource( 449 ), ExtResource( 450 ), ExtResource( 453 ), ExtResource( 454 ), ExtResource( 455 ), ExtResource( 521 ), ExtResource( 649 ) ],
-"loop": true,
-"name": "down_left_attack_idle",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 168 ), ExtResource( 165 ), ExtResource( 171 ), ExtResource( 166 ), ExtResource( 169 ), ExtResource( 170 ), ExtResource( 180 ), ExtResource( 204 ), ExtResource( 179 ), ExtResource( 195 ), ExtResource( 205 ), ExtResource( 202 ), ExtResource( 198 ), ExtResource( 206 ), ExtResource( 207 ) ],
-"loop": false,
-"name": "up_attack",
-"speed": 30.0
-}, {
-"frames": [ ExtResource( 1193 ), ExtResource( 1182 ), ExtResource( 1196 ), ExtResource( 1184 ), ExtResource( 1171 ), ExtResource( 1190 ), ExtResource( 1178 ), ExtResource( 1172 ), ExtResource( 1170 ), ExtResource( 1185 ), ExtResource( 1207 ), ExtResource( 1201 ), ExtResource( 1186 ), ExtResource( 1187 ), ExtResource( 1195 ), ExtResource( 1191 ), ExtResource( 1194 ), ExtResource( 1205 ), ExtResource( 1197 ), ExtResource( 1199 ), ExtResource( 1200 ), ExtResource( 1208 ), ExtResource( 1203 ), ExtResource( 1206 ), ExtResource( 1173 ), ExtResource( 1177 ), ExtResource( 1175 ), ExtResource( 1209 ), ExtResource( 1174 ), ExtResource( 1210 ) ],
-"loop": false,
-"name": "down_windup",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 549 ), ExtResource( 559 ), ExtResource( 560 ), ExtResource( 533 ), ExtResource( 525 ), ExtResource( 561 ), ExtResource( 535 ), ExtResource( 539 ), ExtResource( 538 ), ExtResource( 550 ), ExtResource( 528 ), ExtResource( 572 ), ExtResource( 571 ), ExtResource( 567 ), ExtResource( 562 ), ExtResource( 563 ), ExtResource( 564 ), ExtResource( 565 ), ExtResource( 566 ), ExtResource( 568 ), ExtResource( 569 ), ExtResource( 570 ), ExtResource( 573 ), ExtResource( 574 ), ExtResource( 575 ), ExtResource( 540 ), ExtResource( 576 ), ExtResource( 541 ), ExtResource( 577 ), ExtResource( 542 ) ],
@@ -1860,14 +1690,79 @@ animations = [ {
 "name": "down_left_windup",
 "speed": 30.0
 }, {
+"frames": [ ExtResource( 578 ), ExtResource( 583 ), ExtResource( 579 ), ExtResource( 581 ), ExtResource( 580 ), ExtResource( 582 ), ExtResource( 584 ), ExtResource( 593 ), ExtResource( 602 ), ExtResource( 604 ), ExtResource( 603 ), ExtResource( 605 ), ExtResource( 599 ), ExtResource( 616 ), ExtResource( 607 ), ExtResource( 586 ), ExtResource( 600 ), ExtResource( 614 ), ExtResource( 594 ), ExtResource( 609 ) ],
+"loop": true,
+"name": "down_attack_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 606 ), ExtResource( 601 ), ExtResource( 608 ), ExtResource( 611 ), ExtResource( 596 ), ExtResource( 610 ), ExtResource( 615 ), ExtResource( 617 ), ExtResource( 618 ), ExtResource( 595 ), ExtResource( 612 ), ExtResource( 619 ), ExtResource( 613 ), ExtResource( 620 ), ExtResource( 621 ), ExtResource( 622 ), ExtResource( 589 ), ExtResource( 597 ), ExtResource( 587 ), ExtResource( 623 ) ],
+"loop": true,
+"name": "down_right_attack_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 598 ), ExtResource( 588 ), ExtResource( 591 ), ExtResource( 624 ), ExtResource( 625 ), ExtResource( 590 ), ExtResource( 626 ), ExtResource( 627 ), ExtResource( 592 ), ExtResource( 635 ), ExtResource( 628 ), ExtResource( 631 ), ExtResource( 630 ), ExtResource( 640 ), ExtResource( 632 ), ExtResource( 647 ), ExtResource( 629 ), ExtResource( 633 ), ExtResource( 634 ), ExtResource( 636 ) ],
+"loop": true,
+"name": "right_attack_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 641 ), ExtResource( 642 ), ExtResource( 637 ), ExtResource( 638 ), ExtResource( 639 ), ExtResource( 643 ), ExtResource( 644 ), ExtResource( 645 ), ExtResource( 646 ), ExtResource( 648 ), ExtResource( 658 ), ExtResource( 674 ), ExtResource( 659 ), ExtResource( 654 ), ExtResource( 661 ), ExtResource( 652 ), ExtResource( 653 ), ExtResource( 660 ), ExtResource( 655 ), ExtResource( 662 ) ],
+"loop": true,
+"name": "up_right_attack_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 675 ), ExtResource( 663 ), ExtResource( 673 ), ExtResource( 668 ), ExtResource( 650 ), ExtResource( 669 ), ExtResource( 664 ), ExtResource( 656 ), ExtResource( 665 ), ExtResource( 651 ), ExtResource( 666 ), ExtResource( 667 ), ExtResource( 657 ), ExtResource( 672 ), ExtResource( 670 ), ExtResource( 423 ), ExtResource( 420 ), ExtResource( 416 ), ExtResource( 424 ), ExtResource( 422 ) ],
+"loop": true,
+"name": "up_attack_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 419 ), ExtResource( 427 ), ExtResource( 406 ), ExtResource( 397 ), ExtResource( 430 ), ExtResource( 401 ), ExtResource( 431 ), ExtResource( 407 ), ExtResource( 396 ), ExtResource( 432 ), ExtResource( 433 ), ExtResource( 398 ), ExtResource( 409 ), ExtResource( 434 ), ExtResource( 410 ), ExtResource( 403 ), ExtResource( 451 ), ExtResource( 441 ), ExtResource( 452 ), ExtResource( 435 ) ],
+"loop": true,
+"name": "left_attack_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 436 ), ExtResource( 443 ), ExtResource( 437 ), ExtResource( 444 ), ExtResource( 457 ), ExtResource( 438 ), ExtResource( 439 ), ExtResource( 440 ), ExtResource( 442 ), ExtResource( 447 ), ExtResource( 445 ), ExtResource( 446 ), ExtResource( 448 ), ExtResource( 449 ), ExtResource( 450 ), ExtResource( 453 ), ExtResource( 454 ), ExtResource( 455 ), ExtResource( 521 ), ExtResource( 649 ) ],
+"loop": true,
+"name": "down_left_attack_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 421 ), ExtResource( 412 ), ExtResource( 428 ), ExtResource( 405 ), ExtResource( 426 ), ExtResource( 394 ), ExtResource( 411 ), ExtResource( 413 ), ExtResource( 414 ), ExtResource( 404 ), ExtResource( 399 ), ExtResource( 429 ), ExtResource( 417 ), ExtResource( 415 ), ExtResource( 408 ), ExtResource( 425 ), ExtResource( 402 ), ExtResource( 418 ), ExtResource( 400 ), ExtResource( 395 ) ],
+"loop": true,
+"name": "up_left_attack_idle",
+"speed": 30.0
+}, {
 "frames": [ ExtResource( 114 ), ExtResource( 150 ), ExtResource( 126 ), ExtResource( 115 ), ExtResource( 151 ), ExtResource( 130 ), ExtResource( 119 ), ExtResource( 131 ), ExtResource( 122 ), ExtResource( 116 ), ExtResource( 133 ), ExtResource( 152 ), ExtResource( 153 ), ExtResource( 154 ), ExtResource( 155 ) ],
 "loop": false,
 "name": "right_attack",
 "speed": 30.0
 }, {
-"frames": [ ExtResource( 1525 ), ExtResource( 1527 ), ExtResource( 1521 ), ExtResource( 1534 ), ExtResource( 1528 ), ExtResource( 1544 ), ExtResource( 1522 ), ExtResource( 1546 ), ExtResource( 1550 ), ExtResource( 1533 ), ExtResource( 1535 ), ExtResource( 1536 ), ExtResource( 1529 ), ExtResource( 1539 ), ExtResource( 1548 ), ExtResource( 1540 ), ExtResource( 1519 ), ExtResource( 1551 ), ExtResource( 1530 ), ExtResource( 1545 ), ExtResource( 1516 ), ExtResource( 1531 ), ExtResource( 1537 ), ExtResource( 1523 ), ExtResource( 1538 ), ExtResource( 1517 ), ExtResource( 1541 ), ExtResource( 1547 ), ExtResource( 1552 ), ExtResource( 1542 ), ExtResource( 1553 ), ExtResource( 1518 ), ExtResource( 1555 ), ExtResource( 1568 ), ExtResource( 1559 ), ExtResource( 1569 ), ExtResource( 1554 ), ExtResource( 1556 ), ExtResource( 1570 ), ExtResource( 1557 ), ExtResource( 1558 ), ExtResource( 1565 ), ExtResource( 1562 ), ExtResource( 1571 ), ExtResource( 1560 ), ExtResource( 1561 ), ExtResource( 1563 ), ExtResource( 1572 ), ExtResource( 1566 ), ExtResource( 1575 ), ExtResource( 1564 ), ExtResource( 1567 ), ExtResource( 1573 ), ExtResource( 1578 ), ExtResource( 1574 ), ExtResource( 1576 ), ExtResource( 1577 ), ExtResource( 1580 ), ExtResource( 1590 ), ExtResource( 1589 ) ],
+"frames": [ ExtResource( 456 ), ExtResource( 671 ), ExtResource( 585 ), ExtResource( 145 ), ExtResource( 121 ), ExtResource( 146 ), ExtResource( 112 ), ExtResource( 140 ), ExtResource( 127 ), ExtResource( 142 ), ExtResource( 128 ), ExtResource( 141 ), ExtResource( 125 ), ExtResource( 139 ), ExtResource( 135 ) ],
 "loop": false,
-"name": "up_right_idle",
+"name": "down_attack",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 117 ), ExtResource( 138 ), ExtResource( 123 ), ExtResource( 143 ), ExtResource( 118 ), ExtResource( 132 ), ExtResource( 129 ), ExtResource( 147 ), ExtResource( 134 ), ExtResource( 113 ), ExtResource( 144 ), ExtResource( 148 ), ExtResource( 136 ), ExtResource( 137 ), ExtResource( 149 ) ],
+"loop": false,
+"name": "down_right_attack",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 120 ), ExtResource( 156 ), ExtResource( 157 ), ExtResource( 158 ), ExtResource( 159 ), ExtResource( 124 ), ExtResource( 160 ), ExtResource( 167 ), ExtResource( 175 ), ExtResource( 161 ), ExtResource( 173 ), ExtResource( 162 ), ExtResource( 174 ), ExtResource( 163 ), ExtResource( 164 ) ],
+"loop": false,
+"name": "up_right_attack",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 168 ), ExtResource( 165 ), ExtResource( 171 ), ExtResource( 166 ), ExtResource( 169 ), ExtResource( 170 ), ExtResource( 180 ), ExtResource( 204 ), ExtResource( 179 ), ExtResource( 195 ), ExtResource( 205 ), ExtResource( 202 ), ExtResource( 198 ), ExtResource( 206 ), ExtResource( 207 ) ],
+"loop": false,
+"name": "up_attack",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 182 ), ExtResource( 196 ), ExtResource( 197 ), ExtResource( 203 ), ExtResource( 201 ), ExtResource( 208 ), ExtResource( 178 ), ExtResource( 188 ), ExtResource( 176 ), ExtResource( 199 ), ExtResource( 209 ), ExtResource( 187 ), ExtResource( 210 ), ExtResource( 183 ), ExtResource( 200 ) ],
+"loop": false,
+"name": "up_left_attack",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 211 ), ExtResource( 212 ), ExtResource( 177 ), ExtResource( 213 ), ExtResource( 181 ), ExtResource( 214 ), ExtResource( 215 ), ExtResource( 216 ), ExtResource( 217 ), ExtResource( 218 ), ExtResource( 219 ), ExtResource( 184 ), ExtResource( 220 ), ExtResource( 185 ), ExtResource( 221 ) ],
+"loop": false,
+"name": "left_attack",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 186 ), ExtResource( 222 ), ExtResource( 223 ), ExtResource( 224 ), ExtResource( 190 ), ExtResource( 189 ), ExtResource( 194 ), ExtResource( 225 ), ExtResource( 226 ), ExtResource( 191 ), ExtResource( 227 ), ExtResource( 192 ), ExtResource( 228 ), ExtResource( 193 ), ExtResource( 237 ) ],
@@ -1875,8 +1770,113 @@ animations = [ {
 "name": "down_left_attack",
 "speed": 30.0
 }, {
-"frames": [ ExtResource( 182 ), ExtResource( 196 ), ExtResource( 197 ), ExtResource( 203 ), ExtResource( 201 ), ExtResource( 208 ), ExtResource( 178 ), ExtResource( 188 ), ExtResource( 176 ), ExtResource( 199 ), ExtResource( 209 ), ExtResource( 187 ), ExtResource( 210 ), ExtResource( 183 ), ExtResource( 200 ) ],
+"frames": [ ExtResource( 255 ), ExtResource( 258 ), ExtResource( 256 ), ExtResource( 269 ), ExtResource( 273 ), ExtResource( 249 ), ExtResource( 250 ), ExtResource( 266 ), ExtResource( 268 ), ExtResource( 247 ), ExtResource( 257 ), ExtResource( 248 ), ExtResource( 251 ), ExtResource( 272 ), ExtResource( 275 ), ExtResource( 252 ), ExtResource( 240 ), ExtResource( 276 ), ExtResource( 259 ), ExtResource( 241 ) ],
 "loop": false,
-"name": "up_left_attack",
+"name": "down_right_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 230 ), ExtResource( 229 ), ExtResource( 231 ), ExtResource( 232 ), ExtResource( 233 ), ExtResource( 234 ), ExtResource( 235 ), ExtResource( 236 ), ExtResource( 238 ), ExtResource( 242 ), ExtResource( 264 ), ExtResource( 270 ), ExtResource( 274 ), ExtResource( 265 ), ExtResource( 246 ), ExtResource( 271 ), ExtResource( 244 ), ExtResource( 254 ), ExtResource( 245 ), ExtResource( 260 ) ],
+"loop": false,
+"name": "down_dying",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1371 ), ExtResource( 1369 ), ExtResource( 1378 ), ExtResource( 1370 ), ExtResource( 1394 ), ExtResource( 1373 ), ExtResource( 1372 ), ExtResource( 1389 ), ExtResource( 1362 ), ExtResource( 1398 ), ExtResource( 1380 ), ExtResource( 1374 ), ExtResource( 1376 ), ExtResource( 1363 ), ExtResource( 1365 ), ExtResource( 1377 ), ExtResource( 1387 ), ExtResource( 1388 ), ExtResource( 1381 ), ExtResource( 1383 ), ExtResource( 1399 ), ExtResource( 1364 ), ExtResource( 1384 ), ExtResource( 1400 ), ExtResource( 1401 ), ExtResource( 1402 ), ExtResource( 1367 ), ExtResource( 1403 ) ],
+"loop": true,
+"name": "up_left_walk",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1404 ), ExtResource( 1405 ), ExtResource( 1420 ), ExtResource( 1411 ), ExtResource( 1421 ), ExtResource( 1422 ), ExtResource( 1406 ), ExtResource( 1409 ), ExtResource( 1407 ), ExtResource( 1408 ), ExtResource( 1419 ), ExtResource( 1410 ), ExtResource( 1412 ), ExtResource( 1413 ), ExtResource( 1414 ), ExtResource( 1415 ), ExtResource( 1424 ), ExtResource( 1423 ), ExtResource( 1416 ), ExtResource( 1425 ), ExtResource( 1417 ), ExtResource( 1442 ), ExtResource( 1438 ), ExtResource( 1430 ), ExtResource( 1449 ), ExtResource( 1439 ), ExtResource( 1431 ), ExtResource( 1426 ) ],
+"loop": true,
+"name": "left_walk",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1432 ), ExtResource( 1434 ), ExtResource( 1443 ), ExtResource( 1440 ), ExtResource( 1441 ), ExtResource( 1450 ), ExtResource( 1436 ), ExtResource( 1433 ), ExtResource( 1447 ), ExtResource( 1448 ), ExtResource( 1451 ), ExtResource( 1437 ), ExtResource( 1444 ), ExtResource( 1428 ), ExtResource( 1445 ), ExtResource( 1427 ), ExtResource( 1429 ), ExtResource( 1435 ), ExtResource( 1179 ), ExtResource( 1204 ), ExtResource( 1198 ), ExtResource( 1180 ), ExtResource( 1181 ), ExtResource( 1192 ), ExtResource( 1188 ), ExtResource( 1189 ), ExtResource( 1202 ), ExtResource( 1183 ) ],
+"loop": true,
+"name": "down_left_walk",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1193 ), ExtResource( 1182 ), ExtResource( 1196 ), ExtResource( 1184 ), ExtResource( 1171 ), ExtResource( 1190 ), ExtResource( 1178 ), ExtResource( 1172 ), ExtResource( 1170 ), ExtResource( 1185 ), ExtResource( 1207 ), ExtResource( 1201 ), ExtResource( 1186 ), ExtResource( 1187 ), ExtResource( 1195 ), ExtResource( 1191 ), ExtResource( 1194 ), ExtResource( 1205 ), ExtResource( 1197 ), ExtResource( 1199 ), ExtResource( 1200 ), ExtResource( 1208 ), ExtResource( 1203 ), ExtResource( 1206 ), ExtResource( 1173 ), ExtResource( 1177 ), ExtResource( 1175 ), ExtResource( 1209 ), ExtResource( 1174 ), ExtResource( 1210 ) ],
+"loop": false,
+"name": "down_windup",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1256 ), ExtResource( 1247 ), ExtResource( 1237 ), ExtResource( 1246 ), ExtResource( 1257 ), ExtResource( 1259 ), ExtResource( 1248 ), ExtResource( 1260 ), ExtResource( 1264 ), ExtResource( 1235 ), ExtResource( 1236 ), ExtResource( 1261 ), ExtResource( 1251 ), ExtResource( 1238 ), ExtResource( 1268 ), ExtResource( 1262 ), ExtResource( 1249 ), ExtResource( 1245 ), ExtResource( 1253 ), ExtResource( 1250 ), ExtResource( 1242 ), ExtResource( 1263 ), ExtResource( 1252 ), ExtResource( 1239 ), ExtResource( 1265 ), ExtResource( 1266 ), ExtResource( 1269 ), ExtResource( 1234 ), ExtResource( 1270 ), ExtResource( 1271 ) ],
+"loop": false,
+"name": "right_windup",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1211 ), ExtResource( 1176 ), ExtResource( 1212 ), ExtResource( 1213 ), ExtResource( 1229 ), ExtResource( 1230 ), ExtResource( 1214 ), ExtResource( 1233 ), ExtResource( 1225 ), ExtResource( 1227 ), ExtResource( 1215 ), ExtResource( 1216 ), ExtResource( 1226 ), ExtResource( 1217 ), ExtResource( 1228 ), ExtResource( 1218 ), ExtResource( 1219 ), ExtResource( 1220 ), ExtResource( 1231 ), ExtResource( 1232 ), ExtResource( 1222 ), ExtResource( 1223 ), ExtResource( 1221 ), ExtResource( 1267 ), ExtResource( 1243 ), ExtResource( 1258 ), ExtResource( 1255 ), ExtResource( 1244 ), ExtResource( 1241 ), ExtResource( 1254 ) ],
+"loop": false,
+"name": "down_right_windup",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1272 ), ExtResource( 1273 ), ExtResource( 1274 ), ExtResource( 1275 ), ExtResource( 1240 ), ExtResource( 1287 ), ExtResource( 1276 ), ExtResource( 1277 ), ExtResource( 1291 ), ExtResource( 1279 ), ExtResource( 1278 ), ExtResource( 1280 ), ExtResource( 1281 ), ExtResource( 1296 ), ExtResource( 1288 ), ExtResource( 1282 ), ExtResource( 1283 ), ExtResource( 1284 ), ExtResource( 1285 ), ExtResource( 1286 ), ExtResource( 1289 ), ExtResource( 1290 ), ExtResource( 1292 ), ExtResource( 1293 ), ExtResource( 1294 ), ExtResource( 1295 ), ExtResource( 1352 ), ExtResource( 1446 ), ExtResource( 1297 ), ExtResource( 1224 ) ],
+"loop": false,
+"name": "up_right_windup",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 48 ), ExtResource( 49 ), ExtResource( 42 ), ExtResource( 70 ), ExtResource( 63 ), ExtResource( 69 ), ExtResource( 59 ), ExtResource( 66 ), ExtResource( 56 ), ExtResource( 54 ), ExtResource( 67 ), ExtResource( 57 ), ExtResource( 35 ), ExtResource( 38 ), ExtResource( 37 ), ExtResource( 60 ), ExtResource( 64 ), ExtResource( 50 ), ExtResource( 43 ), ExtResource( 51 ), ExtResource( 46 ), ExtResource( 52 ), ExtResource( 61 ), ExtResource( 55 ), ExtResource( 71 ), ExtResource( 47 ), ExtResource( 62 ), ExtResource( 65 ), ExtResource( 68 ), ExtResource( 58 ), ExtResource( 53 ), ExtResource( 36 ), ExtResource( 72 ), ExtResource( 73 ), ExtResource( 74 ), ExtResource( 40 ), ExtResource( 39 ), ExtResource( 75 ), ExtResource( 76 ), ExtResource( 41 ), ExtResource( 77 ), ExtResource( 78 ), ExtResource( 79 ), ExtResource( 44 ), ExtResource( 80 ), ExtResource( 45 ), ExtResource( 81 ), ExtResource( 82 ), ExtResource( 83 ), ExtResource( 84 ), ExtResource( 85 ), ExtResource( 92 ), ExtResource( 86 ), ExtResource( 87 ), ExtResource( 88 ), ExtResource( 89 ), ExtResource( 90 ), ExtResource( 91 ), ExtResource( 93 ), ExtResource( 94 ) ],
+"loop": false,
+"name": "down_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 95 ), ExtResource( 96 ), ExtResource( 97 ), ExtResource( 108 ), ExtResource( 103 ), ExtResource( 101 ), ExtResource( 104 ), ExtResource( 109 ), ExtResource( 110 ), ExtResource( 102 ), ExtResource( 111 ), ExtResource( 105 ), ExtResource( 99 ), ExtResource( 100 ), ExtResource( 106 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 8 ), ExtResource( 1 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 2 ), ExtResource( 19 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 20 ), ExtResource( 15 ), ExtResource( 21 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 25 ), ExtResource( 32 ), ExtResource( 22 ), ExtResource( 26 ), ExtResource( 33 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 18 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 98 ), ExtResource( 34 ), ExtResource( 107 ), ExtResource( 1485 ), ExtResource( 1467 ), ExtResource( 1462 ), ExtResource( 1480 ), ExtResource( 1456 ), ExtResource( 1482 ), ExtResource( 1486 ), ExtResource( 1469 ), ExtResource( 1479 ) ],
+"loop": false,
+"name": "down_right_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1463 ), ExtResource( 1477 ), ExtResource( 1466 ), ExtResource( 1472 ), ExtResource( 1454 ), ExtResource( 1464 ), ExtResource( 1460 ), ExtResource( 1458 ), ExtResource( 1478 ), ExtResource( 1483 ), ExtResource( 1481 ), ExtResource( 1473 ), ExtResource( 1487 ), ExtResource( 1457 ), ExtResource( 1455 ), ExtResource( 1471 ), ExtResource( 1484 ), ExtResource( 1459 ), ExtResource( 1468 ), ExtResource( 1465 ), ExtResource( 1452 ), ExtResource( 1488 ), ExtResource( 1453 ), ExtResource( 1491 ), ExtResource( 1489 ), ExtResource( 1490 ), ExtResource( 1492 ), ExtResource( 1493 ), ExtResource( 1494 ), ExtResource( 1495 ), ExtResource( 1496 ), ExtResource( 1461 ), ExtResource( 1497 ), ExtResource( 1498 ), ExtResource( 1499 ), ExtResource( 1474 ), ExtResource( 1475 ), ExtResource( 1502 ), ExtResource( 1476 ), ExtResource( 1470 ), ExtResource( 1505 ), ExtResource( 1500 ), ExtResource( 1501 ), ExtResource( 1503 ), ExtResource( 1506 ), ExtResource( 1504 ), ExtResource( 1507 ), ExtResource( 1508 ), ExtResource( 1509 ), ExtResource( 1510 ), ExtResource( 1511 ), ExtResource( 1512 ), ExtResource( 1513 ), ExtResource( 1514 ), ExtResource( 1549 ), ExtResource( 1524 ), ExtResource( 1532 ), ExtResource( 1526 ), ExtResource( 1520 ), ExtResource( 1543 ) ],
+"loop": false,
+"name": "right_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1525 ), ExtResource( 1527 ), ExtResource( 1521 ), ExtResource( 1534 ), ExtResource( 1528 ), ExtResource( 1544 ), ExtResource( 1522 ), ExtResource( 1546 ), ExtResource( 1550 ), ExtResource( 1533 ), ExtResource( 1535 ), ExtResource( 1536 ), ExtResource( 1529 ), ExtResource( 1539 ), ExtResource( 1548 ), ExtResource( 1540 ), ExtResource( 1519 ), ExtResource( 1551 ), ExtResource( 1530 ), ExtResource( 1545 ), ExtResource( 1516 ), ExtResource( 1531 ), ExtResource( 1537 ), ExtResource( 1523 ), ExtResource( 1538 ), ExtResource( 1517 ), ExtResource( 1541 ), ExtResource( 1547 ), ExtResource( 1552 ), ExtResource( 1542 ), ExtResource( 1553 ), ExtResource( 1518 ), ExtResource( 1555 ), ExtResource( 1568 ), ExtResource( 1559 ), ExtResource( 1569 ), ExtResource( 1554 ), ExtResource( 1556 ), ExtResource( 1570 ), ExtResource( 1557 ), ExtResource( 1558 ), ExtResource( 1565 ), ExtResource( 1562 ), ExtResource( 1571 ), ExtResource( 1560 ), ExtResource( 1561 ), ExtResource( 1563 ), ExtResource( 1572 ), ExtResource( 1566 ), ExtResource( 1575 ), ExtResource( 1564 ), ExtResource( 1567 ), ExtResource( 1573 ), ExtResource( 1578 ), ExtResource( 1574 ), ExtResource( 1576 ), ExtResource( 1577 ), ExtResource( 1580 ), ExtResource( 1590 ), ExtResource( 1589 ) ],
+"loop": false,
+"name": "up_right_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1591 ), ExtResource( 1587 ), ExtResource( 1588 ), ExtResource( 1592 ), ExtResource( 1581 ), ExtResource( 1582 ), ExtResource( 1583 ), ExtResource( 1584 ), ExtResource( 1585 ), ExtResource( 1515 ), ExtResource( 1586 ), ExtResource( 1579 ), ExtResource( 747 ), ExtResource( 763 ), ExtResource( 756 ), ExtResource( 773 ), ExtResource( 748 ), ExtResource( 757 ), ExtResource( 750 ), ExtResource( 774 ), ExtResource( 749 ), ExtResource( 740 ), ExtResource( 751 ), ExtResource( 742 ), ExtResource( 752 ), ExtResource( 766 ), ExtResource( 755 ), ExtResource( 761 ), ExtResource( 745 ), ExtResource( 767 ), ExtResource( 760 ), ExtResource( 775 ), ExtResource( 758 ), ExtResource( 744 ), ExtResource( 776 ), ExtResource( 753 ), ExtResource( 754 ), ExtResource( 765 ), ExtResource( 741 ), ExtResource( 759 ), ExtResource( 762 ), ExtResource( 777 ), ExtResource( 778 ), ExtResource( 743 ), ExtResource( 764 ), ExtResource( 768 ), ExtResource( 769 ), ExtResource( 771 ), ExtResource( 770 ), ExtResource( 772 ), ExtResource( 779 ), ExtResource( 780 ), ExtResource( 781 ), ExtResource( 746 ), ExtResource( 783 ), ExtResource( 782 ), ExtResource( 784 ), ExtResource( 789 ), ExtResource( 785 ), ExtResource( 786 ) ],
+"loop": false,
+"name": "up_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 792 ), ExtResource( 797 ), ExtResource( 787 ), ExtResource( 788 ), ExtResource( 801 ), ExtResource( 790 ), ExtResource( 791 ), ExtResource( 793 ), ExtResource( 794 ), ExtResource( 795 ), ExtResource( 802 ), ExtResource( 798 ), ExtResource( 796 ), ExtResource( 799 ), ExtResource( 800 ), ExtResource( 835 ), ExtResource( 825 ), ExtResource( 838 ), ExtResource( 823 ), ExtResource( 824 ), ExtResource( 837 ), ExtResource( 826 ), ExtResource( 830 ), ExtResource( 817 ), ExtResource( 819 ), ExtResource( 811 ), ExtResource( 820 ), ExtResource( 821 ), ExtResource( 836 ), ExtResource( 813 ), ExtResource( 822 ), ExtResource( 816 ), ExtResource( 815 ), ExtResource( 814 ), ExtResource( 818 ), ExtResource( 827 ), ExtResource( 831 ), ExtResource( 828 ), ExtResource( 807 ), ExtResource( 812 ), ExtResource( 839 ), ExtResource( 829 ), ExtResource( 833 ), ExtResource( 832 ), ExtResource( 834 ), ExtResource( 804 ), ExtResource( 840 ), ExtResource( 810 ), ExtResource( 805 ), ExtResource( 841 ), ExtResource( 806 ), ExtResource( 809 ), ExtResource( 842 ), ExtResource( 843 ), ExtResource( 808 ), ExtResource( 844 ), ExtResource( 855 ), ExtResource( 845 ), ExtResource( 864 ), ExtResource( 856 ) ],
+"loop": false,
+"name": "up_left_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 865 ), ExtResource( 850 ), ExtResource( 853 ), ExtResource( 860 ), ExtResource( 848 ), ExtResource( 846 ), ExtResource( 858 ), ExtResource( 866 ), ExtResource( 847 ), ExtResource( 849 ), ExtResource( 851 ), ExtResource( 867 ), ExtResource( 852 ), ExtResource( 857 ), ExtResource( 861 ), ExtResource( 854 ), ExtResource( 859 ), ExtResource( 862 ), ExtResource( 901 ), ExtResource( 876 ), ExtResource( 894 ), ExtResource( 878 ), ExtResource( 868 ), ExtResource( 896 ), ExtResource( 899 ), ExtResource( 871 ), ExtResource( 883 ), ExtResource( 880 ), ExtResource( 888 ), ExtResource( 891 ), ExtResource( 897 ), ExtResource( 890 ), ExtResource( 881 ), ExtResource( 889 ), ExtResource( 892 ), ExtResource( 898 ), ExtResource( 872 ), ExtResource( 900 ), ExtResource( 902 ), ExtResource( 903 ), ExtResource( 877 ), ExtResource( 895 ), ExtResource( 879 ), ExtResource( 869 ), ExtResource( 904 ), ExtResource( 905 ), ExtResource( 870 ), ExtResource( 893 ), ExtResource( 906 ), ExtResource( 887 ), ExtResource( 907 ), ExtResource( 886 ), ExtResource( 908 ), ExtResource( 882 ), ExtResource( 873 ), ExtResource( 909 ), ExtResource( 874 ), ExtResource( 884 ), ExtResource( 910 ), ExtResource( 875 ) ],
+"loop": false,
+"name": "left_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 911 ), ExtResource( 912 ), ExtResource( 913 ), ExtResource( 914 ), ExtResource( 915 ), ExtResource( 916 ), ExtResource( 917 ), ExtResource( 918 ), ExtResource( 919 ), ExtResource( 920 ), ExtResource( 885 ), ExtResource( 921 ), ExtResource( 930 ), ExtResource( 922 ), ExtResource( 923 ), ExtResource( 927 ), ExtResource( 924 ), ExtResource( 925 ), ExtResource( 926 ), ExtResource( 928 ), ExtResource( 929 ), ExtResource( 959 ), ExtResource( 940 ), ExtResource( 966 ), ExtResource( 944 ), ExtResource( 943 ), ExtResource( 934 ), ExtResource( 945 ), ExtResource( 947 ), ExtResource( 958 ), ExtResource( 954 ), ExtResource( 960 ), ExtResource( 950 ), ExtResource( 946 ), ExtResource( 948 ), ExtResource( 937 ), ExtResource( 942 ), ExtResource( 955 ), ExtResource( 964 ), ExtResource( 949 ), ExtResource( 951 ), ExtResource( 965 ), ExtResource( 932 ), ExtResource( 963 ), ExtResource( 952 ), ExtResource( 938 ), ExtResource( 939 ), ExtResource( 953 ), ExtResource( 956 ), ExtResource( 935 ), ExtResource( 957 ), ExtResource( 941 ), ExtResource( 961 ), ExtResource( 933 ), ExtResource( 962 ), ExtResource( 706 ), ExtResource( 693 ), ExtResource( 708 ), ExtResource( 707 ), ExtResource( 709 ) ],
+"loop": false,
+"name": "down_left_idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 695 ), ExtResource( 677 ), ExtResource( 691 ), ExtResource( 703 ), ExtResource( 704 ), ExtResource( 686 ), ExtResource( 688 ), ExtResource( 699 ), ExtResource( 678 ), ExtResource( 680 ), ExtResource( 710 ), ExtResource( 679 ), ExtResource( 676 ), ExtResource( 690 ), ExtResource( 715 ), ExtResource( 711 ), ExtResource( 692 ), ExtResource( 694 ), ExtResource( 705 ), ExtResource( 713 ), ExtResource( 696 ), ExtResource( 687 ), ExtResource( 697 ), ExtResource( 712 ), ExtResource( 714 ), ExtResource( 702 ), ExtResource( 698 ), ExtResource( 716 ) ],
+"loop": true,
+"name": "down_walk",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1300 ), ExtResource( 1333 ), ExtResource( 1331 ), ExtResource( 1307 ), ExtResource( 1313 ), ExtResource( 1315 ), ExtResource( 1298 ), ExtResource( 1327 ), ExtResource( 1318 ), ExtResource( 1328 ), ExtResource( 1334 ), ExtResource( 1335 ), ExtResource( 1312 ), ExtResource( 1336 ), ExtResource( 1309 ), ExtResource( 1337 ), ExtResource( 1338 ), ExtResource( 1303 ), ExtResource( 1339 ), ExtResource( 1304 ), ExtResource( 1306 ), ExtResource( 1340 ), ExtResource( 1341 ), ExtResource( 1359 ), ExtResource( 1344 ), ExtResource( 1354 ), ExtResource( 1349 ), ExtResource( 1357 ) ],
+"loop": true,
+"name": "up_right_walk",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 700 ), ExtResource( 701 ), ExtResource( 681 ), ExtResource( 717 ), ExtResource( 682 ), ExtResource( 718 ), ExtResource( 683 ), ExtResource( 719 ), ExtResource( 684 ), ExtResource( 720 ), ExtResource( 685 ), ExtResource( 721 ), ExtResource( 723 ), ExtResource( 722 ), ExtResource( 724 ), ExtResource( 689 ), ExtResource( 725 ), ExtResource( 726 ), ExtResource( 737 ), ExtResource( 739 ), ExtResource( 727 ), ExtResource( 728 ), ExtResource( 736 ), ExtResource( 729 ), ExtResource( 730 ), ExtResource( 731 ), ExtResource( 734 ), ExtResource( 732 ) ],
+"loop": true,
+"name": "down_right_walk",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 733 ), ExtResource( 735 ), ExtResource( 803 ), ExtResource( 931 ), ExtResource( 738 ), ExtResource( 936 ), ExtResource( 863 ), ExtResource( 1308 ), ExtResource( 1330 ), ExtResource( 1316 ), ExtResource( 1324 ), ExtResource( 1314 ), ExtResource( 1319 ), ExtResource( 1305 ), ExtResource( 1329 ), ExtResource( 1317 ), ExtResource( 1299 ), ExtResource( 1320 ), ExtResource( 1301 ), ExtResource( 1321 ), ExtResource( 1332 ), ExtResource( 1302 ), ExtResource( 1310 ), ExtResource( 1322 ), ExtResource( 1323 ), ExtResource( 1311 ), ExtResource( 1325 ), ExtResource( 1326 ) ],
+"loop": true,
+"name": "right_walk",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 1360 ), ExtResource( 1342 ), ExtResource( 1361 ), ExtResource( 1343 ), ExtResource( 1358 ), ExtResource( 1348 ), ExtResource( 1345 ), ExtResource( 1346 ), ExtResource( 1347 ), ExtResource( 1350 ), ExtResource( 1355 ), ExtResource( 1351 ), ExtResource( 1353 ), ExtResource( 1356 ), ExtResource( 1396 ), ExtResource( 1366 ), ExtResource( 1392 ), ExtResource( 1393 ), ExtResource( 1379 ), ExtResource( 1397 ), ExtResource( 1390 ), ExtResource( 1382 ), ExtResource( 1395 ), ExtResource( 1391 ), ExtResource( 1375 ), ExtResource( 1386 ), ExtResource( 1368 ), ExtResource( 1385 ) ],
+"loop": true,
+"name": "up_walk",
 "speed": 30.0
 } ]

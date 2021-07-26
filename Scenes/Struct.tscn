@@ -44,8 +44,11 @@ visible = false
 polygon = PoolVector2Array( -0.194458, 209.234, 200.001, 103.973, 200.001, 74.9761, -0.455872, -27.3204, -199.999, 72.319, -200.39, 104.767 )
 disabled = true
 
-[node name="Footprints" type="Area2D" parent="." index="20"]
+[node name="BuildingFootprint" type="CollisionPolygon2D" parent="." index="20"]
 visible = false
+polygon = PoolVector2Array( 0.155716, -0.498287, 51.4181, 25.9873, -0.0780945, 52.5188, -51.3914, 25.9873 )
+
+[node name="Footprints" type="Area2D" parent="." index="21"]
 
 [node name="X1" type="CollisionPolygon2D" parent="Footprints" index="0"]
 visible = false
@@ -67,9 +70,9 @@ visible = false
 polygon = PoolVector2Array( 0.0825806, -0.508993, 202.206, 104.049, -0.114365, 209.426, -202.247, 104.034 )
 disabled = true
 
-[node name="SpawnArea" type="Path2D" parent="." index="21"]
+[node name="SpawnArea" type="Path2D" parent="." index="22"]
 curve = SubResource( 1 )
 
-[node name="BuildTimer" type="Timer" parent="." index="22"]
+[node name="BuildTimer" type="Timer" parent="." index="23"]
 one_shot = true
 [connection signal="timeout" from="BuildTimer" to="." method="_on_BuildTimer_timeout"]

@@ -26,6 +26,7 @@ func clear_all():
 	$MainPanel/ResourceLabel.hide()
 	$UnitPortrait.hide()
 	$MainPanel/ConstructionButton.hide()
+	$MainPanel/StatusPanel.hide()
 
 func _on_Unit_selected(unit):
 	clear_all()
@@ -100,6 +101,17 @@ func update_display():
 	$MainPanel/ResourceSprite.hide()
 	$MainPanel/ResourceSpriteShadow.hide()
 	$MainPanel/ResourceLabel.hide()
+	
+	if not su.has_method("get_state"): return
+	$MainPanel/StatusPanel.show()
+	$MainPanel/StatusPanel/StateLabel.text = "State - " + str(su.get_state())
+	$MainPanel/StatusPanel/TaskLabel.text = "Task - " + str(su.get_task())
+	$MainPanel/StatusPanel/TargetLabel.text = "Target - [ "
+	if su.get_target() == null:
+		$MainPanel/StatusPanel/TargetLabel.text += "None ]"
+		return
+	$MainPanel/StatusPanel/TargetLabel.text += str(su.get_target_name())
+	$MainPanel/StatusPanel/TargetLabel.text += " : " + str(su.get_target_coordinates()) + "]"
 
 func _on_Dispatcher_selection_cleared():
 	su = null

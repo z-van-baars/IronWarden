@@ -41,7 +41,7 @@ onready var units
 onready var st
 onready var chatbox_cooldown
 onready var _resources = {}
-onready var _cps = []
+onready var _cps = [] # command posts
 onready var tools
 onready var _selected_units = []
 onready var construction_mode = false
@@ -126,8 +126,8 @@ func get_player_number():
 func set_player_number(player_n):
 	_player_num = player_n
 
-func add_base(cp):
-	_cps.append(cp)
+func add_base(command_post):
+	_cps.append(command_post)
 
 func get_base():
 	return _cps[0]
@@ -156,15 +156,29 @@ func get_construction_options() -> Array:
 
 func set_initial_resources() -> void:
 	_resources = {
-		ResourceTypes.RES.BIOMASS: 10000,
-		ResourceTypes.RES.ALLOY: 10000,
-		ResourceTypes.RES.WARPSTONE: 10000,
-		ResourceTypes.RES.ENERGY: 10000,
+		ResourceTypes.RES.BIOMASS: 0,
+		ResourceTypes.RES.ALLOY: 0,
+		ResourceTypes.RES.WARPSTONE: 0,
+		ResourceTypes.RES.ENERGY: 0,
 		ResourceTypes.RES.COMMAND: 0
 	}
 
 func get_resources() -> Dictionary:
 	return _resources
+
+func get_all_units():
+	return get_tree().get_nodes_in_group("player_" + str(get_player_number()) + "_units")
+
+func get_all_structures():
+	return get_tree().get_nodes_in_group("player_" + str(get_player_number()) + "_structures")
+
+func get_command_posts():
+	var command_posts = []
+	for each_structure in get_all_structures():
+		if not each_structure.get_id() == StructureTypes.STRUCT.COMMAND_POST:
+			continue
+		command_posts.append(each_structure)
+	return command_posts
 
 func clear_selected() -> void:
 	for each in _selected_units:
@@ -222,7 +236,7 @@ func credit_resources(credit_amounts) -> void:
 	for resource in credit_amounts.keys():
 
 		_resources[resource] += credit_amounts[resource]
-	emit_signal("resources_changed")
+	emit_signal("resources_changed", self)
 
 
 func debit_resources(debit_amounts) -> void:
@@ -235,7 +249,7 @@ func debit_resources(debit_amounts) -> void:
 		assert(debit_amounts[resource] <= _resources[resource])
 
 		_resources[resource] -= debit_amounts[resource]
-	emit_signal("resources_changed")
+	emit_signal("resources_changed", self)
 
 func _on_Dispatcher_construction_mode_entered(structure_type : int) -> void:
 	construction_mode = true

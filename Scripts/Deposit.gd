@@ -1,6 +1,7 @@
 extends "res://Scripts/GameUnit.gd"
 signal hovered
 signal unhovered
+signal exhausted
 
 onready var starting = {}
 onready var remaining = {}
@@ -14,6 +15,7 @@ onready var partially_mined = false
 func sub_connect():
 	self.connect("hovered", dis, "_on_Deposit_hovered")
 	self.connect("unhovered", dis, "_on_Deposit_unhovered")
+	self.connect("exhausted", dis, "_on_Deposit_exhausted")
 	
 func setup(deposit_type, location, player_number):
 	connect_signals()
@@ -30,6 +32,7 @@ func setup(deposit_type, location, player_number):
 		ResourceTypes.RES.ENERGY: 0}
 	load_stats(deposit_type)
 	set_spriteframes("-", deposit_type)
+	$Range.queue_free()
 	set_detection_polygon()
 	set_footprint_polygon()
 	set_selection_border()
@@ -57,12 +60,12 @@ func set_spriteframes(_faction_name, deposit_type):
 	#$AnimatedSprite.frames = res.spriteframe_ref[deposit_type]
 	$Sprite.texture = tools.r_choice(res.deposit_icons[deposit_type])
 	# $Sprite.position.y -= max(0, $Sprite.texture.get_height() - 128) / 2
-
+func get_coordinates(): return pos
 func set_detection_polygon():
 	$BBox/Border.polygon = $DetectionArea.polygon
-
+func get_footprint(): return $TileFootprint
 func set_footprint_polygon():
-	$Footprint.disabled = true
+	$Footprint.queue_free()
 
 func set_selection_border():
 	$SelectionBorder.texture = load("res://Assets/Art/UI/selection_border_1x1.png")
@@ -82,8 +85,7 @@ func build_sounds():
 			sound_category[0],
 			sound_category[1])
 
-func _process(_delta):
-	check_expire()
+
 
 func is_boxable():
 	return false
@@ -92,31 +94,32 @@ func get_id(): return _d_type
 func get_r_type(): return _r_type
 
 func update_bars():
-	if partially_mined:
-		$ProgressBar.show()
+	$ProgressBar.show()
 	$ProgressBar.value = remaining[_r_type]
 
 func increment(resource_type, quantity):
 	partially_mined = true
-	if remaining[resource_type] >= quantity:
+	update_bars()
+	if remaining[resource_type] > quantity:
 		remaining[resource_type] -= quantity
 		return
 	remaining[resource_type] = 0
-	
-func check_expire():
-	for count in remaining.values():
-		if count > 0: return
-	kill()
+	exhaust()
+
 
 func get_center():
-	return position
+	return position + Vector2(0, 26)
 
 func get_thumbnail():
 	return res.thumbnail[_d_type]
 
 func kill():
-	emit_signal("kill")
-	queue_free()
+	emit_signal("kill", self, gatherers)
+
+func exhaust():
+	emit_signal("exhausted", self, gatherers)
+	deselect()
+	hide()
 
 func select():
 	selected = true
@@ -132,14 +135,11 @@ func gather_target_set(gatherer):
 	$SelectionBorder.modulate = Color(255, 0, 0)
 	$SelectionBorder.show()
 	gatherers.append(gatherer)
-	connect("kill", gatherer, "_on_Target_Resource_kill")
 
 func gather_target_unset(gatherer):
-	$SelectionBorder.modulate = Color(255, 255, 255)
 	if not selected:
 		$SelectionBorder.hide()
 	if not partially_mined: $ProgressBar.hide()
-	connect("kill", gatherer, "_on_Target_Resource_kill")
 	gatherers.erase(gatherer)
 
 func hover():

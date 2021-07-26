@@ -6,6 +6,8 @@ signal start_multiplayer_game
 signal new_action_logged
 # unit production stuff
 signal open_build_menu
+signal unit_added
+signal unit_removed
 # construction stuff
 signal open_construction_menu
 signal construction_mode_entered
@@ -23,6 +25,7 @@ signal deposit_left_clicked
 signal deposit_right_clicked
 signal deposit_hovered
 signal deposit_unhovered
+signal deposit_exhausted
 signal set_deposit_cursor
 # cursor stuff
 signal reset_cursor
@@ -32,11 +35,15 @@ signal open_tech_tree
 # Player signals
 signal credit_resources
 signal debit_resources
+signal player_resources_changed
 signal player_name_changed
+# chat and cheats
+signal all_visible
+signal all_explored
 # Network Stuff
 onready var main = get_tree().root.get_node("Main")
 onready var construction_menu = main.get_node("UILayer/ConstructionMenu")
-onready var players
+onready var players # players[player_number] = PlayerObject
 onready var units = main.get_node("GameObjects/Units")
 onready var action_log = []
 
@@ -53,11 +60,26 @@ func connect_signals():
 		self.connect("construction_mode_exited", player, "_on_Dispatcher_construction_mode_exited")
 		if player.get_local():
 			self.connect("player_name_changed", player, "_on_Dispatcher_name_changed")
+		self.connect(
+			"unit_added",
+			main.get_node("UILayer/ResourcesWidget"),
+			"_on_Dispatcher_unit_add_remove")
+		self.connect(
+			"unit_removed",
+			main.get_node("UILayer/ResourcesWidget"),
+			"_on_Dispatcher_unit_add_remove")
 
 func log_action(action_string):
 	action_log.append(action_string)
 	emit_signal("new_action_logged", action_log[-1])
 
+func _on_Units_unit_added(new_unit, player_number):
+	emit_signal("unit_added")
+
+func _on_Units_unit_removed(removed_unit, player_number):
+	emit_signal("unit_removed")
+
+	
 func _on_Unit_left_clicked(unit):
 	
 	if unit.has_method("gather_target_set"):
@@ -76,11 +98,16 @@ func _on_Unit_update(_unit):
 
 func _on_Unit_kill(unit, targeted_by):
 	log_action(unit.get_display_name() + " was killed!")
-	main.local_player.clear_selected()
 	for each_unit in targeted_by:
 		each_unit.clear_target_unit()
 	if unit.selected:
 		emit_signal("selection_cleared")
+
+func _on_Unit_credit_resources(credit_amount, player_number):
+	players[player_number].credit_resources(credit_amount)
+
+func _on_Unit_debit_resources(debit_amount, player_number):
+	players[player_number].debit_resources(debit_amount)
 
 func _on_Deposit_hovered(deposit):
 	emit_signal("deposit_hovered", deposit)
@@ -90,6 +117,11 @@ func _on_Deposit_hovered(deposit):
 func _on_Deposit_unhovered():
 	emit_signal("deposit_unhovered")
 	emit_signal("reset_cursor")
+
+func _on_Deposit_exhausted(deposit, gatherers):
+	for gatherer in gatherers:
+		gatherer._on_Target_Deposit_exhausted()
+	emit_signal("deposit_exhausted", deposit)
 
 func _on_Player_unit_selected(unit):
 	#idk what happens here if you select more than one
@@ -109,6 +141,10 @@ func _on_Foundation_Placed():
 
 func _on_Player_selection_cleared():
 	emit_signal("selection_cleared")
+
+func _on_Player_resources_changed(player):
+	if player.get_local():
+		emit_signal("player_resources_changed")
 
 func _on_Player_unit_move_to(target_location):
 	emit_signal("set_target_location", target_location)
@@ -132,6 +168,9 @@ func _on_DebugMenu_toggle_draw_attack_range():
 func _on_Build_Structure_unit_spawned(unit_type):
 	log_action("New Unit Spawned - " + units.get_display_name(unit_type))
 	emit_signal("unit_spawned", unit_type)
+
+func _on_Build_Structure_set_rally_point():
+	pass
 
 func _on_Player_escape_key_pressed():
 	emit_signal("player_toggle_options_menu")
@@ -159,3 +198,17 @@ func _on_player_name_changed(new_player_name):
 
 func _on_Lobby_start_multiplayer_game(lobby_name, player_pool, game_settings):
 	emit_signal("start_multiplayer_game", lobby_name, player_pool, game_settings)
+
+
+func _on_Cheats_all_visible():
+	emit_signal("all_visible")
+func _on_Cheats_all_explored():
+	emit_signal("all_explored")
+
+
+
+
+
+
+
+

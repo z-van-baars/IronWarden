@@ -9,10 +9,22 @@ var map_grid
 var units
 var st
 var unscaled
+var players
 var local_player
-onready var explored_tiles = {}
-onready var visible_tiles = {}
+var all_explored = false # cheat code
+var all_visible = false # cheat code
 
+onready var explored_tiles = {} # persistent record to minimize recalc over time
+onready var newly_explored = {} # refreshed each update cycle to minimize redraw
+onready var unexplored_tiles = {} # persistent record, inverse of explored dict
+onready var visible_tiles = {} # persistent but continually updated each cycle
+
+
+func _on_Dispatcher_all_explored():
+	all_explored = !all_explored
+
+func _on_Dispatcher_all_visible():
+	all_visible = !all_visible
 
 func set_module_refs():
 	main = get_tree().root.get_node("Main")
@@ -24,9 +36,18 @@ func set_module_refs():
 	units = main.get_node("GameObjects/Units")
 	st = main.get_node("GameObjects/Structures")
 	local_player = main.local_player
-	for each_player in get_tree().root.get_node("Main").players.keys():
-		explored_tiles[each_player] = []
-		visible_tiles[each_player] = []
+	players = main.players
+	for each_player in players.keys():
+		explored_tiles[each_player] = {}
+		newly_explored[each_player] = {}
+		unexplored_tiles[each_player] = {}
+		visible_tiles[each_player] = {}
+	for _y in range(map_grid.tiles.size()):
+		for _x in range(map_grid.tiles[0].size()):
+			for each_player in players.keys():
+				explored_tiles[each_player][Vector2(_x, _y)] = false
+				unexplored_tiles[each_player][Vector2(_x, _y)] = true
+				
 	$FogTimer.start()
 
 func create_fog_texture(tile_scale):
@@ -77,8 +98,8 @@ func redraw_fog():
 			x += tile_scale
 		x = 0
 		y += tile_scale
-	reveal_tiles(img, get_all_explored(local_player.get_player_number()), tile_scale)
-	reveal_tiles(img, get_all_visible(local_player.get_player_number()), tile_scale, true)
+	# reveal_tiles(img, get_all_explored(local_player.get_player_number()), tile_scale)
+	# reveal_tiles(img, get_all_visible(local_player.get_player_number()), tile_scale, true)
 	img.unlock()
 	var itex = ImageTexture.new()
 	itex.create_from_image(img)
@@ -90,19 +111,46 @@ func redraw_fog():
 func get_unscaled():
 	return unscaled
 
+func _on_FogTimer_timeout():
+	update_fog_of_war()
+	update_fog_tiles()
 
-"""func get_revealed(player_number):
-	return tools.get_nearby_tiles(
-		Vector2(int(map_width / 2), int(map_height / 2)), 10, true)"""
+func _on_Grid_exploration_updated():
+	update_fog_of_war()
+	redraw_fog()
+
+func initialize_fog_tilemap():
+	for _y in range(map_grid.tiles.size()):
+		for _x in range(map_grid.tiles[0].size()):
+			$FogMap.set_cellv(Vector2(_x, _y), 0)
+			
+
+func update_fog_tiles():
+	var player_number = local_player.get_player_number()
+	for vis_tile in visible_tiles[player_number].keys():
+		if visible_tiles[player_number][vis_tile] == true:
+			$FogMap.set_cellv(vis_tile, -1)
+	for ex_tile in explored_tiles[player_number].keys():
+		if explored_tiles[player_number][ex_tile] == false:
+			continue
+		if visible_tiles[player_number].has(ex_tile):
+			if visible_tiles[player_number][ex_tile] == false:
+				$FogMap.set_cellv(ex_tile, 1)
 
 func update_fog_of_war():
-	#var all_explored = main.all_explored
-	#var all_visible = main.all_visible
+
+	var p_id = local_player.get_player_number()
+	newly_explored[p_id] = {}
+	var tile_visibility = smart_check_visible(p_id)
 	
-	visible_tiles[local_player.get_player_number()] = brute_check_all_visible(local_player.get_player_number())
-	mark_explored(
-		local_player.get_player_number(),
-		visible_tiles[local_player.get_player_number()])
+	for visible_tile in tile_visibility.keys():
+		if tile_visibility[visible_tile] == false:
+			visible_tiles[p_id][visible_tile] = false
+			continue
+		if explored_tiles[p_id][visible_tile] == false:
+			newly_explored[visible_tile] = true
+			explored_tiles[p_id][visible_tile] = true
+		visible_tiles[p_id][visible_tile] = true
 
 func mark_explored(player_number, visible_tiles):
 	for tile in visible_tiles:
@@ -113,10 +161,29 @@ func get_all_explored(player_number):
 		for _x in range(map_grid.tiles[0].size()):
 			if map_grid.get_cell(Vector2(_x, _y)).get_explored(player_number):
 				explored_tiles[player_number].append(Vector2(_x, _y))
+				unexplored_tiles[player_number].erase(Vector2(_x, _y))
+
 	return explored_tiles[player_number]
 
-func get_all_visible(player_number):
-	return visible_tiles[player_number]
+
+func smart_check_visible(player_number):
+	var visible_tiles = {}
+	var evaluated = {} # mark tiles if they are visible to avoid repeat checking
+	var evaluations = 0 # super early exit
+	for tile_row in map_grid.tiles:
+		for tile in tile_row:
+			visible_tiles[tile.get_pos()] = false
+			evaluated[tile.get_pos()] = false
+	for unit in players[player_number].get_all_units():
+		var new_visible_tiles = get_visible_tiles(unit.position, unit.get_sight())
+		for new_tile in new_visible_tiles:
+			visible_tiles[new_tile] = true
+			if evaluated[new_tile] == false:
+				evaluations += 1
+				evaluated[new_tile] = true
+		if evaluations >= map_width * map_height:
+			break
+	return visible_tiles
 
 func brute_check_all_visible(player_number):
 	var all_visible = []
@@ -141,20 +208,6 @@ func get_visible_tiles(location, radius):
 	return tools.get_nearby_tiles(
 		tile_location, radius, true)
 
-func update_fog_tiles():
-	for _y in range(map_grid.tiles.size()):
-		for _x in range(map_grid.tiles[0].size()):
-			$FogMap.set_cellv(Vector2(_x, _y), 0)
-	for ex_tile in get_all_explored(local_player.get_player_number()):
-		$FogMap.set_cellv(ex_tile, 1)
-	for vis_tile in get_all_visible(local_player.get_player_number()):
-		$FogMap.set_cellv(vis_tile, -1)
 
 
-func _on_FogTimer_timeout():
-	update_fog_of_war()
-	update_fog_tiles()
 
-func _on_Grid_exploration_updated():
-	update_fog_of_war()
-	redraw_fog()

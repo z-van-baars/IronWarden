@@ -147,14 +147,18 @@ func set_detection_polygon(structure_size):
 	$BBox/Border.polygon = detection_polygons[structure_size].polygon
 
 func set_footprint_polygon(structure_size):
-	$Footprint.disabled = true
 	var footprint_polygons = {
 		Vector2(1, 1): $Footprints/X1,
 		Vector2(2, 2): $Footprints/X2,
 		Vector2(3, 3): $Footprints/X3,
 		Vector2(4, 4): $Footprints/X4
 	}
-	footprint_polygons[structure_size].disabled = false
+	# footprint_polygons[structure_size].disabled = false
+	$BuildingFootprint.polygon = footprint_polygons[structure_size].polygon
+	$Footprint.queue_free()
+
+func get_footprint():
+	return $BuildingFootprint
 
 func update_bars():
 	$ProgressBar.hide()
@@ -174,6 +178,9 @@ func get_id(): return _stats[Stats.STAT.STRUCTURE_ID]
 
 func get_footprint_offset():
 	return Vector2(0, -26 * sqrt(width * height))
+
+func get_footprint_tiles():
+	return(st.get_footprint_tiles(_stype, pos))
 
 func get_center():
 	return Vector2(
@@ -268,6 +275,4 @@ func start_next_in_queue():
 	$BuildTimer.wait_time = 0.1
 	$BuildTimer.start()
 
-func get_footprint():
-	return(st.get_footprint_tiles(_stype, pos))
 	

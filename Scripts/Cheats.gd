@@ -1,5 +1,7 @@
 extends Node
 signal zoinks
+signal all_visible
+signal all_explored
 var cheats = []
 var command_center = null
 var player
@@ -35,3 +37,7 @@ func _on_ChatBox_cheatcode(cheat_string):
 			for _c in range(10):
 				command_center.spawn_unit(2)
 			emit_signal("zoinks")
+		"all visible":
+			emit_signal("all_visible")
+		"all explored":
+			emit_signal("all_explored")

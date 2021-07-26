@@ -1,4 +1,6 @@
 extends YSort
+signal unit_added
+signal unit_removed
 
 onready var unit_scn = preload("res://Scenes/MotileUnit.tscn")
 onready var creature_scn = preload("res://Scenes/Creature.tscn")
@@ -109,10 +111,6 @@ func load_barrel_offsets():
 
 	file.close()
 
-
-
-
-
 func load_sprites():
 	icons = {
 		UnitTypes.UTYPE.MARINE: [],
@@ -180,6 +178,8 @@ func add_unit(unit_type, location, player_owner, target_location=null):
 	new_unit.setup(unit_type, location, player_owner)
 	if target_location:
 		new_unit.move_to(target_location)
+	new_unit.add_to_group("player_" + str(player_owner) + "_units")
+	emit_signal("unit_added", new_unit, player_owner)
 
 func get_build_time(unit_type):
 	return statlines[unit_type][Stats.STAT.BUILD_TIME]

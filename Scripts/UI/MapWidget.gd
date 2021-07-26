@@ -126,5 +126,5 @@ func draw_map():
 
 
 func _on_MapTimer_timeout():
-	draw_map()
+	# draw_map()
 	update_player_scores()

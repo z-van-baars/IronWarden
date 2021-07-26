@@ -21,7 +21,7 @@ var reveal_all = false
 var spawn_mode = false
 
 var player_profiles = []
-var players = {}
+var players = {} # players[player_number] = PlayerObject
 onready var active_profile = null
 onready var local_player = null
 
@@ -52,7 +52,8 @@ func _ready() -> void:
 	res.set_module_refs()
 	st.set_module_refs()
 	units.set_module_refs()
-	#units.build_spriteframes()
+	# units.build_spriteframes()
+	# units.spriteframe_warmup()
 
 	$Cursor.set_module_refs()
 
@@ -102,9 +103,11 @@ func new_networked_player(player_data):
 	return new_player
 
 func start_local_game():
-	# units.spriteframe_warmup()
+	print("Mapgen Start...")
 	$GameMap.map_gen()
+	print("Generating Navigation Data...")
 	$Nav2D.import_map_data($GameMap)
+	print("Generating Player Data...")
 	var _player_1_data = {
 		name = active_profile.get_name(),
 		number = 0,
@@ -146,9 +149,11 @@ func start_local_game():
 		0: _player_1_data
 	}
 	var ai_player_pool = {
-		0: _player_2_data
+		# 0: _player_2_data
 	}
+	print("Placing Initial Units...")
 	for player in player_pool.values():
+
 		var new_player = new_networked_player(player)
 		if player.local:
 			local_player = new_player
@@ -157,25 +162,18 @@ func start_local_game():
 
 		$Players.add_child(new_player)
 		build_player_start(new_player)
+		print("Player %s complete..." % [str(new_player.get_player_number())])
 
 	for ai_player in ai_player_pool.values():
 		var new_ai_player = new_ai_player(ai_player)
 		players[ai_player.number] = new_ai_player
 		$Players.add_child(new_ai_player)
 		build_player_start(new_ai_player)
+		print("Player %s complete..." % [str(new_ai_player.get_player_number())])
 
-	$GameObjects/Fog.set_module_refs()
-	$GameMap/Grid.initialize_tiles()
-	$GameMap/Grid.set_player_ref()
-	$SelectionBox.connect_local_player()
-	$Dispatcher.new_game()
-	$Dispatcher.connect_signals()
-	$GameObjects/Fog._on_FogTimer_timeout()
-	initialize_menus()
-
+	final_setup()
 
 func _on_Dispatcher_start_multiplayer_game(lobby_name, player_pool, game_settings):
-	# units.spriteframe_warmup()
 	$GameMap.map_gen()
 	$Nav2D.import_map_data($GameMap)
 	var ai_player_pool = {}
@@ -196,15 +194,32 @@ func _on_Dispatcher_start_multiplayer_game(lobby_name, player_pool, game_setting
 		players[ai_player.number] = new_ai_player
 		$Players.add_child(new_ai_player)
 		build_player_start(new_ai_player)
+	
+	final_setup()
 
-	$GameObjects/Fog.set_module_refs()
+func final_setup():
+	print("Initializing Fog of War...")
 	$GameMap/Grid.initialize_tiles()
 	$GameMap/Grid.set_player_ref()
+	$GameObjects/Fog.set_module_refs()
+	$GameObjects/Fog.initialize_fog_tilemap()
+	$GameObjects/Fog._on_FogTimer_timeout()
+	print("Connecting Dispatcher...")
 	$SelectionBox.connect_local_player()
 	$Dispatcher.new_game()
 	$Dispatcher.connect_signals()
-	$GameObjects/Fog._on_FogTimer_timeout()
 	initialize_menus()
+	print("Map Gen Complete.")
+
+	local_player.credit_resources(
+		{
+		ResourceTypes.RES.BIOMASS: 10000,
+		ResourceTypes.RES.ALLOY: 10000,
+		ResourceTypes.RES.WARPSTONE: 10000,
+		ResourceTypes.RES.ENERGY: 10000,
+		ResourceTypes.RES.COMMAND: 0
+	}
+	)
 
 func build_player_start(player):
 
@@ -225,12 +240,15 @@ func build_player_start(player):
 				all_buildable = false
 				break
 
-	var player_cp = st.add_structure(
+	st.add_structure(
 		StructureTypes.STRUCT.COMMAND_POST,
 		random_start,
 		player.get_player_number(),
 		true)
-	player.add_base(player_cp)
+	var player_structures = get_tree().get_nodes_in_group("player_" + str(player.get_player_number()) + "_structures")
+	player.add_base(
+		player_structures[0]
+	)
 
 	for _x in range(3):
 		player.get_base().spawn_unit(UnitTypes.UTYPE.TECHPRIEST)

@@ -157,6 +157,20 @@ func v_distance(vec1, vec2):
 	return sqrt((a2 * a2) + (b2 * b2))
 	
 
+func get_closest_tile(source_tile, tiles_list):
+	var tiles_by_distance = {}
+	for tile in tiles_list:
+		tiles_by_distance[tile] = distance(
+			source_tile.get_x(),
+			source_tile.get_y(),
+			tile.get_x(),
+			tile.get_y())
+	var closest = tiles_list[0]
+	for tile_key in tiles_by_distance.keys():
+		if tiles_by_distance[tile_key] <= tiles_by_distance[closest]:
+			closest = tile_key
+	return closest
+
 func get_tiles_in_zone(zone_start, zone_end):
 	var leftmost = zone_start.x
 	var topmost = zone_start.y
@@ -296,18 +310,26 @@ func draw_circle_arc(center, radius, angle_from, angle_to, color):
 
 
 func get_formation(center, unit_array, unit_radius, rotation_angle):
-	var rank_width = ceil(unit_array.size() * 0.3)
-	var n_ranks = ceil(unit_array.size() / rank_width)
-	#return get_raw_positions(rank_width, unit_array.size(), unit_radius)
-	return rotate_positions(
-		get_raw_positions(rank_width, unit_array.size(), unit_radius), rotation_angle)
+	# Unit radius is a hard coded arbitrary numberof pixels, currently 20
+	# in theory this should be derivative based on unit size, since smaller units
+	# would need a tighter formation than larger ones, but 20 is a decent starting point
+	var rank_width = max(4, ceil(unit_array.size() * 0.3))
+	var n_ranks = max(1, ceil(unit_array.size() / rank_width))
+	# return get_raw_positions(rank_width, unit_array.size(), unit_radius)
+	return rotate_positions(get_raw_positions(rank_width, unit_array.size(), unit_radius), rotation_angle)
 
 func get_raw_positions(rank_width, n_units, u_radius):
+	# list of all positions in the unit, array[Vector2]
 	var positions = []
+	# Aggregate position of the center of the unit comprising the formation
 	var current_position = Vector2(
 		-(rank_width * u_radius / 2), 0)
+	# rank iteration counter, int
 	var rank = 0
+	
+	
 	while positions.size() < n_units:
+		
 		for _c in range(rank_width):
 			positions.append(current_position)
 			current_position += Vector2(u_radius, 0)
@@ -315,7 +337,12 @@ func get_raw_positions(rank_width, n_units, u_radius):
 			if positions.size() == n_units:
 				return positions
 		rank += 1
-		current_position = Vector2(-(min(rank_width, n_units - positions.size()) / 2) * u_radius, rank * u_radius)
+		# current_position = Vector2(-(rank_width * u_radius / 2), rank * u_radius)
+		current_position = Vector2(
+			-(min(rank_width, n_units - positions.size()) / 2) * u_radius,
+			rank * u_radius)
+	
+	
 	return positions
 
 		

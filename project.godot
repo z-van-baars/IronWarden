@@ -41,6 +41,10 @@ window/size/test_width=1920
 window/size/test_height=1080
 mouse_cursor/custom_image="res://Assets/Art/UI/Cursors/MetroSmall/arrow.png"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "codeandweb.texturepacker" )
+
 [importer_defaults]
 
 texture={

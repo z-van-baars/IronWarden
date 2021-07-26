@@ -30,6 +30,7 @@ func set_module_refs():
 	nav = get_tree().root.get_node("Main/Nav2D")
 
 func map_gen():
+	print(" - Setting Map Parameters...")
 	tools.set_map_parameters()
 	grid.set_module_refs()
 	nav.set_module_refs()
@@ -37,11 +38,13 @@ func map_gen():
 	grid.set_map_parameters(width, height)
 	$TileMap.clear()
 	$GridMap.clear()
+	print(" - Clearing Tile Grid...")
 	grid.wipe_map()
-
+	print(" - Generating Blank Terrain...")
 	grid.blank_grassland()
-
+	print(" - Randomizing Resources...")
 	random_resources()
+	print(" - Rendering TileMap...")
 	paint_map_terrain()
 
 
@@ -60,9 +63,17 @@ func blank_forest():
 			res.add_deposit(DepositTypes.DEPOSIT.TREE, Vector2(_x, _y))
 
 func random_resources():
-	generate_forests(n_forests, forest_size, forest_radius)
-	generate_forests(n_small_forests, small_forest_size, small_forest_radius)
+	print("Placing Large Forests...")
+	var start = OS.get_unix_time()
 
+	
+	generate_forests(n_forests, forest_size, forest_radius)
+	var elapsed = (OS.get_unix_time() - start)
+	print(" / " + str(n_forests) + " Large Forests placed in [" + str(elapsed))
+	print("Placing Small Forests...")
+	print(n_small_forests)
+	generate_forests(n_small_forests, small_forest_size, small_forest_radius)
+	print("Placing Ore...")
 	var ore_deposit_locs = tools.get_random_coordinates(grid.tiles, n_ore)
 	var ore_count = 0
 	for ore_deposit in ore_deposit_locs:
@@ -82,7 +93,9 @@ func random_resources():
 			valid_ore_neighbors.erase(r_neighbor)
 			res.add_deposit(DepositTypes.DEPOSIT.ORE, r_neighbor)
 			ore_count += 1
-
+	print("Ore Deposits: " + str(ore_count) + " / " + str(n_ore))
+	
+	print("Placing Warpstone Crystals...")
 	var crystal_count = 0
 	var crystal_deposit_locs = tools.get_random_coordinates(grid.tiles, n_crystal)
 	for crystal_deposit in crystal_deposit_locs:
@@ -102,9 +115,6 @@ func random_resources():
 			valid_crystal_neighbors.erase(r_neighbor)
 			res.add_deposit(DepositTypes.DEPOSIT.CRYSTAL, r_neighbor)
 			crystal_count += 1
-	
-	
-	print("Ore Deposits: " + str(ore_count) + " / " + str(n_ore))
 	print("Crystal Deposits: " + str(crystal_count) + " / " + str(n_crystal))
 
 

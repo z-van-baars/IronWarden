@@ -139,10 +139,14 @@ func task_changed():
 	if task != Tasks.ATTACK_TARGET:
 		$AttackTimer.stop()
 
+func get_task():
+	return Tasks.keys()[task]
+
 func set_task_idle():
 	task = Tasks.IDLE
 	clear_target_unit()
-	clear_target_resource()
+	clear_target_deposit()
+	clear_extraction_type()
 	clear_target_construction()
 	task_changed()
 func set_task_move_to_location():
@@ -168,6 +172,8 @@ func set_state_idle():
 	state = States.IDLE
 	state_changed()
 func additional_idle_functions(): pass
+func get_state():
+	return States.keys()[state]
 func set_state_move():
 	
 	if not $AnimationTimer.is_stopped():
@@ -234,17 +240,15 @@ func update_bars():
 
 
 func _process(_delta):
-
-	update_bars()
 	match task:
-		Tasks.IDLE:
-			idle_task_logic()
 		Tasks.DIE:
 			pass
-
+		Tasks.ROT:
+			pass
+		Tasks.IDLE:
+			idle_task_logic()
 		Tasks.GATHER:
 			gather_task_logic()
-
 		Tasks.ATTACK_TARGET:
 			attack_task_logic()
 		
@@ -253,8 +257,6 @@ func _process(_delta):
 
 		Tasks.MOVE_TO_LOCATION:
 			location_move_task_logic()
-
-	update()
 
 func _physics_process(delta):
 	match state:
@@ -404,12 +406,6 @@ func zero_target():
 	path = []
 	step_target = position
 
-func set_target_resource(resource):
-	if target_resource: target_resource.get_node("SelectionBorder").hide()
-	target_resource = resource
-	gather_type = resource.get_r_type()
-	path_to(resource.get_center())
-
 func set_target_unit(new_target_unit):
 	target_unit = new_target_unit
 	target_unit.set_targeted(self)
@@ -449,7 +445,7 @@ func move_to(target_world_pos, shift=false):
 	if !shift:
 		clear_waypoints()
 		clear_target_unit()
-		clear_target_resource()
+		clear_target_deposit()
 
 func add_waypoint(waypoint):
 	if task == Tasks.IDLE:
@@ -628,4 +624,5 @@ func _on_AnimatedSprite_animation_finished():
 			$AnimatedSprite.stop()
 			$AnimatedSprite.set_animation(animation_direction + "_rot")
 			$AnimatedSprite.set_frame(0)
+			set_task_rot()
 		

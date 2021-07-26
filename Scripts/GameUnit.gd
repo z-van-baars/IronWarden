@@ -133,7 +133,11 @@ onready var _utype
 onready var _stype
 onready var _stats = {}
 
+# pause duration before attempting a repath, allows both objects to 'reset' instead
+# of spamming each game tick with re-path or move-along-path attempts
 onready var bump_cooldown = 1.0
+
+# default value - assumes "base to base" contact w/adjacent object
 onready var contact_radius = 18
 
 
@@ -153,9 +157,10 @@ var task_queue = []
 var carrying = {}
 var target_unit = null
 var target_dropoff = null
-var target_resource = null
+var target_deposit = null
 var target_construction = null
-var gather_type = null
+var gather_type = null # Resource ID, ints
+var extraction_type = null # Deposit ID, int
 var targeted_by = []
 
 onready var selection_border_size = {
@@ -168,7 +173,7 @@ func _ready():
 		_stats[Stats.STAT[stat]] = null
 	$GatherShape.shape.radius = contact_radius
 
-func set_module_refs():
+func set_module_refs() -> void:
 	tools = get_tree().root.get_node("Main/Tools")
 	nav = get_tree().root.get_node("Main/Nav2D/NavMap")
 	nav2d = get_tree().root.get_node("Main/Nav2D")
@@ -179,7 +184,7 @@ func set_module_refs():
 	proj = get_tree().root.get_node("Main/GameObjects/Projectiles")
 	map_grid = get_tree().root.get_node("Main/GameMap/Grid")
 
-func connect_signals():
+func connect_signals() -> void:
 	self.connect("left_clicked", dis, "_on_Unit_left_clicked")
 	self.connect("right_clicked", dis, "_on_Unit_right_clicked")
 	self.connect("update", dis, "_on_Unit_update")
@@ -188,10 +193,10 @@ func connect_signals():
 	self.connect("debit_resources", dis, "_on_Unit_debit_resources")
 	sub_connect()
 
-func sub_connect():
+func sub_connect() -> void:
 	pass
 
-func setup(unit_type, location, player_owner):
+func setup(unit_type, location, player_owner) -> void:
 	set_module_refs()
 	connect_signals()
 	load_stats(unit_type)
@@ -205,15 +210,15 @@ func setup(unit_type, location, player_owner):
 	build_sounds()
 	zero_target()
 
-func load_stats(unit_type):
+func load_stats(unit_type) -> void:
 	for stat in units.statlines[unit_type].keys():
 		_stats[stat] = units.statlines[unit_type][stat]
 
-func set_spriteframes(faction_name, _unit_type):
+func set_spriteframes(faction_name, _unit_type) -> void:
 	pass
 
 # Sound shit
-func build_sounds():
+func build_sounds() -> void:
 	pass
 
 func import_sound_subdir(sound_dir_str, subdir_str, sound_type_index, subtype_str="", subtype_index=null):
@@ -230,17 +235,17 @@ func import_sound_subdir(sound_dir_str, subdir_str, sound_type_index, subtype_st
 			new_audioplayer.stream = load(sound_dir_str + subdir_str + subtype_str + sound_file)
 			sound_players[sound_type_index][subtype_index].append(new_audioplayer)
 
-func play_sound(sound_index, gather_id=null):
+func play_sound(sound_index, gather_id=null) -> void:
 	if sound_players[sound_index].empty(): return
 	if gather_id == null: tools.r_choice(sound_players[sound_index]).play()
 	else: tools.r_choice(sound_players[sound_index][gather_id]).play()
 
 
-func play_confirm(): play_sound(Sounds.CONFIRM)
-func play_move_confirm(): play_sound(Sounds.MOVE_CONFIRM)
-func play_attack_sound(): play_sound(Sounds.ATTACK)
-func play_attack_confirm(): play_sound(Sounds.ATTACK_CONFIRM)
-func play_greeting(): play_sound(Sounds.SELECT)
+func play_confirm() -> void: play_sound(Sounds.CONFIRM)
+func play_move_confirm() -> void: play_sound(Sounds.MOVE_CONFIRM)
+func play_attack_sound() -> void: play_sound(Sounds.ATTACK)
+func play_attack_confirm() -> void: play_sound(Sounds.ATTACK_CONFIRM)
+func play_greeting() -> void: play_sound(Sounds.SELECT)
 
 
 func get_world_pos() -> Vector2: return position
@@ -249,34 +254,36 @@ func get_player_number() -> int: return _player_owner
 func set_faction(faction_name): _faction = faction_name
 func get_faction() -> String: return _faction
 func get_id() -> void: pass
-func get_display_name(): return _stats[Stats.STAT.DISPLAY_NAME]
-func get_speed(): return _stats[Stats.STAT.SPEED]
-func get_armor(): return _stats[Stats.STAT.ARMOR]
-func set_health(new_health): _stats[Stats.STAT.HEALTH] = new_health
-func get_health(): return _stats[Stats.STAT.HEALTH]
-func get_maxhealth(): return _stats[Stats.STAT.MAXHEALTH]
+func get_display_name() -> String: return _stats[Stats.STAT.DISPLAY_NAME]
+func get_speed() -> int: return _stats[Stats.STAT.SPEED]
+func get_armor() -> int: return _stats[Stats.STAT.ARMOR]
+func set_health(new_health) -> void: _stats[Stats.STAT.HEALTH] = new_health
+func get_health() -> int: return _stats[Stats.STAT.HEALTH]
+func get_maxhealth() -> int: return _stats[Stats.STAT.MAXHEALTH]
 func set_shields(new_shields): _stats[Stats.STAT.SHIELDS] = new_shields
-func get_shields(): return _stats[Stats.STAT.SHIELDS]
-func get_maxshields(): return _stats[Stats.STAT.MAXSHIELDS]
-func get_attack(): return _stats[Stats.STAT.ATTACK]
-func get_range(): return _stats[Stats.STAT.RANGE]
-func get_build_time(): return _stats[Stats.STAT.BUILD_TIME]
-func get_gather_time(): return _stats[Stats.STAT.GATHER_TIME]
-func get_carry_cap(): return _stats[Stats.STAT.CARRY_CAP]
-func get_sight(): return _stats[Stats.STAT.SIGHT]
-func get_cost(): return _stats[Stats.STAT.COST]
+func get_shields() -> int: return _stats[Stats.STAT.SHIELDS]
+func get_maxshields() -> int: return _stats[Stats.STAT.MAXSHIELDS]
+func get_attack() -> int: return _stats[Stats.STAT.ATTACK]
+func get_range() -> int: return _stats[Stats.STAT.RANGE]
+func get_build_time() -> int: return _stats[Stats.STAT.BUILD_TIME]
+func get_gather_time() -> int: return _stats[Stats.STAT.GATHER_TIME]
+func get_carry_cap() -> int: return _stats[Stats.STAT.CARRY_CAP]
+func get_sight() -> int: return _stats[Stats.STAT.SIGHT]
+func get_cost() -> int: return _stats[Stats.STAT.COST]
 
-func is_boxable(): return true
+func get_footprint(): return $Footprint
+
+func is_boxable() -> bool: return true
 func get_thumbnail(): return units.thumbnail[_utype]
-func can_path(): return true
-func can_gather(): return false
-func empty_lading(): pass
-func can_construct(): return false
+func can_path() -> bool: return true
+func can_gather() -> bool: return false
+func empty_lading() -> void: pass
+func can_construct() -> bool: return false
 
-func get_attack_windup(): return 1
-func get_attack_speed(): return 1
-func get_construction_time(): return 1
-func get_center(): return Vector2(position.x, position.y)
+func get_attack_windup() -> int: return 1
+func get_attack_speed() -> int: return 1
+func get_construction_time() -> int: return 1
+func get_center() -> Vector2: return Vector2(position.x, position.y)
 
 func state_changed():
 	pass
@@ -302,29 +309,42 @@ func update_bars():
 	health_bar.value = get_health()
 
 
-func _process(_delta):
+func get_target():
+	if not target_unit == null:
+		return target_unit
+	if not target_dropoff == null:
+		return target_dropoff
+	if not target_deposit == null:
+		return target_deposit
+	if not target_construction == null:
+		return target_construction
+	return null
 
-	update_bars()
-	update()
+func get_target_name():
+	return get_target().get_display_name()
 
-func _physics_process(delta):
-	pass
+func get_target_coordinates():
+	return get_target().get_tile_coords()
 
 func zero_target():
 	final_target = position
 	path = []
 	step_target = position
 
-func set_target_resource(resource):
-	if target_resource: target_resource.get_node("SelectionBorder").hide()
-	target_resource = resource
-	gather_type = resource.r_type
-	path_to(resource.get_center())
+func set_target_deposit(t_deposit):
+	if target_deposit: target_deposit.get_node("SelectionBorder").hide()
+	target_deposit = t_deposit
+	gather_type = t_deposit.get_r_type()
+	extraction_type = t_deposit.get_id()
+	path_to(t_deposit.get_center())
 
-func clear_target_resource():
-	if not target_resource: return
-	target_resource.gather_target_unset(self)
-	target_resource = null
+func clear_target_deposit():
+	if not target_deposit: return
+	target_deposit.gather_target_unset(self)
+	target_deposit = null
+
+func clear_extraction_type():
+	extraction_type = null
 
 func set_targeted(new_unit):
 	targeted_by.append(new_unit)
@@ -366,7 +386,7 @@ func check_contact(queried_object, alternative_radius=null):
 
 	var collisions = space.intersect_shape(query)
 	for entry in collisions:
-		if entry.collider == queried_object:
+		if entry.collider.get_footprint() == queried_object.get_footprint():
 			return true
 	return false
 
@@ -413,18 +433,18 @@ func select():
 	$SelectionBorder.show()
 	health_bar.show()
 	if target_unit: target_unit.hover()
-	if target_resource:
-		target_resource.get_node("SelectionBorder").show()
-		target_resource.get_node("SelectionBorder").modulate = Color.green
+	if target_deposit:
+		target_deposit.get_node("SelectionBorder").show()
+		target_deposit.get_node("SelectionBorder").modulate = Color.green
 
 func deselect():
 	selected = false
 	$SelectionBorder.hide()
 	health_bar.hide()
 	if target_unit: target_unit.unhover()
-	if target_resource:
-		target_resource.get_node("SelectionBorder").hide()
-		target_resource.get_node("SelectionBorder").modulate = Color.white
+	if target_deposit:
+		target_deposit.get_node("SelectionBorder").hide()
+		target_deposit.get_node("SelectionBorder").modulate = Color.white
 
 
 

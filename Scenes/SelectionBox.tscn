@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/SelectionBox.gd" type="Script" id=1]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 14.9239, 10.8543 )
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -24,7 +24,7 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visible = false
 position = Vector2( 14.8803, 11.2279 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 disabled = true
 
 [node name="Panel" type="Panel" parent="."]
@@ -41,7 +41,7 @@ __meta__ = {
 }
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.125
 one_shot = true
 
 [node name="CloseTimer" type="Timer" parent="."]

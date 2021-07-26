@@ -216,17 +216,17 @@ func set_module_refs():
 		StructureTypes.STRUCT.TOWER: tower_stats
 	}
 
-func add_structure(structure_type : int, coordinates: Vector2, player_own : int, constructed=false) -> Object:
+func add_structure(structure_type : int, coordinates: Vector2, player_owner : int, constructed=false):
 	var new_structure = structure_scn.instance()
 	$All.add_child(new_structure)
 	new_structure.setup(
 		structure_type,
 		$StructureMap.map_to_world(coordinates),
-		player_own)
-	grid.set_tiles_to_dirt(new_structure.get_footprint())
-	grid.set_structure(new_structure.get_footprint(), new_structure)
+		player_owner)
+	grid.set_tiles_to_dirt(new_structure.get_footprint_tiles())
+	grid.set_structure(new_structure.get_footprint_tiles(), new_structure)
 	new_structure.set_constructed(constructed)
-	return new_structure
+	new_structure.add_to_group("player_" + str(player_owner) + "_structures")
 
 func get_structures():
 	return $All.get_children()

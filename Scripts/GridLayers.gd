@@ -4,6 +4,7 @@ signal exploration_updated
 onready var cell_scn = preload("res://Scenes/Cell.tscn")
 onready var tools
 onready var tiles
+onready var deposits = {}
 onready var map_width
 onready var map_height
 onready var units
@@ -34,8 +35,33 @@ func set_cell(coordinates, cell_obj):
 func get_tile(map_position):
 	return tile_map.world_to_map(map_position)
 
-func set_resource(coordinates, deposit_id):
-	get_cell(coordinates).set_resource_id(deposit_id)
+func _on_Dispatcher_deposit_exhausted(deposit):
+	get_cell(deposit.get_coordinates()).set_resource_id(null)
+
+func find_nearby_deposits(search_location, radius, deposit_type):
+	var center_tile = tile_map.world_to_map(search_location)
+	var tiles_to_search = tools.get_nearby_tiles(center_tile, radius, true)
+	var nearby_deposits = []
+	for tile in tiles_to_search:
+		if get_cell(tile).get_resource_id() == deposit_type:
+			nearby_deposits.append(get_cell(tile))
+	if nearby_deposits.size() == 0:
+		return null
+	elif nearby_deposits.size() == 1:
+		return nearby_deposits[0].get_pos()
+	else:
+		return tools.get_closest_tile(get_cell(center_tile), nearby_deposits).get_pos()
+
+func set_deposit(coordinates, deposit_object):
+	get_cell(coordinates).set_resource_id(deposit_object.get_id())
+	deposits[coordinates] = deposit_object
+
+func get_deposit(coordinates):
+	return deposits[coordinates]
+
+func _on_Deposit_expired(deposit):
+	set_deposit(deposit.get_coordinates(), null)
+
 
 func set_structure(footprint_tiles, structure_obj):
 	for tile_coords in footprint_tiles:
@@ -57,6 +83,7 @@ func init_clean_grid():
 			new_cell.initialize()
 			new_cell.set_pos(Vector2(x, y))
 			tile_row.append(new_cell)
+			deposits[Vector2(x, y)] = null
 		tiles.append(tile_row)
 
 func wipe_map():
@@ -88,5 +115,8 @@ func _on_Cell_exploration_changed(player_number):
 	return
 	if player_number == local_player.get_player_number():
 		emit_signal("exploration_updated")
+
+
+
 
 
