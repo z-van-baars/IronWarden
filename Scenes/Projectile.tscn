@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Projectile.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Art/Units/imperium/conscript/down_left.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Art/Units/imperium/conscript/idle/down_left/0000.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Art/Tiles/98x52/grass_1.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Art/Particles/trace_06.png" type="Texture" id=5]
 
@@ -17,8 +17,8 @@ texture = ExtResource( 3 )
 
 [node name="ReferenceUnitSprite" type="Sprite" parent="."]
 visible = false
-position = Vector2( 0, -72 )
 texture = ExtResource( 2 )
+offset = Vector2( 0, -59 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

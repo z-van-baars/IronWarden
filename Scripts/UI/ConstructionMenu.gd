@@ -20,11 +20,11 @@ func new_game():
 func clear_all():
 	for child in $Panel/ButtonGrid.get_children():
 		child.queue_free()
-	hide()
+	$BackButton.hide()
 
 func check_cost(resource_cost):
 	for resource in resource_cost.keys():
-		if player.resources[resource] < resource_cost[resource]:
+		if player.get_resources()[resource] < resource_cost[resource]:
 			return false
 	return true
 
@@ -48,7 +48,6 @@ func _on_StructureButton_clicked(s_type):
 	if check_cost(st.get_cost(structure_type)) == true:
 		emit_signal("tick1")
 		$Panel/ButtonGrid.hide()
-		$CancelButton.show()
 		emit_signal("structure_button_clicked", structure_type)
 	else:
 		pass
@@ -57,24 +56,29 @@ func get_structure_type():
 	return structure_type
 
 
-func _on_CancelButton_pressed():
-	emit_signal("cancel_clicked", dis, "_on_Construction_Menu_Cancel_clicked")
-	$Panel/ButtonGrid.show()
-	$CancelButton.hide()
-
-
-func _on_Dispatcher_open_construction_menu():
-	if visible: return
-	construct_buttons()
-	show()
-	$Panel/ButtonGrid.show()
-	$CancelButton.hide()
-
-
-func _on_ExitButton_pressed():
+func _on_BackButton_pressed():
+	if structure_type != null:
+		# emit_signal("cancel_clicked", dis, "_on_Construction_Menu_Cancel_clicked")
+		$Panel/ButtonGrid.show()
+		structure_type = null
+		return
 	clear_all()
 	emit_signal("exit")
 
+func _on_Dispatcher_construction_id_changed(new_id):
+	if new_id == null:
+		_on_BackButton_pressed()
 
-func _on_Dispatcher_structure_placement_right_click():
-	_on_CancelButton_pressed()
+func _on_Dispatcher_toggle_construction_mode():
+	if $BackButton.visible:
+		_on_BackButton_pressed()
+		return
+	construct_buttons()
+	$BackButton.show()
+	$Panel/ButtonGrid.show()
+
+
+
+
+
+

@@ -88,13 +88,18 @@ func check_cost(resource_cost):
 	return true
 
 func _on_Build_Button_clicked(unit_type):
-	if check_cost(units.get_build_cost(unit_type)) == true and active_structure.build_queue.size() < 12:
-		active_structure.add_to_queue(unit_type)
-		player.debit_resources(units.get_build_cost(unit_type))
-		# update_queue_buttons()
-		emit_signal("tick1")
-	else:
-		emit_signal("deny1")
+	var quantity = 1
+	if player.get_shift():
+		quantity = 5
+	for _i in range(quantity):
+		if check_cost(units.get_build_cost(unit_type)) == true and active_structure.build_queue.size() < 12:
+			active_structure.add_to_queue(unit_type)
+			player.debit_resources(units.get_build_cost(unit_type))
+			# update_queue_buttons()
+			emit_signal("tick1")
+		else:
+			emit_signal("deny1")
+			continue
 
 
 func _on_QueueButton_clicked(queue_index, resource_cost):
@@ -111,3 +116,8 @@ func _on_Dispatcher_open_build_menu(structure):
 
 func _on_Dispatcher_selection_cleared():
 	clear_all()
+
+func _on_Dispatcher_unit_update():
+	return
+	construct_buttons()
+	show()

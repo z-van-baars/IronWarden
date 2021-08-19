@@ -1,13 +1,10 @@
-extends "res://Scripts/GameUnit.gd"
+extends "res://Scripts/GameObject.gd"
 
 # Unique Signal Declarations
-
 signal unit_spawned
 signal spawn_sound
 signal set_rally_point
-
-# Module References
-onready var center_widget = get_tree().root.get_node("Main/UILayer/CenterWidget")
+signal finished
 
 enum States {
 	IDLE,
@@ -17,13 +14,15 @@ enum States {
 }
 # mutable internal properties
 var rally_point = null
-var constructed = false
+var _constructed = false
 
 
 # variable statline properties, filled out for different units programmatically
 var width = 1
 var height = 1
+var _constructors = []
 var build_queue = []
+var _construction_progress = 0
 
 func sub_connect():
 	self.connect("unit_spawned", dis, "_on_Build_Structure_unit_spawned")
@@ -85,27 +84,46 @@ func build_sounds():
 			sound_category[0],
 			sound_category[1])
 
+func connect_construction_signal(constructor):
+	_constructors.append(constructor)
+	self.connect("finished", constructor, "_on_TargetConstruction_finished")
+
+func disconnect_construction_signal(constructor):
+	_constructors.erase(constructor)
+	self.disconnect("finished", constructor, "_on_TargetConstruction_finished")
+
 func _process(_delta):
 	update_bars()
 
-
-
-func increment_construction(quantity):
-	$ProgressBar.value += quantity
+func increment_construction(quantity=1):
+	_construction_progress += quantity
 	construction_check()
+	var construction_opacity = 0.5
+	# construction_opacity += (_construction_progress / 100.0) / 2.0
+	# $Sprite.modulate.a = construction_opacity
+	if _constructed:
+		$Sprite.texture = st.icons[_stype]
+	else:
+		$Sprite.texture = load("res://Assets/Art/Structures/foundations/%0x%1.png".format(
+			[str(width), str(height)], "%_"))
+	update_bars()
 
 func construction_check():
-	if $ProgressBar.value >= 100:
+	if _construction_progress >= 100:
 		set_constructed(true)
 
 func set_constructed(construction_complete):
-	constructed = construction_complete
-	$ProgressBar.value = 0
+	_constructed = construction_complete
 	if construction_complete:
-		$AnimatedSprite.show()
+		emit_signal("finished")
 		return
+	_construction_progress = 0
+	update_bars()
+	$Sprite.texture = load("res://Assets/Art/Structures/foundations/%0x%1.png".format(
+		[str(width), str(height)], "%_"))
 
-	$AnimatedSprite.hide()
+func get_constructed():
+	return _constructed
 
 func get_thumbnail():
 	return st.thumbnail[_stype]
@@ -113,52 +131,20 @@ func get_thumbnail():
 func get_stype(): return _stype
 
 func set_spawn_area(structure_size):
-	var new_polygon = PoolVector2Array()
-	var footprint_polygons = {
-		Vector2(1, 1): $Footprints/X1,
-		Vector2(2, 2): $Footprints/X2,
-		Vector2(3, 3): $Footprints/X3,
-		Vector2(4, 4): $Footprints/X4
-	}
-	for vertex in footprint_polygons[structure_size].polygon:
-		new_polygon.append(
+	for vertex in FootprintSizes[structure_size]:
+		$SpawnArea.curve.add_point(
 			vertex * Vector2(1.25, 1.25) - (get_center() - position) * 0.25)
 
-	for each_vertex in new_polygon:
-		$SpawnArea.curve.add_point(each_vertex)
-
 func set_selection_border(structure_size):
-	var border_textures = {
-		Vector2(1, 1): preload("res://Assets/Art/UI/selection_border_1x1.png"),
-		Vector2(2, 2): preload("res://Assets/Art/UI/selection_border_2x2.png"),
-		Vector2(3, 3): preload("res://Assets/Art/UI/selection_border_3x3.png"),
-		Vector2(4, 4): preload("res://Assets/Art/UI/selection_border_4x4.png")
-	}
-	$SelectionBorder.texture = border_textures[structure_size]
+	$SelectionBorder.texture = load("res://Assets/Art/UI/selection_border_%0x%1.png".format(
+		[str(structure_size.x), str(structure_size.y)], "%_"))
 	$SelectionBorder.position = Vector2(0, -42)
 
 func set_detection_polygon(structure_size):
-	var detection_polygons = {
-		Vector2(1, 1): $Boxes/X1,
-		Vector2(2, 2): $Boxes/X2,
-		Vector2(3, 3): $Boxes/X3,
-		Vector2(4, 4): $Boxes/X4
-	}
-	$BBox/Border.polygon = detection_polygons[structure_size].polygon
+	$BBox/Border.polygon = PoolVector2Array(DetectionPolygons[structure_size])
 
 func set_footprint_polygon(structure_size):
-	var footprint_polygons = {
-		Vector2(1, 1): $Footprints/X1,
-		Vector2(2, 2): $Footprints/X2,
-		Vector2(3, 3): $Footprints/X3,
-		Vector2(4, 4): $Footprints/X4
-	}
-	# footprint_polygons[structure_size].disabled = false
-	$BuildingFootprint.polygon = footprint_polygons[structure_size].polygon
-	$Footprint.queue_free()
-
-func get_footprint():
-	return $BuildingFootprint
+	$Footprint.polygon = PoolVector2Array(FootprintSizes[structure_size])
 
 func update_bars():
 	$ProgressBar.hide()
@@ -171,8 +157,9 @@ func update_bars():
 	$ShieldBar.value = _stats[Stats.STAT.SHIELDS]
 	$HealthBar.max_value = _stats[Stats.STAT.MAXHEALTH]
 	$HealthBar.value = _stats[Stats.STAT.HEALTH]
-	if not constructed:
+	if not _constructed:
 		$ProgressBar.show()
+		$ProgressBar.value = _construction_progress
 
 func get_id(): return _stats[Stats.STAT.STRUCTURE_ID]
 
@@ -214,8 +201,6 @@ func take_damage(damage_type, damage_amt, attacker=null):
 
 func set_aggressive(new_target):
 	set_target_unit(new_target)
-
-
 
 func play_move_confirm():
 	pass

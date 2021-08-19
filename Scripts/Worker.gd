@@ -1,6 +1,5 @@
 extends "res://Scripts/MotileUnit.gd"
-var gather_started = false
-var gather_radius = 50
+var gather_quantity = 1
 
 func can_construct(): return true
 
@@ -10,6 +9,12 @@ func set_task_gather():
 	task = Tasks.GATHER
 	clear_target_unit()
 	clear_target_construction()
+	task_changed()
+
+func set_task_construct():
+	task = Tasks.CONSTRUCT_STRUCTURE
+	clear_target_unit()
+	clear_target_deposit()
 	task_changed()
 
 func set_state_extract():
@@ -31,11 +36,43 @@ func start_gather():
 	set_state_extract()
 	zero_target()
 
+func set_target_construction(new_target_construction):
+	assert(new_target_construction != null)
+	clear_target_construction()
+	target_construction = new_target_construction
+	target_construction.connect_construction_signal(self)
+	set_task_construct()
+	# path_to(target_construction.get_center())
 
-func start_construct():
+func clear_target_construction():
+	if not target_construction: return
+	target_construction.disconnect_construction_signal(self)
+	target_construction = null
+
+func _on_TargetConstruction_finished():
+	if not task_queue.empty():
+		return
+	var nearby_sites = find_nearby_construction_sites()
+	if nearby_sites.empty():
+		set_task_idle()
+		set_state_idle()
+		zero_target()
+		return
+		
+	var new_target = sort_nearby_construction_sites(nearby_sites)
+	set_target_construction(new_target.get_coordinates())
+
+func sort_nearby_construction_sites(site_array):
+	assert(!site_array.empty())
+	return site_array[0]
+
+func start_construction():
 	set_state_construct()
 	zero_target()
-	$ConstructionTimer.start(get_construction_time())
+
+func find_nearby_construction_sites():
+	var nearby_sites = []
+	return nearby_sites
 
 func gather(target_deposit):
 	set_target_deposit(target_deposit)
@@ -45,21 +82,34 @@ func gather(target_deposit):
 func _draw():
 	$Target.hide()
 	if not selected: return
-	if not get_tree().root.get_node("Main").draw_paths: return
-	if not path.empty():
-		var path_pts = []
-		path_pts.append(position - position)
-		path_pts.append(step_target - position)
-		for each_point in path:
-			path_pts.append(each_point - position)
-		draw_polyline(path_pts, Color.red, 3)
-	if final_target != null and final_target != position:
-		# $Target.show()
-		$Target.position = final_target - position
+	# passthrough
+	if get_tree().root.get_node("Main").draw_targets():
+		if final_target != null and final_target != position:
+			$Target.show()
+			$Target.position = final_target - position
+		for alt_target in alternative_targets:
+			draw_circle(alt_target - position, 5, Color(1.0, 0.5, 0.5, 0.5))
+		var last_waypoint = final_target
+		for waypoint in waypoints:
+			if waypoint != final_target:
+				draw_circle(waypoint - position, 5, Color(1.0, 0.85, 0.25, 0.5))
+				draw_polyline([last_waypoint - position, waypoint - position], Color(0.0, 0.85, 0.70, 0.4), 2)
+			last_waypoint = waypoint
+		# passthrough
+	if not get_tree().root.get_node("Main").draw_paths(): return
+
+	var path_pts = []
+	path_pts.append(position - position)
+	path_pts.append(step_target - position)
+	for each_point in path:
+		path_pts.append(each_point - position)
+	draw_polyline(path_pts, Color(0.0, 1.0, 0.75, 0.5), 3)
 
 	if target_deposit != null and selected == true:
-		target_deposit.get_node("SelectionBox").show()
-		target_deposit.get_node("SelectionBox").modulate = Color.green
+		target_deposit.get_node("SelectionBorder").show()
+		target_deposit.get_node("SelectionBorder").modulate = Color.green
+	if alternative_targets.empty():
+		return
 
 func _on_Target_Deposit_exhausted():
 	target_deposit = null
@@ -153,21 +203,38 @@ func debit_resources(debit_amount):
 	emit_signal("debit_resources", debit_amount, get_player_number())
 
 func _on_GatherTimer_timeout():
-	pickup_resource(gather_type, target_deposit.increment(gather_type, 1))
+	pickup_resource(gather_type, target_deposit.increment(gather_type, gather_quantity))
 	play_sound(Sounds.EXTRACT, target_deposit.get_id())
 	$ResourceCollectionLabel.show()
 	$ResourceCollectionLabel/Icon/ResourceIcon.texture = res.icons[gather_type]
-	$ResourceCollectionLabel/QuantityLabel.text = "+ 1 "
+	$ResourceCollectionLabel/QuantityLabel.text = "+ " + str(gather_quantity)
 	$ResourceCollectionLabel/AnimationPlayer.play("Extract")
 	emit_signal("update", self)
 	$GatherTimer.start(get_gather_time())
 
+func construct_task_logic():
+	if target_construction == null:
+		set_state_idle()
+		set_task_idle()
+		zero_target()
+		return
+
+	# are we at the construction site?
+	if not check_contact(target_construction):
+		if path.empty(): # do we have a path?
+			path_to(target_construction.get_center())
+			set_state_move()
+		return
+
+	# have we started construction already?
+	if state == States.CONSTRUCT: return
+	start_construction() # if not, start
+
 func _on_ConstructionTimer_timeout():
-	target_construction.increment()
+	$ConstructionTimer.start()
+	target_construction.increment_construction()
 	play_sound(Sounds.CONSTRUCT)
-	$ConstructionTimer.start(get_gather_time())
-
-
+	
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):

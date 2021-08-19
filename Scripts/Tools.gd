@@ -1,10 +1,14 @@
 extends Node2D
-var width
-var height
-var rng = RandomNumberGenerator.new()
+onready var rng = RandomNumberGenerator.new()
 
 func _ready():
 	rng.randomize()
+
+func get_width():
+	return get_tree().root.get_node("Main/GameMap").width
+
+func get_height():
+	return get_tree().root.get_node("Main/GameMap").height
 
 func is_blocked(tile_coordinates):
 	if in_map(tile_coordinates) == false: return true
@@ -30,9 +34,6 @@ func comma_sep(number):
 		comma_string += string[i]
 	return comma_string
 
-func set_map_parameters():
-	width = get_tree().root.get_node("Main/GameMap").width
-	height = get_tree().root.get_node("Main/GameMap").height
 
 func r_choice(some_array):
 	return some_array[randi() % some_array.size()]
@@ -75,7 +76,7 @@ func filter_tiles(tile_list: Array, water=false):
 	else:
 		return land_tiles
 
-func get_neighbor_tiles(tile_address: Vector2):
+func get_neighbor_tiles(tile_address: Vector2, diagonal=true):
 	var x1 = tile_address.x
 	var y1 = tile_address.y
 	var all_neighbors = [
@@ -87,14 +88,37 @@ func get_neighbor_tiles(tile_address: Vector2):
 		Vector2(x1 - 1, y1 + 1),
 		Vector2(x1,     y1 + 1),
 		Vector2(x1 + 1, y1 + 1)]
+	var non_diagonal_neighbors = [
+		Vector2(x1,     y1 - 1),
+		Vector2(x1 - 1, y1),
+		Vector2(x1 + 1, y1),
+		Vector2(x1,     y1 + 1)
+	]
 	var in_map_neighbors = []
-	for neighbor in all_neighbors:
-		if (neighbor.x < width and
-			neighbor.y < width and
-			neighbor.x >= 0 and
-			neighbor.y >= 0):
+	if diagonal:
+		for neighbor in all_neighbors:
+			if in_map(neighbor):
 				in_map_neighbors.append(neighbor)
+		return in_map_neighbors
+	for neighbor in non_diagonal_neighbors:
+		if in_map(neighbor):
+			in_map_neighbors.append(neighbor)
 	return in_map_neighbors
+
+func get_diagonal_neighbors(tile_address: Vector2):
+	var x1 = tile_address.x
+	var y1 = tile_address.y
+	var diagonal_neighbors = [
+		Vector2(x1 - 1, y1 - 1),
+		Vector2(x1 + 1, y1 - 1),
+		Vector2(x1 - 1, y1 + 1),
+		Vector2(x1 + 1, y1 + 1)]
+	var in_map_neighbors = []
+	for neighbor in diagonal_neighbors:
+		if in_map(neighbor):
+			in_map_neighbors.append(neighbor)
+	return in_map_neighbors
+	
 
 func get_nearby_tiles(center_tile: Vector2, radius: float, inclusive=false):
 	var nearby_tiles: Array = []
@@ -118,7 +142,7 @@ func get_nearby_tiles(center_tile: Vector2, radius: float, inclusive=false):
 func in_map(tile):
 	if tile.x < 0 or tile.y < 0:
 		return false
-	if tile.x >= width or tile.y >= height:
+	if tile.x >= get_width() or tile.y >= get_height():
 		return false
 	return true
 
@@ -309,52 +333,21 @@ func draw_circle_arc(center, radius, angle_from, angle_to, color):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color)
 
 
-func get_formation(center, unit_array, unit_radius, rotation_angle):
-	# Unit radius is a hard coded arbitrary numberof pixels, currently 20
-	# in theory this should be derivative based on unit size, since smaller units
-	# would need a tighter formation than larger ones, but 20 is a decent starting point
-	var rank_width = max(4, ceil(unit_array.size() * 0.3))
-	var n_ranks = max(1, ceil(unit_array.size() / rank_width))
-	# return get_raw_positions(rank_width, unit_array.size(), unit_radius)
-	return rotate_positions(get_raw_positions(rank_width, unit_array.size(), unit_radius), rotation_angle)
 
-func get_raw_positions(rank_width, n_units, u_radius):
-	# list of all positions in the unit, array[Vector2]
-	var positions = []
-	# Aggregate position of the center of the unit comprising the formation
-	var current_position = Vector2(
-		-(rank_width * u_radius / 2), 0)
-	# rank iteration counter, int
-	var rank = 0
-	
-	
-	while positions.size() < n_units:
-		
-		for _c in range(rank_width):
-			positions.append(current_position)
-			current_position += Vector2(u_radius, 0)
-			
-			if positions.size() == n_units:
-				return positions
-		rank += 1
-		# current_position = Vector2(-(rank_width * u_radius / 2), rank * u_radius)
-		current_position = Vector2(
-			-(min(rank_width, n_units - positions.size()) / 2) * u_radius,
-			rank * u_radius)
-	
-	
-	return positions
 
-		
-func rotate_positions(positions, rotation_angle):
-	var positions_rotated = []
-	for each in positions:
-		
-		var angled_pos = each.rotated(rotation_angle)
+func print_array(array_to_print):
+	print("[")
+	for _element in array_to_print:
+		print("  " + str(_element))
+	print("]")
 
-		positions_rotated.append(Vector2(-angled_pos.y, angled_pos.x))
-	return positions_rotated
-	
+func print_varray(array_to_print):
+	print("[")
+	for _vector in array_to_print:
+		print(" [" + str(floor(_vector.x)) + ", " + str(floor(_vector.y)) + "]")
+	print("]")
+		
+
 	
 	
 	

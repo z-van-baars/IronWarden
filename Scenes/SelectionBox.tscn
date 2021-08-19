@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/SelectionBox.gd" type="Script" id=1]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 14.9239, 10.8543 )
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -18,14 +18,11 @@ border_blend = true
 script = ExtResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 2
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 position = Vector2( 14.8803, 11.2279 )
-shape = SubResource( 3 )
-disabled = true
+shape = SubResource( 1 )
 
 [node name="Panel" type="Panel" parent="."]
 anchor_left = 0.5
@@ -41,14 +38,6 @@ __meta__ = {
 }
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.125
-one_shot = true
-
-[node name="CloseTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.075
 one_shot = true
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
-[connection signal="area_shape_entered" from="Area2D" to="." method="_on_Area2D_area_shape_entered"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
-[connection signal="body_shape_entered" from="Area2D" to="." method="_on_Area2D_body_shape_entered"]
-[connection signal="timeout" from="CloseTimer" to="." method="_on_CloseTimer_timeout"]

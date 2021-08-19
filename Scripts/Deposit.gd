@@ -1,4 +1,4 @@
-extends "res://Scripts/GameUnit.gd"
+extends "res://Scripts/GameObject.gd"
 signal hovered
 signal unhovered
 signal exhausted
@@ -31,14 +31,15 @@ func setup(deposit_type, location, player_number):
 		ResourceTypes.RES.WARPSTONE: 0,
 		ResourceTypes.RES.ENERGY: 0}
 	load_stats(deposit_type)
-	set_spriteframes("-", deposit_type)
+	$AnimatedSprite.visible = false
+	set_sprite("-", deposit_type)
 	$Range.queue_free()
 	set_detection_polygon()
 	set_footprint_polygon()
 	set_selection_border()
 	position = location
 	pos = map_grid.get_tile(position)
-
+	update_bars()
 	assert(res.deposits[deposit_type][_r_type] != 0)
 
 
@@ -53,19 +54,16 @@ func load_stats(deposit_type):
 	$ProgressBar.min_value = 0
 	$ProgressBar.max_value = starting[_r_type]
 
-func set_spriteframes(_faction_name, deposit_type):
+func set_sprite(_faction_name, deposit_type):
 	var name_string = get_display_name().to_lower().replace(" ", "_")
 	var anim_path = "res://Assets/SpriteFrames/Deposits/" + name_string
-	# $AnimatedSprite.frames = load(anim_path + "/SpriteFrame.tres")
-	#$AnimatedSprite.frames = res.spriteframe_ref[deposit_type]
 	$Sprite.texture = tools.r_choice(res.deposit_icons[deposit_type])
+	$Sprite.position.y = -18
 	# $Sprite.position.y -= max(0, $Sprite.texture.get_height() - 128) / 2
-func get_coordinates(): return pos
 func set_detection_polygon():
-	$BBox/Border.polygon = $DetectionArea.polygon
-func get_footprint(): return $TileFootprint
+	$BBox/Border.polygon = PoolVector2Array(DetectionPolygonsShort[Vector2(1, 1)])
 func set_footprint_polygon():
-	$Footprint.queue_free()
+	$Footprint.polygon = PoolVector2Array(FootprintSizes[Vector2(1, 1)])
 
 func set_selection_border():
 	$SelectionBorder.texture = load("res://Assets/Art/UI/selection_border_1x1.png")
@@ -94,7 +92,8 @@ func get_id(): return _d_type
 func get_r_type(): return _r_type
 
 func update_bars():
-	$ProgressBar.show()
+	if partially_mined:
+		$ProgressBar.show()
 	$ProgressBar.value = remaining[_r_type]
 
 func increment(resource_type, quantity):
@@ -102,9 +101,11 @@ func increment(resource_type, quantity):
 	update_bars()
 	if remaining[resource_type] > quantity:
 		remaining[resource_type] -= quantity
-		return
+		return quantity
+	var adjusted_quantity = remaining[resource_type]
 	remaining[resource_type] = 0
 	exhaust()
+	return adjusted_quantity
 
 
 func get_center():

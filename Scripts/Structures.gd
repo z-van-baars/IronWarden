@@ -1,5 +1,5 @@
 extends Node2D
-onready var structure_scn = preload("res://Scenes/Struct.tscn")
+onready var structure_scn = preload("res://Scenes/Structure.tscn")
 
 onready var grid
 onready var nav_map
@@ -247,6 +247,7 @@ func get_faction(structure_type):
 	return faction[structure_type]
 
 func get_footprint_tiles(structure_type, coordinates):
+	# Returns a lits of Vector2s
 	var footprint_tiles = []
 	var start = Vector2(coordinates)
 	for y in range(footprint[structure_type].y):
@@ -260,5 +261,5 @@ func get_footprint_offset(structure_type):
 		get_width(structure_type) * get_height(structure_type)))
 
 
-func _on_Dispatcher_new_construction(player_own, structure_type, coordinates):
-	add_structure(player_own, structure_type, coordinates)
+func _on_Dispatcher_new_construction(structure_type, coordinates, player_own):
+	add_structure(structure_type, coordinates, player_own)

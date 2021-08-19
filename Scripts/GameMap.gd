@@ -31,7 +31,6 @@ func set_module_refs():
 
 func map_gen():
 	print(" - Setting Map Parameters...")
-	tools.set_map_parameters()
 	grid.set_module_refs()
 	nav.set_module_refs()
 
@@ -69,10 +68,13 @@ func random_resources():
 	
 	generate_forests(n_forests, forest_size, forest_radius)
 	var elapsed = (OS.get_unix_time() - start)
-	print(" / " + str(n_forests) + " Large Forests placed in [" + str(elapsed))
+	print("Large Forests: [" + str(n_forests) + " / " + str(n_forests) + "]  placed in [ " + str(elapsed) + "s ]")
 	print("Placing Small Forests...")
-	print(n_small_forests)
+	start = OS.get_unix_time()
 	generate_forests(n_small_forests, small_forest_size, small_forest_radius)
+	elapsed = (OS.get_unix_time() - start)
+	print("Small Forests: [" + str(n_small_forests) + " / " + str(n_small_forests) + "]  placed in [ " + str(elapsed) + "s ]")
+	start = OS.get_unix_time()
 	print("Placing Ore...")
 	var ore_deposit_locs = tools.get_random_coordinates(grid.tiles, n_ore)
 	var ore_count = 0
@@ -93,8 +95,9 @@ func random_resources():
 			valid_ore_neighbors.erase(r_neighbor)
 			res.add_deposit(DepositTypes.DEPOSIT.ORE, r_neighbor)
 			ore_count += 1
-	print("Ore Deposits: " + str(ore_count) + " / " + str(n_ore))
-	
+	elapsed = (OS.get_unix_time() - start)
+	print("Ore Deposits: [" + str(ore_count) + " / " + str(n_ore) + "] placed in [ " + str(elapsed) + "s ]")
+	start = OS.get_unix_time()
 	print("Placing Warpstone Crystals...")
 	var crystal_count = 0
 	var crystal_deposit_locs = tools.get_random_coordinates(grid.tiles, n_crystal)
@@ -115,7 +118,8 @@ func random_resources():
 			valid_crystal_neighbors.erase(r_neighbor)
 			res.add_deposit(DepositTypes.DEPOSIT.CRYSTAL, r_neighbor)
 			crystal_count += 1
-	print("Crystal Deposits: " + str(crystal_count) + " / " + str(n_crystal))
+	elapsed = (OS.get_unix_time() - start)
+	print("Crystal Deposits: [" + str(crystal_count) + " / " + str(n_crystal) + "] placed in [ " + str(elapsed) + "s ]")
 
 
 func generate_forests(n, _fsize, f_radius):
@@ -123,7 +127,7 @@ func generate_forests(n, _fsize, f_radius):
 		var forest_start
 		while true:
 			forest_start = tools.get_random_coordinates(grid.tiles, 1)[0]
-			if grid.get_cell(forest_start).get_resource_id() != 1:
+			if grid.get_cell(forest_start).get_deposit_id() != 1:
 				break
 		res.add_deposit(DepositTypes.DEPOSIT.TREE, forest_start)
 		var evaluated = [forest_start]

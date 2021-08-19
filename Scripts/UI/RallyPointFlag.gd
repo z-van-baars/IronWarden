@@ -19,7 +19,7 @@ func _on_Dispatcher_rally_point_set(location):
 	restart_animation()
 	play_animation()
 
-func _on_Dispatcher_unit_selected(unit):
+func _on_Dispatcher_units_selected(unit):
 	if "rally_point" in unit and unit.rally_point != null:
 		set_location(unit.rally_point)
 		restart_animation()
@@ -45,3 +45,6 @@ func _on_Dispatcher_set_target_location(target_location):
 	if not $AnimatedSprite.playing:
 		$AnimatedSprite.play("wave")
 	show()
+
+
+

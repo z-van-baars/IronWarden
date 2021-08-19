@@ -23,7 +23,7 @@ enum WEAPON {
 	BEAM,
 	HITSCAN,
 	RADIAL,
-	CONIC,
+	CONICAL,
 	MELEE
 }
 

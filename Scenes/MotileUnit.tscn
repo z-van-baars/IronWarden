@@ -4,10 +4,19 @@
 [ext_resource path="res://Scripts/MotileUnit.gd" type="Script" id=2]
 
 [node name="MotileUnit" instance=ExtResource( 1 )]
+collision_layer = 9
+collision_mask = 6
 script = ExtResource( 2 )
 
-[node name="DetectionArea" type="CollisionPolygon2D" parent="." index="20"]
+[node name="Repulsor" parent="." index="6"]
+collision_layer = 24
+collision_mask = 24
+
+[node name="Range" parent="." index="8"]
 visible = false
-polygon = PoolVector2Array( 0.180878, -45.4826, 10.6703, -39.5386, 13.992, -29.5736, 14.5164, 0.321327, 6.82419, 4.69193, -0.168762, 5.9157, -7.6862, 4.86675, -13.9799, -0.0283203, -13.6302, -29.2239, -10.6582, -39.8882 )
-disabled = true
+
+[node name="BumpTimer" parent="Path2D" index="0"]
+wait_time = 0.2
+one_shot = true
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="timeout" from="Path2D/BumpTimer" to="." method="_on_BumpTimer_timeout"]

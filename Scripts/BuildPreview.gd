@@ -2,18 +2,21 @@ extends Node2D
 var grid
 var st
 var construction_id
+var construction_mode = false
 var pos
 var tile_map
 var building_offset
+var local_player
 
 
 func set_module_refs():
 	grid = get_tree().root.get_node("Main/GameMap/Grid")
 	st = get_tree().root.get_node("Main/GameObjects/Structures")
 	tile_map = get_tree().root.get_node("Main/GameMap/TileMap")
+	local_player = get_tree().root.get_node("Main").local_player
 
 func check_valid():
-	return grid.construction_site_clear(pos, construction_id)
+	return grid.construction_site_clear(pos, construction_id, local_player.get_player_number())
 
 func _process(_delta):
 	if not visible: return
@@ -43,13 +46,19 @@ func set_selection_border(structure_size):
 
 func set_valid():
 	$SelectionBorder.modulate = Color(1, 1, 1, 1)
-	$Sprite.modulate = Color(0.5, 0.9, 0.5, 1)
+	$Sprite.modulate = Color(0.55, 1.0, 0.55, 0.8)
 
 func set_invalid():
-	$SelectionBorder.modulate = Color(0.9, 0.5, 0.5, 1)
-	$Sprite.modulate = Color(0.9, 0.5, 0.5, 1)
+	$SelectionBorder.modulate = Color(1.1, 0.25, 0.25, 1)
+	$Sprite.modulate = Color(1.25, 0.75, 0.75, 0.8)
 
-func setup(structure_type):
+func setup(structure_type=null):
+	if structure_type == null:
+		$Sprite.visible = false
+		clear()
+		return
+	$Sprite.visible = true
+	show()
 	construction_id = structure_type
 	$Sprite.texture = st.icons[structure_type]
 	building_offset = st.get_footprint_offset(structure_type)
@@ -57,10 +66,9 @@ func setup(structure_type):
 		st.get_width(structure_type),
 		st.get_height(structure_type)))
 
-func _on_Dispatcher_construction_mode_entered(structure_type):
+func _on_Dispatcher_construction_id_changed(structure_type):
 	setup(structure_type)
-	show()
 
-
-func _on_Dispatcher_construction_mode_exited():
-	hide()
+func _on_Dispatcher_toggle_construction_mode():
+	construction_mode = !construction_mode
+	setup()

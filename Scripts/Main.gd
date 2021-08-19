@@ -12,13 +12,54 @@ onready var local_player_scn = preload("res://Scenes/LocalPlayer.tscn")
 
 
 # debug junk
-var draw_paths = false
-var draw_targets = true
-var draw_nav_polys = true
-var draw_spawn_radius = true
-var draw_attack_range = true
-var reveal_all = false
-var spawn_mode = false
+enum DebugSettings {
+	draw_paths,
+	draw_targets,
+	draw_nav_polys,
+	draw_spawn_areas,
+	draw_attack_ranges,
+	reveal_all,
+	spawn_mode}
+
+var debug_states = {
+	DebugSettings.draw_paths: true,
+	DebugSettings.draw_targets: true,
+	DebugSettings.draw_nav_polys: true,
+	DebugSettings.draw_spawn_areas: true,
+	DebugSettings.draw_attack_ranges: true,
+	DebugSettings.reveal_all: false,
+	DebugSettings.spawn_mode: false,}
+
+func draw_paths():
+	return debug_states[DebugSettings.draw_paths]
+func draw_targets():
+	return debug_states[DebugSettings.draw_targets]
+func draw_nav_polys():
+	return debug_states[DebugSettings.draw_nav_polys]
+func draw_spawn_areas():
+	return debug_states[DebugSettings.draw_spawn_areas]
+func draw_attack_ranges():
+	return debug_states[DebugSettings.draw_attack_ranges]
+func reveal_all():
+	return debug_states[DebugSettings.reveal_all]
+func spawn_mode():
+	return debug_states[DebugSettings.spawn_mode]
+
+func _on_Dispatcher_toggle_draw_attack_ranges():
+	debug_states[DebugSettings.draw_attack_ranges] = !draw_attack_ranges()
+
+func _on_Dispatcher_toggle_draw_nav_polys():
+	debug_states[DebugSettings.draw_nav_polys] = !draw_nav_polys()
+
+func _on_Dispatcher_toggle_draw_paths():
+	debug_states[DebugSettings.draw_attack_ranges] = !draw_attack_ranges()
+
+func _on_Dispatcher_toggle_draw_spawn_areas():
+	debug_states[DebugSettings.draw_spawn_areas] = !draw_spawn_areas()
+
+func _on_Dispatcher_toggle_draw_targets():
+	debug_states[DebugSettings.draw_targets] = !draw_targets()
+
 
 var player_profiles = []
 var players = {} # players[player_number] = PlayerObject
@@ -105,8 +146,7 @@ func new_networked_player(player_data):
 func start_local_game():
 	print("Mapgen Start...")
 	$GameMap.map_gen()
-	print("Generating Navigation Data...")
-	$Nav2D.import_map_data($GameMap)
+
 	print("Generating Player Data...")
 	var _player_1_data = {
 		name = active_profile.get_name(),
@@ -117,29 +157,10 @@ func start_local_game():
 		host = false,
 		local = true
 	}
-	
 	var _player_2_data = {
 		name = "Abaddon",
 		number = 1,
 		color = Color.red,
-		faction = "imperium",
-		net_id = null,
-		host = false,
-		local = false
-	}
-	var _player_3_data = {
-		name = "Yvraine",
-		number = 2,
-		color = Color.yellow,
-		faction = "imperium",
-		net_id = null,
-		host = false,
-		local = false
-	}
-	var _player_4_data = {
-		name = "Gazghull Mag Uruk Thraka",
-		number = 3,
-		color = Color.green,
 		faction = "imperium",
 		net_id = null,
 		host = false,
@@ -170,7 +191,8 @@ func start_local_game():
 		$Players.add_child(new_ai_player)
 		build_player_start(new_ai_player)
 		print("Player %s complete..." % [str(new_ai_player.get_player_number())])
-
+	print("Generating Navigation Data...")
+	$Nav2D.setup($GameMap)
 	final_setup()
 
 func _on_Dispatcher_start_multiplayer_game(lobby_name, player_pool, game_settings):
@@ -252,7 +274,6 @@ func build_player_start(player):
 
 	for _x in range(3):
 		player.get_base().spawn_unit(UnitTypes.UTYPE.TECHPRIEST)
-	
 	for _c in range(5 * players.keys().size() + 1):
 		var random_chicken_loc = Vector2(
 				tools.rng.randi_range(10, $GameMap.width - 11),
@@ -276,3 +297,5 @@ func initialize_menus():
 
 	$Sounds/Stream._on_new_game()
 	$UILayer/ResourcesWidget.start_clock()
+
+

@@ -1,0 +1,147 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Assets/SpriteFrames/SpriteFrame.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Assets/Art/UI/selection_border_small.png" type="Texture" id=2]
+[ext_resource path="res://Styles/healthbarbackground.tres" type="StyleBox" id=3]
+[ext_resource path="res://Styles/shieldbarvalue.tres" type="StyleBox" id=4]
+[ext_resource path="res://Styles/shieldbarbackground.tres" type="StyleBox" id=5]
+[ext_resource path="res://Styles/healthbarvalue.tres" type="StyleBox" id=6]
+[ext_resource path="res://Scripts/GameObject.gd" type="Script" id=7]
+[ext_resource path="res://Assets/Art/Tiles/98x52/grass_1.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Art/Structures/4x4.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Art/Resources/warpstone_gem/gem_2.png" type="Texture" id=10]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 39.0
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.219608, 0.219608, 0.219608, 1 )
+
+[sub_resource type="Curve2D" id=4]
+_data = {
+"points": PoolVector2Array(  )
+}
+
+[node name="GameObject" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource( 7 )
+
+[node name="Sounds" type="Node2D" parent="."]
+visible = false
+
+[node name="TileBase" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 8 )
+
+[node name="SelectionBorder" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+
+[node name="Target" type="Sprite" parent="."]
+modulate = Color( 0.996078, 0.0117647, 0.0117647, 1 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
+frames = ExtResource( 1 )
+offset = Vector2( 0, -59 )
+
+[node name="TilePreview" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -42 )
+texture = ExtResource( 9 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -42 )
+texture = ExtResource( 10 )
+
+[node name="BBox" type="Area2D" parent="."]
+modulate = Color( 1, 1, 1, 0.294118 )
+collision_mask = 0
+
+[node name="Border" type="CollisionPolygon2D" parent="BBox"]
+polygon = PoolVector2Array( 7.43597, 4.60872, 14.335, 0.144623, 13.9292, -29.0749, 10.5473, -39.4912, 0.266365, -45.5786, -10.691, -39.897, -13.5318, -28.9397, -14.0729, -0.125927, -7.30907, 4.60872, 0.131088, 5.96148 )
+
+[node name="Range" type="Area2D" parent="."]
+scale = Vector2( 1.75, 1 )
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+modulate = Color( 0.737255, 0.117647, 0.823529, 0.258824 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Footprint" type="CollisionPolygon2D" parent="."]
+
+[node name="ShieldBar" type="ProgressBar" parent="."]
+visible = false
+margin_left = -12.0
+margin_top = -54.0
+margin_right = 14.0
+margin_bottom = -51.0
+custom_styles/fg = ExtResource( 4 )
+custom_styles/bg = ExtResource( 5 )
+value = 75.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+visible = false
+margin_left = -12.0
+margin_top = -50.0
+margin_right = 14.0
+margin_bottom = -47.0
+custom_styles/fg = ExtResource( 6 )
+custom_styles/bg = ExtResource( 3 )
+value = 75.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+margin_left = -12.0
+margin_top = -46.0
+margin_right = 14.0
+margin_bottom = -43.0
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+value = 75.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="ConstructionTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource( 4 )
+
+[node name="BumpTimer" type="Timer" parent="Path2D"]
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+[connection signal="input_event" from="BBox" to="." method="_on_BBox_input_event"]
+[connection signal="mouse_entered" from="BBox" to="." method="_on_BBox_mouse_entered"]
+[connection signal="mouse_exited" from="BBox" to="." method="_on_BBox_mouse_exited"]
+[connection signal="timeout" from="AnimationTimer" to="." method="_on_AnimationTimer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_KillTimer_timeout"]
+[connection signal="timeout" from="ConstructionTimer" to="." method="_on_ConstructionTimer_timeout"]

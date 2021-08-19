@@ -18,7 +18,6 @@ func _ready():
 func _on_Dispatcher_unit_spawned(_unit):
 	$MarineSpawn.play()
 
-
 func _on_zoinks():
 	$Zoinks.play()
 
@@ -28,8 +27,12 @@ func _on_flick1():
 func _on_deny1():
 	$Deny1.play()
 
+func _on_deny2():
+	$Deny2.play()
+
 func _on_tick1():
 	$Tick10.play()
 
 func _on_spawn_sound():
 	$SpawnChirp.play()
+

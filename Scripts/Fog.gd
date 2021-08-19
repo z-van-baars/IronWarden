@@ -112,12 +112,8 @@ func get_unscaled():
 	return unscaled
 
 func _on_FogTimer_timeout():
-	update_fog_of_war()
+	var newly_explored = update_fog_of_war()
 	update_fog_tiles()
-
-func _on_Grid_exploration_updated():
-	update_fog_of_war()
-	redraw_fog()
 
 func initialize_fog_tilemap():
 	for _y in range(map_grid.tiles.size()):
@@ -151,6 +147,7 @@ func update_fog_of_war():
 			newly_explored[visible_tile] = true
 			explored_tiles[p_id][visible_tile] = true
 		visible_tiles[p_id][visible_tile] = true
+	return newly_explored
 
 func mark_explored(player_number, visible_tiles):
 	for tile in visible_tiles:
@@ -174,8 +171,8 @@ func smart_check_visible(player_number):
 		for tile in tile_row:
 			visible_tiles[tile.get_pos()] = false
 			evaluated[tile.get_pos()] = false
-	for unit in players[player_number].get_all_units():
-		var new_visible_tiles = get_visible_tiles(unit.position, unit.get_sight())
+	for unit in (players[player_number].get_all_units() + players[player_number].get_all_structures()):
+		var new_visible_tiles = get_visible_tiles(unit.get_center(), unit.get_sight())
 		for new_tile in new_visible_tiles:
 			visible_tiles[new_tile] = true
 			if evaluated[new_tile] == false:

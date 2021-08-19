@@ -8,6 +8,7 @@ signal debit_resources
 signal update
 signal shield_damage
 signal kill
+signal waypoint_reached
 
 enum Sounds {
 	SELECT,
@@ -114,13 +115,12 @@ var res
 var proj
 var map_grid
 
-# Internal node references
+# Aliasing
 onready var health_bar = get_node("HealthBar")
 onready var shield_bar = get_node("ShieldBar")
 onready var bump_timer = get_node("Path2D/BumpTimer")
 onready var sound_container = get_node("Sounds")
-
-
+onready var center_widget = get_tree().root.get_node("Main/UILayer/CenterWidget")
 
 # variable statline properties, filled out for different units programmatically
 onready var weapon_type
@@ -128,7 +128,9 @@ onready var weapon
 onready var build_options = []
 onready var tech_options = []
 
-onready var _faction
+onready var _faction = null
+onready var _formation = null
+onready var _control_group = null
 onready var _utype
 onready var _stype
 onready var _stats = {}
@@ -138,7 +140,10 @@ onready var _stats = {}
 onready var bump_cooldown = 1.0
 
 # default value - assumes "base to base" contact w/adjacent object
-onready var contact_radius = 18
+# this might need to scale with unit footprint size
+# perhaps an algo
+
+onready var contact_radius = 8
 
 
 # mutable internal properties
@@ -151,6 +156,7 @@ var direction : Vector2
 var animation_direction = "down"
 var step_target : Vector2
 var final_target : Vector2
+var original_target : Vector2
 var path = []
 var waypoints = []
 var task_queue = []
@@ -171,7 +177,6 @@ func _ready():
 	set_module_refs()
 	for stat in Stats.STAT:
 		_stats[Stats.STAT[stat]] = null
-	$GatherShape.shape.radius = contact_radius
 
 func set_module_refs() -> void:
 	tools = get_tree().root.get_node("Main/Tools")
@@ -208,6 +213,7 @@ func setup(unit_type, location, player_owner) -> void:
 	
 	set_spriteframes(units.get_faction(unit_type), unit_type)
 	build_sounds()
+	update_bars()
 	zero_target()
 
 func load_stats(unit_type) -> void:
@@ -246,11 +252,14 @@ func play_move_confirm() -> void: play_sound(Sounds.MOVE_CONFIRM)
 func play_attack_sound() -> void: play_sound(Sounds.ATTACK)
 func play_attack_confirm() -> void: play_sound(Sounds.ATTACK_CONFIRM)
 func play_greeting() -> void: play_sound(Sounds.SELECT)
+func is_alive() -> bool: return (get_health() > 0)
 
 
 func get_world_pos() -> Vector2: return position
-func get_tile_coords() -> Vector2: return map_grid.get_tile(position)
+func get_coordinates() -> Vector2: return map_grid.get_tile(position)
 func get_player_number() -> int: return _player_owner
+func set_control_group(group_id) -> void: _control_group = group_id
+func get_control_group() -> int: return _control_group
 func set_faction(faction_name): _faction = faction_name
 func get_faction() -> String: return _faction
 func get_id() -> void: pass
@@ -280,9 +289,9 @@ func can_gather() -> bool: return false
 func empty_lading() -> void: pass
 func can_construct() -> bool: return false
 
-func get_attack_windup() -> int: return 1
-func get_attack_speed() -> int: return 1
-func get_construction_time() -> int: return 1
+func get_attack_windup() -> float: return 1.0
+func get_attack_speed() -> float: return 1.0
+func get_construction_time() -> float: return 1.0
 func get_center() -> Vector2: return Vector2(position.x, position.y)
 
 func state_changed():
@@ -324,10 +333,11 @@ func get_target_name():
 	return get_target().get_display_name()
 
 func get_target_coordinates():
-	return get_target().get_tile_coords()
+	return get_target().get_coordinates()
 
 func zero_target():
 	final_target = position
+	original_target = Vector2.ZERO
 	path = []
 	step_target = position
 
@@ -360,7 +370,8 @@ func set_target_unit(new_target_unit):
 
 func clear_target_unit():
 	if not target_unit: return
-	target_unit.set_untargeted(self)
+	if is_instance_valid(target_unit):
+		target_unit.set_untargeted(self)
 	target_unit = null
 	$AttackTimer.stop()
 
@@ -370,8 +381,44 @@ func set_target_construction(tile):
 
 func clear_target_construction():
 	if not target_construction: return
+	if is_instance_valid(target_construction):
+		# remove target construction business
+		pass
 	target_construction = null
+	
+func get_radial_positions(center, footprint_radius, index):
+	var radial_positions = []
+	var diameter = index * 4
+	diameter += (footprint_radius * 2 * 1.75) * index
 
+	var circumference = diameter * 3.14159
+	var batch_size = int(floor(circumference / (footprint_radius * 2 * 1.75)))
+
+	var next_position = Vector2(0, 0)
+	next_position += Vector2(0, -(diameter))
+	radial_positions.append(center + next_position * Vector2(1, 0.5714))
+	while radial_positions.size() < batch_size:
+		next_position = next_position.rotated(deg2rad(360 / batch_size))
+		radial_positions.append(center + next_position * Vector2(1, 0.5714))
+	return radial_positions
+
+func filter_obstructed_positions(unfiltered : Array, footprint_radius, early_exit=false):
+	var unobstructed_positions = []
+	
+	for candidate in unfiltered:
+		var space = get_world_2d().direct_space_state
+		var query = Physics2DShapeQueryParameters.new()
+		var contact_zone = CircleShape2D.new()
+		contact_zone.radius = footprint_radius
+		query.set_shape(contact_zone)
+		query.transform = Transform2D(0, candidate)
+		query.transform.x *= 1.75
+		var collisions = space.intersect_shape(query)
+		if collisions.empty():
+			unobstructed_positions.append(candidate)
+			if early_exit == true:
+				return unobstructed_positions
+	return unobstructed_positions
 
 func check_contact(queried_object, alternative_radius=null):
 	var space = get_world_2d().direct_space_state
@@ -383,10 +430,17 @@ func check_contact(queried_object, alternative_radius=null):
 	query.set_shape(contact_zone)
 	query.transform = Transform2D(0, get_center())
 	query.transform.x *= 1.75
+	# print(query.get_collision_layer())
+	# Don't know why, but for some reason even though the query is being done
+	# on collision level one, the hash for that level is displayer, but for detected
+	# objects when I request the collision layer it tells me in plain english
+	# query running on this layer -> [ 2147483647 ] dunno if that will read as is
+	# or as layer 1, or both for boolean checks
 
 	var collisions = space.intersect_shape(query)
 	for entry in collisions:
 		if entry.collider.get_footprint() == queried_object.get_footprint():
+			# print(queried_object.get_collision_layer())
 			return true
 	return false
 
@@ -396,8 +450,14 @@ func get_step_target():
 	step_target = Vector2(new_step_target.x, new_step_target.y)
 	direction = (step_target - position).normalized()
 
-func path_to(target_world_pos):
-	var nav_path = nav2d.get_simple_path(position, target_world_pos, true)
+func path_to(target_world_pos, pathfind=true):
+	var nav_path
+	if not pathfind:
+		nav_path = nav2d.get_simple_path(position, target_world_pos, true)
+	else:
+		nav_path = nav2d.get_position_path(position, target_world_pos)
+		nav_path.append(target_world_pos)
+
 	if nav_path.size() < 1:
 		return
 	final_target = nav_path[nav_path.size()-1]
@@ -413,11 +473,11 @@ func player_right_clicked(player_id, target_world_pos, shift):
 	if player_id != get_player_number():
 		return
 
-func add_waypoint(waypoint):
-	pass
+func queue_waypoint(waypoint):
+	waypoints.append(waypoint)
 
 func get_next_waypoint(): return waypoints.pop_front()
-
+func get_last_waypoint(): return waypoints.back()
 func get_next_task(): return task_queue.pop_front()
 
 func clear_waypoints(): waypoints = []
@@ -430,6 +490,7 @@ func get_sprite_direction(dir: Vector2):
 
 func select():
 	selected = true
+	add_to_group("selected")
 	$SelectionBorder.show()
 	health_bar.show()
 	if target_unit: target_unit.hover()
@@ -439,6 +500,7 @@ func select():
 
 func deselect():
 	selected = false
+	remove_from_group("selected")
 	$SelectionBorder.hide()
 	health_bar.hide()
 	if target_unit: target_unit.unhover()
@@ -446,6 +508,21 @@ func deselect():
 		target_deposit.get_node("SelectionBorder").hide()
 		target_deposit.get_node("SelectionBorder").modulate = Color.white
 
+func clear_formation():
+	if _formation == null:
+		return
+	if is_instance_valid(_formation):
+		_formation.remove_unit(self)
+		self.disconnect("waypoint_reached", _formation, "_on_Unit_waypoint_reached")
+	_formation = null
+
+func set_formation(formation):
+	clear_formation()
+	_formation = formation
+	self.connect("waypoint_reached", formation, "_on_Unit_waypoint_reached")
+
+func get_formation():
+	return _formation
 
 
 
@@ -461,16 +538,22 @@ func take_damage(damage_type, damage_amt, attacker=null):
 	set_health(max(0, get_health() - armor_carryover))
 	if get_health() == 0:
 		kill()
+	update_bars()
 
 	emit_signal("update", self)
 
 func set_aggressive(new_target):
 	pass
 
-
 func kill():
 	# emit_signal("kill", self, targeted_by)
+	set_health(0)
+	clear_formation()
+	$AnimatedSprite.set_animation(animation_direction + "_dying")
+	$AnimatedSprite.set_frame(0)
+	$AnimatedSprite.play()
 	$KillTimer.start()
+	emit_signal("update", self)
 
 func health_changed():
 	health_bar.value = get_health()
@@ -494,7 +577,7 @@ func _on_BBox_mouse_exited():
 	unhover()
 
 func _on_BBox_input_event(_viewport, event, _shape_idx):
-	if event.is_action_pressed("left_click"):
+	if event.is_action_released("left_click"):
 		emit_signal("left_clicked", self)
 	elif event.is_action_pressed("right_click"):
 		emit_signal("right_clicked", self)
@@ -522,6 +605,7 @@ func _on_AttackTimer_timeout():
 	pass
 
 func _on_KillTimer_timeout():
+	emit_signal("update", self)
 	queue_free()
 
 func _on_AnimationTimer_timeout():
@@ -530,4 +614,25 @@ func _on_AnimationTimer_timeout():
 
 func _on_AnimatedSprite_animation_finished():
 	pass
+
+func _on_Repulsor_area_entered(area):
+	pass # Replace with function body.
+func _on_Repulsor_body_entered(body):
+	pass # Replace with function body.
+func _on_Repulsor_body_exited(body):
+	pass # Replace with function body.
+func _on_Repulsor_body_shape_entered(body_id, body, body_shape, area_shape):
+	pass # Replace with function body.
+func unit_overlap_handler(sensor):
+	pass
+func unit_exit_handler(sensor):
+	pass
+
+
+
+
+
+
+
+
 

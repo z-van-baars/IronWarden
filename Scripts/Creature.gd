@@ -13,6 +13,7 @@ func additional_idle_functions():
 	$WanderTimer.start(tools.rng.randf_range(3.0, 15.0))
 
 func _on_WanderTimer_timeout():
+	return
 	wander()
 	
 

@@ -1,6 +1,4 @@
 extends Node2D
-signal exploration_updated
-
 onready var cell_scn = preload("res://Scenes/Cell.tscn")
 onready var tools
 onready var tiles
@@ -11,12 +9,14 @@ onready var units
 onready var st
 onready var tile_map
 onready var local_player
+onready var fog
 
 func set_module_refs():
 	tools = get_tree().root.get_node("Main/Tools")
 	units = get_tree().root.get_node("Main/GameObjects/Units")
 	st = get_tree().root.get_node("Main/GameObjects/Structures")
 	tile_map = get_parent().get_node("TileMap")
+	fog = get_tree().root.get_node("Main/GameObjects/Fog")
 
 func set_player_ref():
 	local_player = get_tree().root.get_node("Main").local_player
@@ -27,7 +27,8 @@ func set_map_parameters(w, h):
 
 
 func get_cell(coordinates):
-	return tiles[coordinates.y][coordinates.x]
+	if tools.in_map(coordinates):
+		return tiles[coordinates.y][coordinates.x]
 
 func set_cell(coordinates, cell_obj):
 	tiles[coordinates.y][coordinates.x] = cell_obj
@@ -35,15 +36,21 @@ func set_cell(coordinates, cell_obj):
 func get_tile(map_position):
 	return tile_map.world_to_map(map_position)
 
+func get_world_position(tile_coordinates, centered=true):
+	var offset = Vector2.ZERO
+	if centered:
+		offset.y = 26
+	return tile_map.map_to_world(tile_coordinates) + offset
+
 func _on_Dispatcher_deposit_exhausted(deposit):
-	get_cell(deposit.get_coordinates()).set_resource_id(null)
+	get_cell(deposit.get_coordinates()).set_deposit_id(null)
 
 func find_nearby_deposits(search_location, radius, deposit_type):
 	var center_tile = tile_map.world_to_map(search_location)
 	var tiles_to_search = tools.get_nearby_tiles(center_tile, radius, true)
 	var nearby_deposits = []
 	for tile in tiles_to_search:
-		if get_cell(tile).get_resource_id() == deposit_type:
+		if get_cell(tile).get_deposit_id() == deposit_type:
 			nearby_deposits.append(get_cell(tile))
 	if nearby_deposits.size() == 0:
 		return null
@@ -53,7 +60,7 @@ func find_nearby_deposits(search_location, radius, deposit_type):
 		return tools.get_closest_tile(get_cell(center_tile), nearby_deposits).get_pos()
 
 func set_deposit(coordinates, deposit_object):
-	get_cell(coordinates).set_resource_id(deposit_object.get_id())
+	get_cell(coordinates).set_deposit_id(deposit_object.get_id())
 	deposits[coordinates] = deposit_object
 
 func get_deposit(coordinates):
@@ -65,9 +72,11 @@ func _on_Deposit_expired(deposit):
 
 func set_structure(footprint_tiles, structure_obj):
 	for tile_coords in footprint_tiles:
-		var tile = get_cell(tile_coords)
-		tile.set_structure_id(structure_obj.get_id())
-		tile.set_structure(structure_obj)
+		get_cell(tile_coords).set_structure(structure_obj)
+
+func get_structure_at(map_coords):
+	var tile = get_cell(get_tile(map_coords))
+	return tile.get_structure()
 
 func initialize_tiles():
 	for tile_row in tiles:
@@ -101,20 +110,21 @@ func set_tiles_to_dirt(tiles_to_set):
 		get_parent().get_node("TileMap").set_cellv(Vector2(tile.x, tile.y), 1)
 
 
-func get_structure_at(map_coords):
-	var tile = get_cell(get_tile(map_coords))
-	return tile.get_structure()
 
-func construction_site_clear(tile_coordinates, structure_type):
+func construction_site_clear(tile_coordinates, structure_type, player_number):
 	var site_tiles = st.get_footprint_tiles(structure_type, tile_coordinates)
 	for tile in site_tiles:
-		if not get_cell(tile).is_buildable(): return false
+		if (not get_cell(tile) or
+			not get_cell(tile).is_buildable() or
+			not fog.explored_tiles[player_number][tile]): return false
 	return true
+	
 
-func _on_Cell_exploration_changed(player_number):
-	return
-	if player_number == local_player.get_player_number():
-		emit_signal("exploration_updated")
+func update_exploration(newly_explored_tiles):
+	for player_number in newly_explored_tiles.keys():
+		for tile in newly_explored_tiles[player_number].keys():
+			if newly_explored_tiles[player_number][tile] == true:
+				get_cell(tile).set_explored(player_number, true)
 
 
 

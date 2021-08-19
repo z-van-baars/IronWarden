@@ -3,15 +3,15 @@ extends Node2D
 signal selection_box_end
 
 onready var local_player
-var selected_units = []
-
+var active_query = null
+var active_physics_space = null
+var covered_units = []
 var start = Vector2.ZERO
 var stop = Vector2.ZERO
 
 var top_left = Vector2.ZERO
 var bottom_right = Vector2.ZERO
-
-var selection_rect = RectangleShape2D.new()
+	
 
 func connect_local_player():
 	local_player = get_tree().root.get_node("Main").local_player
@@ -22,15 +22,26 @@ func connect_local_player():
 	)
 
 func reset():
-	# $Area2D/CollisionShape2D.disabled = true
+	covered_units = []
+	active_query = null
+	start = Vector2.ZERO
+	stop = Vector2.ZERO
+	top_left = Vector2.ZERO
+	bottom_right = Vector2.ZERO
 	$Timer.stop()
-	$CloseTimer.stop()
 
 func start_box(mouse_pos):
+	$Area2D.monitoring = true
 	start = mouse_pos
 	$Timer.start()
-	#$Area2D/CollisionShape2D.disabled = false
+	active_physics_space = get_world_2d().direct_space_state
+	active_query = Physics2DShapeQueryParameters.new()
+	active_query.set_shape($Area2D/CollisionShape2D.shape)
+	active_query.set_collision_layer(1)
+	active_query.collide_with_areas = true
+	active_query.collide_with_bodies = false
 	show()
+	
 
 func check_timer():
 	return $Timer.is_stopped()
@@ -63,64 +74,31 @@ func _process(_delta):
 	bottom_right = $Panel.rect_size + $Panel.rect_position
 	$Area2D/CollisionShape2D.position = $Panel.rect_position + $Panel.rect_size / 2 + Vector2(0, 1)
 	$Area2D/CollisionShape2D.shape.extents = $Panel.rect_size.abs() / 2 + Vector2(0, 1)
-	
-	set_area()
+	if $Area2D.monitoring:
+		set_query_transform()
 
 
-func set_area():
-	selection_rect.extents = (start - stop) / 2
+func set_query_transform():
+	active_query.transform = Transform2D(0, (stop + start) / 2)
+	covered_units = active_physics_space.intersect_shape(active_query)
 
 func close_box():
-	selected_units = []
-	if not check_timer():
+	var selected_units = []
+	if not $Timer.is_stopped():
+		$Area2D.monitoring = false
 		hide()
 		reset()
 		return
-	var space = get_world_2d().direct_space_state
-	var query = Physics2DShapeQueryParameters.new()
-	query.set_shape($Area2D/CollisionShape2D.shape)
-	query.transform = Transform2D(0, (stop + start) / 2)
-	var covered_units = space.intersect_shape(query)
 	for entry in covered_units:
-		if entry.collider.is_boxable():
-			selected_units.append(entry.collider)
+		if not entry.collider.get_collision_layer_bit(0):
+			continue
+		if entry.collider.get_parent().is_boxable():
+			selected_units.append(entry.collider.get_parent())
 	emit_signal("selection_box_end", selected_units)
 	hide()
+	$Area2D.monitoring = false
 	reset()
-
-func close_box_new():
-	if not check_timer():
-		hide()
-		reset()
-		return
-	selected_units = []
-	$Area2D/CollisionShape2D.disabled = false
-	$CloseTimer.start()
-
-func _on_CloseTimer_timeout():
-	print($Area2D.get_overlapping_areas())
-	print($Area2D.get_overlapping_bodies())
-	print(selected_units)
-	if not selected_units.empty():
-		emit_signal("selection_box_end", selected_units)
-	$Area2D/CollisionShape2D.disabled = true
-	hide()
-	reset()
-
-
-func _on_Area2D_body_entered(body):
-	# Hits for Deposits
-	# Hits for Selection Border
-	selected_units.append(body)
-
 
 func _on_Area2D_area_entered(area):
 	#This one
-	selected_units.append(area)
-
-func _on_Area2D_area_shape_entered(area_id, area, area_shape, self_shape):
-	selected_units.append(area)
-
-
-func _on_Area2D_body_shape_entered(body_id, body, body_shape, area_shape):
-	selected_units.append(body)
+	print(area.get_parent())

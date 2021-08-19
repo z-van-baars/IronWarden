@@ -1,6 +1,7 @@
 extends Control
 signal tick1
 signal flick1
+signal active_menu
 
 
 func _ready():
@@ -9,6 +10,7 @@ func _ready():
 	get_tree().paused = true
 	hide_panels()
 	show()
+	emit_signal("active_menu")
 
 func _on_NewGame_pressed():
 	emit_signal("tick1")

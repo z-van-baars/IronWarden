@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/06 - Segmentum Obscurus.ogg-4b5e105604cc647d40c892901cc9bfe4.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sound/Stream/06 - Segmentum Obscurus.ogg"
+dest_files=[ "res://.import/06 - Segmentum Obscurus.ogg-4b5e105604cc647d40c892901cc9bfe4.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -5,12 +5,15 @@ signal toggle_spawn_mode
 signal escape_key_pressed
 signal enter_key_pressed
 signal resources_changed
-signal unit_selected
+signal units_selected
 signal resource_selected
 signal selection_cleared
-signal unit_move_to
+signal set_target_location
 signal construction_mode_right_clicked
+signal construction_mode_cancel
 signal new_construction
+signal deny
+signal zoinks
 
 enum Players {
 	PLAYER0,
@@ -72,17 +75,21 @@ func set_module_refs():
 	tools = main.get_node("Tools")
 
 func connect_signals():
-	self.connect("toggle_debug_menu", dis, "_on_Player_toggle_debug_menu")
+	if get_local() == true:
+		self.connect("toggle_debug_menu", dis, "_on_Player_toggle_debug_menu")
+		self.connect("deny", main.get_node("Sounds/UI"), "_on_deny1")
+		self.connect("zoinks", main.get_node("Sounds/UI"), "_on_zoinks")
 	self.connect("toggle_spawn_mode", dis, "_on_Player_toggle_spawn_menu")
 	self.connect("escape_key_pressed", dis, "_on_Player_escape_key_pressed")
 	self.connect("enter_key_pressed", dis, "_on_Player_enter_key_pressed")
 	self.connect("resources_changed", dis, "_on_Player_resources_changed")
-	self.connect("unit_selected", dis, "_on_Player_unit_selected")
+	self.connect("units_selected", dis, "_on_Player_units_selected")
 	self.connect("resource_selected", dis, "_on_Player_resource_selected")
 	self.connect("selection_cleared", dis, "_on_Player_selection_cleared")
-	self.connect("unit_move_to", dis, "_on_Player_unit_move_to")
-	self.connect("construction_mode_right_clicked", dis, "_on_Player_construction_mode_right_clicked")
+	self.connect("set_target_location", dis, "_on_Player_set_target_location")
+	self.connect("construction_mode_cancel", dis, "_on_Player_construction_mode_cancel")
 	self.connect("new_construction", dis, "_on_Player_new_construction")
+
 
 func on_start(tile_map):
 	pass
@@ -181,13 +188,23 @@ func get_command_posts():
 	return command_posts
 
 func clear_selected() -> void:
+	var selected_group = get_tree().get_nodes_in_group("selected")
 	for each in _selected_units:
 		each.deselect()
 	_selected_units = []
+	construction_mode = false
+	construction_build_id = null
 	emit_signal("selection_cleared")
 
 func get_selected() -> Array:
 	return _selected_units
+
+func filter_owned(unit_array, match_number):
+	var matching = []
+	for each in unit_array:
+		if each.get_player_number() == match_number:
+			matching.append(each)
+	return matching
 
 func _unhandled_input(_event):
 	pass
@@ -197,6 +214,8 @@ func _on_Selection_Box_end(newly_selected):
 func gatherers_selected() -> bool:
 	if _selected_units.empty(): return false
 	for each in _selected_units:
+		if not is_instance_valid(each):
+			continue
 		if each.has_method("can_gather") and each.can_gather(): return true
 	return false
 
@@ -213,10 +232,13 @@ func constructors_selected() -> bool:
 		if each.has_method("can_construct") and each.can_construct(): return true
 	return false
 
-func get_constructors(selected : Array) -> Array:
+func get_selected_constructors(selected : Array) -> Array:
+	"""filters out units that cannot construct and are not owned by the player in the input array"""
 	var constructor_units = []
 	for each_unit in selected:
-		if each_unit.has_method("can_construct") and each_unit.can_construct():
+		if (each_unit.has_method("can_construct")
+			and each_unit.can_construct()
+			and each_unit.get_player_number() == get_player_number()):
 			constructor_units.append(each_unit)
 	return constructor_units
 
@@ -251,14 +273,12 @@ func debit_resources(debit_amounts) -> void:
 		_resources[resource] -= debit_amounts[resource]
 	emit_signal("resources_changed", self)
 
-func _on_Dispatcher_construction_mode_entered(structure_type : int) -> void:
-	construction_mode = true
-	construction_build_id = structure_type
+func _on_Dispatcher_construction_id_changed(new_construction_id) -> void:
+	# construction_id == structure_type
+	construction_build_id = new_construction_id
 
-
-func _on_Dispatcher_construction_mode_exited() -> void:
-	construction_mode = false
-	construction_build_id = null
+func _on_Dispatcher_toggle_construction_mode():
+	construction_mode = !construction_mode
 
 func _on_Dispatcher_name_changed(new_name : String) -> void:
 	set_name(new_name)

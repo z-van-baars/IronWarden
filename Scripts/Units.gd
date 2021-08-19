@@ -178,6 +178,7 @@ func add_unit(unit_type, location, player_owner, target_location=null):
 	new_unit.setup(unit_type, location, player_owner)
 	if target_location:
 		new_unit.move_to(target_location)
+		new_unit.original_target = target_location
 	new_unit.add_to_group("player_" + str(player_owner) + "_units")
 	emit_signal("unit_added", new_unit, player_owner)
 
@@ -203,6 +204,7 @@ func load_animations(spriteframe, unit):
 		"res://Assets/Art/Units/" +
 		get_faction(unit).to_lower().replace(" ", "_") + "/" +
 		get_display_name(unit).to_lower().replace(" ", "_"))
+	print(get_display_name(unit).to_lower())
 	var directions = [
 		"down",
 		"down_right",
@@ -234,6 +236,7 @@ func load_animations(spriteframe, unit):
 		unit_actions += gatherer_actions
 
 	for action in unit_actions:
+		print("  -" + action)
 		var action_path = unit_path + "/" + action
 		for direction in directions:
 			var sprites_path = action_path + "/" + direction + "/"
@@ -266,7 +269,7 @@ func spriteframe_warmup():
 			"/SpriteFrame.tres")
 		var unit_spriteframe = load(spriteframe_path)
 		spriteframe_ref[UnitTypes.UTYPE[unit]] = unit_spriteframe
-	print("... complete: " + str(OS.get_unix_time() - start))
+	print("... warmup operations completed in %0s".format([str(OS.get_unix_time() - start)]), "%_")
 
 func build_spriteframes():
 	for unit in UnitTypes.UTYPE:
