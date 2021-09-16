@@ -1,6 +1,8 @@
 extends Node2D
 
 # Signal Declarations
+signal hovered
+signal unhovered
 signal left_clicked
 signal right_clicked
 signal credit_resources
@@ -129,6 +131,39 @@ onready var FootprintSizes = {
 		Vector2(-208, 104)
 	]
 }
+onready var DetectionPolygonsVeryShort = {
+	Vector2(1, 1) : [
+		Vector2(0, -34),
+		Vector2(52, -6),
+		Vector2(52, 26),
+		Vector2(0, 53),
+		Vector2(-52, 26),
+		Vector2(-52, -6)
+	],
+	Vector2(2, 2) : [
+		Vector2(0, 52),
+		Vector2(104, 20),
+		Vector2(104, 26),
+		Vector2(0, -26),
+		Vector2(-104, 20),
+		Vector2(-104, 26)
+	],
+	Vector2(3, 3) : [
+		Vector2(0, 156),
+		Vector2(151, 78),
+		Vector2(151, 50),
+		Vector2(0, -26),
+		Vector2(-151, 50),
+		Vector2(-151, 78)
+	],
+	Vector2(4, 4) : [
+		Vector2(0, 209),
+		Vector2(200, 104),
+		Vector2(200, 75),
+		Vector2(0, -26),
+		Vector2(-200, 75),
+		Vector2(-200, 104)
+	]}
 onready var DetectionPolygonsShort = {
 	Vector2(1, 1) : [
 		Vector2(0, -54),
@@ -213,6 +248,7 @@ var map_grid
 # Aliasing
 onready var health_bar = get_node("HealthBar")
 onready var shield_bar = get_node("ShieldBar")
+onready var progress_bar = get_node("ProgressBar")
 onready var sound_container = get_node("Sounds")
 onready var center_widget = get_tree().root.get_node("Main/UILayer/CenterWidget")
 
@@ -597,13 +633,16 @@ func shields_changed():
 	shield_bar.value = get_shields()
 
 func hover():
+	if selected: return
 	$SelectionBorder.show()
 	health_bar.show()
+	emit_signal("hovered", self)
 
 func unhover():
 	if selected: return
 	$SelectionBorder.hide()
 	health_bar.hide()
+	emit_signal("unhovered")
 
 func _on_BBox_mouse_entered():
 	hover()

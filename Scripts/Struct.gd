@@ -25,6 +25,8 @@ var build_queue = []
 var _construction_progress = 0
 
 func sub_connect():
+	self.connect("hovered", dis, "_on_Unit_hovered")
+	self.connect("unhovered", dis, "_on_Unit_unhovered")
 	self.connect("unit_spawned", dis, "_on_Build_Structure_unit_spawned")
 	self.connect("set_rally_point", dis, "_on_Build_Structure_set_rally_point")
 
@@ -65,7 +67,7 @@ func set_spriteframes(faction_name, structure_type):
 	#$AnimatedSprite.frames = load(anim_path + "/SpriteFrame.tres")
 	#$AnimatedSprite.frames = st.spriteframe_ref[structure_type]
 	$Sprite.texture = st.icons[structure_type]
-	$Sprite.modulate = player_colors[get_player_number()] * 0.5 + Color.white * 0.5
+	# $Sprite.modulate = player_colors[get_player_number()] * 0.5 + Color.white * 0.5
 
 	
 func build_sounds():
@@ -97,6 +99,7 @@ func _process(_delta):
 
 func increment_construction(quantity=1):
 	_construction_progress += quantity
+	set_health(get_health() + 1)
 	construction_check()
 	var construction_opacity = 0.5
 	# construction_opacity += (_construction_progress / 100.0) / 2.0
@@ -109,7 +112,7 @@ func increment_construction(quantity=1):
 	update_bars()
 
 func construction_check():
-	if _construction_progress >= 100:
+	if _construction_progress >= get_maxhealth():
 		set_constructed(true)
 
 func set_constructed(construction_complete):
@@ -117,7 +120,8 @@ func set_constructed(construction_complete):
 	if construction_complete:
 		emit_signal("finished")
 		return
-	_construction_progress = 0
+	_construction_progress = 1
+	set_health(1)
 	update_bars()
 	$Sprite.texture = load("res://Assets/Art/Structures/foundations/%0x%1.png".format(
 		[str(width), str(height)], "%_"))
@@ -147,19 +151,20 @@ func set_footprint_polygon(structure_size):
 	$Footprint.polygon = PoolVector2Array(FootprintSizes[structure_size])
 
 func update_bars():
-	$ProgressBar.hide()
-	$ShieldBar.hide()
+	progress_bar.hide()
+	shield_bar.hide()
 	if not build_queue.empty():
-		$ProgressBar.show()
-		$ProgressBar.value = 100 - ($BuildTimer.time_left / $BuildTimer.wait_time) * 100
+		progress_bar.show()
+		progress_bar.value = 100 - ($BuildTimer.time_left / $BuildTimer.wait_time) * 100
 	if not _stats[Stats.STAT.MAXSHIELDS] == 0:
-		$ShieldBar.show()
-	$ShieldBar.value = _stats[Stats.STAT.SHIELDS]
-	$HealthBar.max_value = _stats[Stats.STAT.MAXHEALTH]
-	$HealthBar.value = _stats[Stats.STAT.HEALTH]
+		shield_bar.show()
+	shield_bar.value = _stats[Stats.STAT.SHIELDS]
+	health_bar.max_value = _stats[Stats.STAT.MAXHEALTH]
+	health_bar.value = _stats[Stats.STAT.HEALTH]
 	if not _constructed:
-		$ProgressBar.show()
-		$ProgressBar.value = _construction_progress
+		progress_bar.show()
+		var value = (float(_construction_progress) / float(get_maxhealth()))
+		progress_bar.value = value * 100
 
 func get_id(): return _stats[Stats.STAT.STRUCTURE_ID]
 
@@ -174,6 +179,7 @@ func get_center():
 		position.x,
 		position.y + 26 * sqrt(width * height) - 26
 			)
+	
 
 func set_target_unit(new_target_unit):
 	target_unit = new_target_unit

@@ -91,10 +91,14 @@ func _unhandled_input(event):
 			emit_signal("set_target_location", global_click_location)
 			debit_resources(st.get_cost(construction_build_id))
 			var selected_constructors = get_selected_constructors(_selected_units)
+
+			if _shift:
+				for constructor in selected_constructors:
+					constructor.task_queue.add_task(TaskQueue.Type.Construct, new_construction)
+				return
 			for constructor in selected_constructors:
 				constructor.set_target_construction(new_construction)
-			if not _shift:
-				emit_signal("construction_mode_cancel", construction_build_id)
+			emit_signal("construction_mode_cancel", construction_build_id)
 		
 				
 
@@ -119,9 +123,10 @@ func _unhandled_input(event):
 				motile_units.append(each)
 			if not each.build_options.empty():
 				production_structures.append(each)
-		if not owned_units.empty():
-			emit_signal("set_target_location", click_location)
-			owned_units[0].play_move_confirm()
+		if motile_units.empty() and production_structures.empty():
+			return
+		emit_signal("set_target_location", click_location)
+		owned_units[0].play_move_confirm()
 		if not motile_units.empty():
 			for each in motile_units:
 				each.clear_formation()
@@ -138,6 +143,7 @@ func _unhandled_input(event):
 
 
 func _on_Selection_Box_end(newly_selected):
+	# print("Box Closed")
 	if not _shift:
 		clear_selected()
 	if newly_selected.empty(): return
@@ -213,6 +219,7 @@ func _on_Dispatcher_deposit_left_clicked(deposit):
 
 func _on_Dispatcher_unit_left_clicked(unit):
 	#doubleclick select all goes here
+	# print("unit clicked direct")
 	if $DoubleClickTimer.is_stopped() == false and last_clicked == unit:
 		select_all_onscreen(unit)
 		emit_signal("units_selected", _selected_units)
@@ -221,6 +228,8 @@ func _on_Dispatcher_unit_left_clicked(unit):
 		return
 	last_clicked = unit
 	$DoubleClickTimer.start()
+	if not _shift:
+		clear_selected()
 	_selected_units.append(unit)
 	unit.select()
 

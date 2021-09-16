@@ -49,6 +49,19 @@ func shuffleList(list):
 		list.remove(x)
 	return shuffledList
 
+func get_perimeter_tiles(footprint_tiles):
+	var perimeter_tiles = []
+	var all_neighbor_tiles = {}
+	for tile in footprint_tiles:
+		for border_tile in get_neighbor_tiles(tile):
+			all_neighbor_tiles[border_tile] = true
+	for tile in footprint_tiles:
+		all_neighbor_tiles[tile] = false
+	for tile in all_neighbor_tiles.keys():
+		if all_neighbor_tiles[tile] == true:
+			perimeter_tiles.append(tile)
+	return perimeter_tiles
+
 func check_distance_above(point_to_check, existing_points, d_threshold):
 	# Returns True if any point is within a given range of the point to check
 	# Else False
@@ -181,14 +194,14 @@ func v_distance(vec1, vec2):
 	return sqrt((a2 * a2) + (b2 * b2))
 	
 
-func get_closest_tile(source_tile, tiles_list):
+func get_closest_tile(origin_tile, tiles_list):
 	var tiles_by_distance = {}
 	for tile in tiles_list:
 		tiles_by_distance[tile] = distance(
-			source_tile.get_x(),
-			source_tile.get_y(),
-			tile.get_x(),
-			tile.get_y())
+			origin_tile.x,
+			origin_tile.y,
+			tile.x,
+			tile.y)
 	var closest = tiles_list[0]
 	for tile_key in tiles_by_distance.keys():
 		if tiles_by_distance[tile_key] <= tiles_by_distance[closest]:

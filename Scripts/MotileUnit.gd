@@ -1,25 +1,5 @@
 extends "res://Scripts/GameUnit.gd"
 
-enum Tasks {
-	IDLE,
-	MOVE_TO_LOCATION,
-	GATHER,
-	ATTACK_TARGET,
-	CONSTRUCT_STRUCTURE,
-	DIE,
-	ROT
-}
-
-enum States {
-	MOVE,
-	ATTACK,
-	EXTRACT,
-	CONSTRUCT,
-	IDLE,
-	DYING,
-	DEAD
-}
-
 var bounce_counter = 0
 var BOUNCE_MAX = 3
 var collisions = 0
@@ -174,6 +154,11 @@ func task_changed():
 func get_task():
 	return Tasks.keys()[task]
 
+func set_task(task_type, task_target):
+	match task_type:
+		TaskQueue.Type.Construct:
+			set_target_construction(task_target)
+
 func set_task_idle():
 	task = Tasks.IDLE
 	collisions = 0
@@ -214,6 +199,7 @@ func set_state_idle():
 func additional_idle_functions(): pass
 func get_state():
 	return States.keys()[state]
+
 func set_state_move():
 	$AnimatedSprite.set_animation(animation_direction + "_walk")
 	$AnimatedSprite.play()
@@ -231,6 +217,7 @@ func set_state_extract():
 	$AnimatedSprite.play()
 	state = States.EXTRACT
 	state_changed()
+
 func set_state_construct():
 	$AnimatedSprite.set_animation(animation_direction + "_idle")
 	$AnimatedSprite.play()
@@ -336,6 +323,7 @@ func _physics_process(delta):
 				attempt_retarget()
 
 			if position == final_target or final_target == null:
+				#putting a thingy here
 				if task == Tasks.IDLE:
 					set_state_idle()
 				elif task == Tasks.MOVE_TO_LOCATION:
@@ -350,7 +338,7 @@ func _physics_process(delta):
 				
 			# Do we have a path with at least 1 point remaining?
 			if path.size() > 0:
-				if position.distance_to(step_target) < 3:
+				if position.distance_to(step_target) < 2:
 					step_target = path[0]
 					path.remove(0)
 			else:
@@ -547,7 +535,11 @@ func location_move_task_logic():
 func gather_task_logic():
 	pass
 
-func idle_task_logic(): pass
+func idle_task_logic():
+	if task_queue.queue.empty():
+		return
+	var next_task = task_queue.pull_next()
+	set_task(next_task[0], next_task[1])
 
 func attack_task_logic():
 	# Check if our target still exists
@@ -566,7 +558,7 @@ func attack_task_logic():
 
 	# Check if our target moved and repath if so
 	if target_unit.position != final_target:
-		path_to(target_unit.get_center())
+		path_to_object(target_unit)
 
 	# Check if we are in range, and if so, switch state to attacking
 	if check_contact(target_unit, get_range() * 38):
@@ -608,28 +600,59 @@ func clear_target_unit():
 
 func set_target_construction(tile):
 	target_construction = map_grid.get_structure_at(tile)
-	path_to(target_construction.get_center())
+	path_to_object(target_construction)
 
 
 func clear_target_construction():
 	if not target_construction: return
 	target_construction = null
 
-func path_to(target_world_pos, pathfind=true):
+func path_to_point(target_world_pos, pathfind=true):
 	var nav_path
 	if not pathfind:
 		nav_path = nav2d.get_simple_path(position, target_world_pos, true)
 	else:
-		nav_path = nav2d.get_position_path(position, target_world_pos)
+		nav_path = nav2d.get_rough_path(position, target_world_pos)
 		nav_path.append(target_world_pos)
-
 	if nav_path.size() < 1:
 		return
 	if nav_path.size() == 1:
-		print("Small nav path")
-	final_target = nav_path[nav_path.size()-1]
+		final_target = nav_path[nav_path.size()-1]
+		set_path(nav_path)
+		return
+	final_target = nav_path[-1]
+	set_path(nav2d.smooth(position, nav_path))
+
+func path_to_object(path_target_object, pathfind=true):
+	if not path_target_object.has_method("get_footprint_tiles"):
+		path_to_point(path_target_object.get_center())
+		return
+	var entry_tiles = nav2d.find_entry_tile(
+		map_grid.get_tile(position),
+		path_target_object.get_footprint_tiles())
+	if entry_tiles == [null, null]:
+		print("no valid entry")
+		return
+	var nav_path
+	if not pathfind:
+		nav_path = nav2d.get_simple_path(position, map_grid.get_world_position(entry_tiles[1]), true)
+	else:
+		nav_path = nav2d.get_rough_path(position, map_grid.get_world_position(entry_tiles[1]))
+		nav_path.append(map_grid.get_world_position(entry_tiles[1]))
+		
+	if nav_path.size() < 1:
+		return
+
+	if nav_path.size() > 1:
+		var smooth_path = nav2d.smooth(position, nav_path)
+		smooth_path.append(map_grid.get_world_position(entry_tiles[0]))
+		final_target = smooth_path[-1]
+		set_path(smooth_path)
+		return
+	nav_path.append(map_grid.get_world_position(entry_tiles[0]))
+	final_target = nav_path[-1]
 	set_path(nav_path)
-	
+
 func player_right_clicked(player_id, target_world_pos, shift):
 	if player_id != get_player_number():
 		return
@@ -645,7 +668,7 @@ func move_to(target_world_pos, shift=false):
 	if shift:
 		queue_waypoint(target_world_pos)
 		return
-	path_to(target_world_pos)
+	path_to_point(target_world_pos)
 	set_task_move_to_location()
 	set_state_move()
 
@@ -820,7 +843,6 @@ func _on_AnimatedSprite_animation_finished():
 		States.IDLE:
 			$AnimationTimer.stop()
 			$AnimationTimer.start(tools.rng.randf_range(1.5, 5.0))
-		States.IDLE:
 			$AnimatedSprite.set_animation(animation_direction + "idle")
 			$AnimatedSprite.play()
 		States.ATTACK:

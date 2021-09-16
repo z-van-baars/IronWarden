@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 # Signal Declarations
+signal hovered
+signal unhovered
 signal left_clicked
 signal right_clicked
 signal credit_resources
@@ -9,6 +11,7 @@ signal update
 signal shield_damage
 signal kill
 signal waypoint_reached
+
 
 enum Sounds {
 	SELECT,
@@ -24,16 +27,38 @@ enum Sounds {
 	UNIT_BUILT
 }
 
+enum Tasks {
+	IDLE,
+	MOVE_TO_LOCATION,
+	GATHER,
+	ATTACK_TARGET,
+	CONSTRUCT_STRUCTURE,
+	DIE,
+	ROT
+}
+
+enum States {
+	MOVE,
+	ATTACK,
+	EXTRACT,
+	CONSTRUCT,
+	IDLE,
+	DYING,
+	DEAD
+}
+
 enum WeaponTypes {
 	PROJECTILE,
 	HITSCAN,
 	BEAM,
 	MELEE
 }
+
 enum DamageType {
 	KINETIC,
 	ENERGY
 }
+
 enum AttackStats {
 	PROJ_TYPE,
 	SPEED,
@@ -41,6 +66,7 @@ enum AttackStats {
 	DAMAGE_TYPE,
 	DAMAGE
 }
+
 var boltershell_data = {
 	AttackStats.PROJ_TYPE: Types.PROJECTILE.BULLET,
 	AttackStats.SPEED: 800,
@@ -48,6 +74,7 @@ var boltershell_data = {
 	AttackStats.DAMAGE_TYPE: Types.DAMAGE.KINETIC,
 	AttackStats.DAMAGE: 10
 }
+
 var lasbolt_data = {
 	AttackStats.PROJ_TYPE: Types.PROJECTILE.LASBOLT,
 	AttackStats.SPEED: 1000,
@@ -55,6 +82,7 @@ var lasbolt_data = {
 	AttackStats.DAMAGE_TYPE: Types.DAMAGE.ENERGY,
 	AttackStats.DAMAGE: 3
 }
+
 var lasbeam_data = {
 	AttackStats.PROJ_TYPE: Types.PROJECTILE.LASBEAM,
 	AttackStats.SPEED: 0,
@@ -62,6 +90,7 @@ var lasbeam_data = {
 	AttackStats.DAMAGE_TYPE: Types.DAMAGE.ENERGY,
 	AttackStats.DAMAGE: 1
 }
+
 onready var sound_players = {
 	Sounds.SELECT: [],
 	Sounds.CONFIRM: [],
@@ -88,12 +117,12 @@ var barrel_length = {
 
 var barrel_height = {
 	UnitTypes.UTYPE.CHICKEN: 18,
-	UnitTypes.UTYPE.CONSCRIPT: 33,
-	UnitTypes.UTYPE.MARINE: 43,
-	UnitTypes.UTYPE.TECHPRIEST: 33,
+	UnitTypes.UTYPE.CONSCRIPT: 23,
+	UnitTypes.UTYPE.MARINE: 33,
+	UnitTypes.UTYPE.TECHPRIEST: 23,
 	UnitTypes.UTYPE.PREDATOR: 50,
 	UnitTypes.UTYPE.LASCANNON: 25,
-	UnitTypes.UTYPE.JOHNNY: 43,
+	UnitTypes.UTYPE.JOHNNY: 33,
 }
 
 var player_colors = {
@@ -143,7 +172,7 @@ onready var bump_cooldown = 1.0
 # this might need to scale with unit footprint size
 # perhaps an algo
 
-onready var contact_radius = 8
+onready var contact_radius = 10
 
 
 # mutable internal properties
@@ -159,7 +188,7 @@ var final_target : Vector2
 var original_target : Vector2
 var path = []
 var waypoints = []
-var task_queue = []
+var task_queue = TaskQueue.TQ.new()
 var carrying = {}
 var target_unit = null
 var target_dropoff = null
@@ -192,6 +221,8 @@ func set_module_refs() -> void:
 func connect_signals() -> void:
 	self.connect("left_clicked", dis, "_on_Unit_left_clicked")
 	self.connect("right_clicked", dis, "_on_Unit_right_clicked")
+	self.connect("hovered", dis, "_on_Unit_hovered")
+	self.connect("unhovered", dis, "_on_Unit_unhovered")
 	self.connect("update", dis, "_on_Unit_update")
 	self.connect("kill", dis, "_on_Unit_kill")
 	self.connect("credit_resources", dis, "_on_Unit_credit_resources")
@@ -346,7 +377,7 @@ func set_target_deposit(t_deposit):
 	target_deposit = t_deposit
 	gather_type = t_deposit.get_r_type()
 	extraction_type = t_deposit.get_id()
-	path_to(t_deposit.get_center())
+	# path_to_point(t_deposit.get_center())
 
 func clear_target_deposit():
 	if not target_deposit: return
@@ -377,7 +408,7 @@ func clear_target_unit():
 
 func set_target_construction(tile):
 	target_construction = map_grid.get_structure_at(tile)
-	path_to(target_construction.get_center())
+	path_to_point(target_construction.get_center())
 
 func clear_target_construction():
 	if not target_construction: return
@@ -450,17 +481,50 @@ func get_step_target():
 	step_target = Vector2(new_step_target.x, new_step_target.y)
 	direction = (step_target - position).normalized()
 
-func path_to(target_world_pos, pathfind=true):
+func path_to_point(target_world_pos, pathfind=true):
 	var nav_path
 	if not pathfind:
 		nav_path = nav2d.get_simple_path(position, target_world_pos, true)
 	else:
-		nav_path = nav2d.get_position_path(position, target_world_pos)
+		nav_path = nav2d.get_rough_path(position, target_world_pos)
 		nav_path.append(target_world_pos)
-
 	if nav_path.size() < 1:
 		return
-	final_target = nav_path[nav_path.size()-1]
+	if nav_path.size() == 1:
+		final_target = nav_path[nav_path.size()-1]
+		set_path(nav_path)
+		return
+	final_target = nav_path[-1]
+	set_path(nav2d.smooth(position, nav_path))
+
+func path_to_object(path_target_object, pathfind=true):
+	if not path_target_object.has_method("get_footprint_tiles"):
+		path_to_point(path_target_object.get_center())
+		return
+	var entry_tiles = nav2d.find_entry_tile(
+		map_grid.get_tile(position),
+		path_target_object.get_footprint_tiles())
+	if entry_tiles == [null, null]:
+		print("no valid entry")
+		return
+	var nav_path
+	if not pathfind:
+		nav_path = nav2d.get_simple_path(position, map_grid.get_world_position(entry_tiles[1]), true)
+	else:
+		nav_path = nav2d.get_rough_path(position, map_grid.get_world_position(entry_tiles[1]))
+		nav_path.append(map_grid.get_world_position(entry_tiles[1]))
+		
+	if nav_path.size() < 1:
+		return
+
+	if nav_path.size() > 1:
+		var smooth_path = nav2d.smooth(position, nav_path)
+		smooth_path.append(map_grid.get_world_position(entry_tiles[0]))
+		final_target = smooth_path[-1]
+		set_path(smooth_path)
+		return
+	nav_path.append(map_grid.get_world_position(entry_tiles[0]))
+	final_target = nav_path[-1]
 	set_path(nav_path)
 
 
@@ -490,7 +554,8 @@ func get_sprite_direction(dir: Vector2):
 
 func select():
 	selected = true
-	add_to_group("selected")
+	if not is_in_group("selected"):
+		add_to_group("selected")
 	$SelectionBorder.show()
 	health_bar.show()
 	if target_unit: target_unit.hover()
@@ -500,6 +565,7 @@ func select():
 
 func deselect():
 	selected = false
+	assert(is_in_group("selected"))
 	remove_from_group("selected")
 	$SelectionBorder.hide()
 	health_bar.hide()
@@ -562,13 +628,17 @@ func shields_changed():
 	shield_bar.value = get_shields()
 
 func hover():
+	if selected: return
 	$SelectionBorder.show()
 	health_bar.show()
+	emit_signal("hovered", self)
 
 func unhover():
+	emit_signal("unhovered")
 	if selected: return
 	$SelectionBorder.hide()
 	health_bar.hide()
+	
 
 func _on_BBox_mouse_entered():
 	hover()

@@ -20,16 +20,24 @@ signal unit_right_clicked
 signal unit_spawned
 signal selection_cleared
 signal reform_button_pressed
+signal unit_hovered
+signal unit_unhovered
+
 # deposit stuff
 signal deposit_left_clicked
 signal deposit_right_clicked
 signal deposit_hovered
 signal deposit_unhovered
 signal deposit_exhausted
-signal set_deposit_cursor
+
 # cursor stuff
+signal set_deposit_cursor
 signal reset_cursor
+signal set_crosshair_cursor
+signal set_build_cursor
+# sets the location for the rally point flag
 signal set_target_location
+# Chatbox
 signal open_chat_box
 signal open_tech_tree
 # Player signals
@@ -104,6 +112,16 @@ func _on_Unit_right_clicked(unit):
 	else:
 		emit_signal("unit_right_clicked", unit)
 
+func _on_Unit_hovered(unit):
+	var selected_units = main.local_player.get_selected()
+	if selected_units.empty():
+		return
+	if unit.get_player_number() != selected_units[0].get_player_number():
+		emit_signal("set_crosshair_cursor")
+
+func _on_Unit_unhovered():
+	emit_signal("reset_cursor")
+
 func _on_Unit_update(_unit):
 	emit_signal("unit_update")
 
@@ -145,6 +163,7 @@ func _on_Player_units_selected(selected_units):
 func _on_Player_construction_mode_cancel(structure_type):
 	if structure_type != null:
 		emit_signal("construction_id_changed", null)
+		emit_signal("reset_cursor")
 	else:
 		emit_signal("toggle_construction_mode")
 
@@ -153,6 +172,7 @@ func _on_ConstructionButton_pressed():
 
 func _on_ConstructionMenu_structure_button_clicked(structure_type):
 	emit_signal("construction_id_changed", structure_type)
+	emit_signal("set_build_cursor")
 
 func _on_Player_new_construction(construction_id, tile_location, player_num):
 	log_action("New Construction")

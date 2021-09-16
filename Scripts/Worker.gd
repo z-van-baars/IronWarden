@@ -5,6 +5,14 @@ func can_construct(): return true
 
 func can_gather(): return true
 
+func set_task(task_type, task_target):
+	match task_type:
+		TaskQueue.Type.Construct:
+			set_target_construction(task_target)
+		TaskQueue.Type.Extract:
+			gather(task_target)
+			task_target.gather_target_set(self)
+
 func set_task_gather():
 	task = Tasks.GATHER
 	clear_target_unit()
@@ -42,7 +50,8 @@ func set_target_construction(new_target_construction):
 	target_construction = new_target_construction
 	target_construction.connect_construction_signal(self)
 	set_task_construct()
-	# path_to(target_construction.get_center())
+	path_to_object(target_construction)
+	set_state_move()
 
 func clear_target_construction():
 	if not target_construction: return
@@ -50,7 +59,10 @@ func clear_target_construction():
 	target_construction = null
 
 func _on_TargetConstruction_finished():
-	if not task_queue.empty():
+	if not task_queue.queue.empty():
+		set_task_idle()
+		set_state_idle()
+		zero_target()
 		return
 	var nearby_sites = find_nearby_construction_sites()
 	if nearby_sites.empty():
@@ -114,8 +126,9 @@ func _draw():
 func _on_Target_Deposit_exhausted():
 	target_deposit = null
 	if state == States.EXTRACT:
+		path_to_object(target_dropoff)
 		set_state_move()
-		path_to(target_dropoff.get_center())
+
 	elif state == States.MOVE and carrying[gather_type] == 0:
 		set_state_idle()
 		set_task_idle()
@@ -153,16 +166,18 @@ func gather_task_logic():
 		if check_contact(target_dropoff):
 			credit_resources()
 			empty_lading()
-			path_to(target_deposit.get_center())
+			path_to_object(target_deposit)
 			set_state_move()
-		else:
-			if path.size() <= 0: # do we have a path?
-				path_to(target_dropoff.get_center())
-				set_state_move()
 			return
+		else:
+			if position == final_target:
+				path_to_object(target_dropoff)
+				set_state_move()
+				return
 
 	# is cargo less-than full?
-	if not check_contact(target_deposit): return
+	if not check_contact(target_deposit):
+		return
 
 	# have we started gathering already?
 	if state == States.EXTRACT: return
@@ -174,6 +189,8 @@ func find_dropoff_target():
 	for each_structure in st.get_structures():
 		if each_structure.get_stype() in res.dropoff_types[target_deposit.get_r_type()]:
 			structures_to_sort.append(each_structure)
+	if structures_to_sort.empty():
+		return null
 	return tools.r_choice(structures_to_sort)
 
 	var distance_to = {}
@@ -221,8 +238,8 @@ func construct_task_logic():
 
 	# are we at the construction site?
 	if not check_contact(target_construction):
-		if path.empty(): # do we have a path?
-			path_to(target_construction.get_center())
+		if position == final_target: # do we have a path?
+			path_to_object(target_construction)
 			set_state_move()
 		return
 

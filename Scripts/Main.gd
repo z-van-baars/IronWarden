@@ -5,11 +5,31 @@ onready var grid
 onready var units
 onready var st
 onready var res
+onready var start
+
+
+var player_profiles = []
+var players = {} # players[player_number] = PlayerObject
+onready var active_profile = null
+onready var local_player = null
 
 onready var ai_player_scn = preload("res://Scenes/AIPlayer.tscn")
 onready var hum_player_scn = preload("res://Scenes/HumanPlayer.tscn")
 onready var local_player_scn = preload("res://Scenes/LocalPlayer.tscn")
 
+enum RunTimeStat {
+	SpriteBuild,
+	MapGen,
+	SpriteWarmup,
+	InitialUnits}
+
+# Collects runtime stats in milliseconds for build data processing
+var runtime_stats = {
+	RunTimeStat.SpriteBuild: 0,
+	RunTimeStat.MapGen: 0,
+	RunTimeStat.SpriteWarmup: 0,
+	RunTimeStat.InitialUnits: 0
+}
 
 # debug junk
 enum DebugSettings {
@@ -61,10 +81,6 @@ func _on_Dispatcher_toggle_draw_targets():
 	debug_states[DebugSettings.draw_targets] = !draw_targets()
 
 
-var player_profiles = []
-var players = {} # players[player_number] = PlayerObject
-onready var active_profile = null
-onready var local_player = null
 
 func load_saved_profiles() -> PlayerProfile:
 	if not tools.list_files_in_directory("res://Profiles/").empty():
@@ -144,10 +160,13 @@ func new_networked_player(player_data):
 	return new_player
 
 func start_local_game():
+	print("=================================================================")
 	print("Mapgen Start...")
+	start = OS.get_ticks_msec()
 	$GameMap.map_gen()
 
-	print("Generating Player Data...")
+
+	print("[ - Generating Player Data...")
 	var _player_1_data = {
 		name = active_profile.get_name(),
 		number = 0,
@@ -172,7 +191,8 @@ func start_local_game():
 	var ai_player_pool = {
 		# 0: _player_2_data
 	}
-	print("Placing Initial Units...")
+	print("[ - Placing Initial Units...")
+	var start_unit_placement = OS.get_ticks_msec()
 	for player in player_pool.values():
 
 		var new_player = new_networked_player(player)
@@ -183,15 +203,17 @@ func start_local_game():
 
 		$Players.add_child(new_player)
 		build_player_start(new_player)
-		print("Player %s complete..." % [str(new_player.get_player_number())])
+		print("[    - Player %s complete..." % [str(new_player.get_player_number())])
 
 	for ai_player in ai_player_pool.values():
 		var new_ai_player = new_ai_player(ai_player)
 		players[ai_player.number] = new_ai_player
 		$Players.add_child(new_ai_player)
 		build_player_start(new_ai_player)
-		print("Player %s complete..." % [str(new_ai_player.get_player_number())])
-	print("Generating Navigation Data...")
+		print("[    - Player %s complete..." % [str(new_ai_player.get_player_number())])
+	runtime_stats[RunTimeStat.InitialUnits] = OS.get_ticks_msec() - start_unit_placement
+	print("[ - Unit Placement Time: " + str(runtime_stats[RunTimeStat.InitialUnits]) + " msecs")
+	print("[ - Generating Navigation Data...")
 	$Nav2D.setup($GameMap)
 	final_setup()
 
@@ -220,19 +242,22 @@ func _on_Dispatcher_start_multiplayer_game(lobby_name, player_pool, game_setting
 	final_setup()
 
 func final_setup():
-	print("Initializing Fog of War...")
+	print("[ - Initializing Fog of War...")
 	$GameMap/Grid.initialize_tiles()
 	$GameMap/Grid.set_player_ref()
 	$GameObjects/Fog.set_module_refs()
 	$GameObjects/Fog.initialize_fog_tilemap()
 	$GameObjects/Fog._on_FogTimer_timeout()
-	print("Connecting Dispatcher...")
+	print("[ - Connecting Dispatcher...")
 	$SelectionBox.connect_local_player()
 	$Dispatcher.new_game()
 	$Dispatcher.connect_signals()
 	initialize_menus()
-	print("Map Gen Complete.")
-
+	print("Map Gen Complete!")
+	var end = OS.get_ticks_msec() - start
+	runtime_stats[RunTimeStat.MapGen] = end
+	print("=================================================================")
+	print("MapGen Time: " + str(stepify(end / 1000.000, 0.001)) + " seconds")
 	local_player.credit_resources(
 		{
 		ResourceTypes.RES.BIOMASS: 10000,

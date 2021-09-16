@@ -149,13 +149,13 @@ func import_profile(player_profile):
 
 func set_initial_construction_options() -> void:
 	_construction_options = [
-		StructureTypes.STRUCT.COMMAND_POST,
 		StructureTypes.STRUCT.BIOMASS_REACTOR,
 		StructureTypes.STRUCT.ALLOY_FOUNDRY,
 		StructureTypes.STRUCT.WARPSTONE_REFINERY,
 		StructureTypes.STRUCT.ENERGY_CONDUIT,
 		StructureTypes.STRUCT.BARRACKS,
-		StructureTypes.STRUCT.TOWER
+		StructureTypes.STRUCT.TOWER,
+		StructureTypes.STRUCT.COMMAND_POST,
 	]
 
 func get_construction_options() -> Array: 

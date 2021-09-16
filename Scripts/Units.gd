@@ -259,7 +259,7 @@ func get_weapon_type(unit_type):
 
 func spriteframe_warmup():
 	print("Starting Spriteframe Warmup...")
-	var start = OS.get_unix_time()
+	var start = OS.get_ticks_msec()
 	for unit in UnitTypes.UTYPE:
 		var spriteframe_path = (
 			"res://Assets/SpriteFrames/Units/" +
@@ -269,7 +269,7 @@ func spriteframe_warmup():
 			"/SpriteFrame.tres")
 		var unit_spriteframe = load(spriteframe_path)
 		spriteframe_ref[UnitTypes.UTYPE[unit]] = unit_spriteframe
-	print("... warmup operations completed in %0s".format([str(OS.get_unix_time() - start)]), "%_")
+	print("... warmup operations completed in %0msecs".format([str(OS.get_ticks_msec() - start)], "%_"))
 
 func build_spriteframes():
 	for unit in UnitTypes.UTYPE:

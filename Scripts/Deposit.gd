@@ -1,6 +1,4 @@
 extends "res://Scripts/GameObject.gd"
-signal hovered
-signal unhovered
 signal exhausted
 
 onready var starting = {}
@@ -61,7 +59,8 @@ func set_sprite(_faction_name, deposit_type):
 	$Sprite.position.y = -18
 	# $Sprite.position.y -= max(0, $Sprite.texture.get_height() - 128) / 2
 func set_detection_polygon():
-	$BBox/Border.polygon = PoolVector2Array(DetectionPolygonsShort[Vector2(1, 1)])
+	# $BBox/Border.polygon = PoolVector2Array(DetectionPolygonsShort[Vector2(1, 1)])
+	$BBox/Border.polygon = PoolVector2Array(DetectionPolygonsVeryShort[Vector2(1, 1)])
 func set_footprint_polygon():
 	$Footprint.polygon = PoolVector2Array(FootprintSizes[Vector2(1, 1)])
 

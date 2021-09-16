@@ -34,6 +34,7 @@ DepositTypes="*res://Scripts/Constants/DepositTypes.gd"
 UnitTypes="*res://Scripts/Constants/UnitTypes.gd"
 StructureTypes="*res://Scripts/Constants/StructureTypes.gd"
 FormTools="*res://Scripts/FormTools.gd"
+TaskQueue="*res://Scripts/TaskQueue.gd"
 
 [display]
 

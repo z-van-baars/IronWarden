@@ -70,6 +70,8 @@ func set_cost_modulators():
 
 
 func construct_buttons():
+	if not active_structure.get_constructed():
+		return
 	for unit in active_structure.build_options:
 		var new_button = build_button_scn.instance()
 		$BuildPanel/ButtonGrid.add_child(new_button)

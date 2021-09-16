@@ -35,13 +35,13 @@ onready var foundation_sprites = {
 }
 
 onready var thumbnail = {
-	StructureTypes.STRUCT.COMMAND_POST: load("res://Assets/Art/Structures/imperium/command_post.png"),
-	StructureTypes.STRUCT.BIOMASS_REACTOR: load("res://Assets/Art/Structures/imperium/biomass_reactor.png"),
-	StructureTypes.STRUCT.ALLOY_FOUNDRY: load("res://Assets/Art/Structures/imperium/alloy_foundry.png"),
-	StructureTypes.STRUCT.WARPSTONE_REFINERY: load("res://Assets/Art/Structures/imperium/warpstone_refinery.png"),
-	StructureTypes.STRUCT.ENERGY_CONDUIT: load("res://Assets/Art/Structures/imperium/energy_conduit.png"),
-	StructureTypes.STRUCT.BARRACKS: load("res://Assets/Art/Structures/imperium/energy_conduit.png"),
-	StructureTypes.STRUCT.TOWER: load("res://Assets/Art/Structures/imperium/energy_conduit.png")
+	StructureTypes.STRUCT.COMMAND_POST: load("res://Assets/Art/Structures/imperium/command_post_icon.png"),
+	StructureTypes.STRUCT.BIOMASS_REACTOR: load("res://Assets/Art/Structures/imperium/biomass_reactor_icon.png"),
+	StructureTypes.STRUCT.ALLOY_FOUNDRY: load("res://Assets/Art/Structures/imperium/alloy_foundry_icon.png"),
+	StructureTypes.STRUCT.WARPSTONE_REFINERY: load("res://Assets/Art/Structures/imperium/warpstone_refinery_icon.png"),
+	StructureTypes.STRUCT.ENERGY_CONDUIT: load("res://Assets/Art/Structures/imperium/energy_conduit_icon.png"),
+	StructureTypes.STRUCT.BARRACKS: load("res://Assets/Art/Structures/imperium/barracks_icon.png"),
+	StructureTypes.STRUCT.TOWER: load("res://Assets/Art/Structures/imperium/tower_icon.png")
 }
 
 onready var footprint = {
